@@ -71,22 +71,22 @@ public class SignupActivity extends AppCompatActivity {
             // code to execute when EditText loses focus
             textViewIDWarning.setEnabled(true);
             textViewIDWarning.setText("");
-            editTextID.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                     editable.toString();
-                }
-            });
+//            editTextID.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable editable) {
+//                     editable.toString();
+//                }
+//            });
             String userID = editTextID.getText().toString();
 
             if(editTextID.getText().toString().equals(""))
