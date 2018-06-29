@@ -15,10 +15,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.003">
 
 
         <android.support.constraint.ConstraintLayout
@@ -40,15 +40,28 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Fridge Friend"
-                android:textColor="@color/colorMenu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textColor="@color/colorMenu"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_settings_black_24dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="10dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/ic_add_circle_outline_black_24dp"
+                tools:layout_editor_absoluteX="290dp"
+                tools:layout_editor_absoluteY="10dp" />
 
 
         </android.support.constraint.ConstraintLayout>
