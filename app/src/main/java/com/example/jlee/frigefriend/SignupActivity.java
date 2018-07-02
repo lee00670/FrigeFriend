@@ -5,9 +5,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -21,14 +23,17 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private String userID;
+
     private String userPassword;
     private String userEmail;
     private AlertDialog dialog;
@@ -40,12 +45,12 @@ public class SignupActivity extends AppCompatActivity {
 
     @BindView(R.id.textViewCancel) TextView textViewCancel;
     @BindView(R.id.editTextID) EditText editTextID;
-    @BindView(R.id.editTextPW)  EditText edtiTextPW;
+    @BindView(R.id.editTextPW)  EditText editTextPW;
     @BindView(R.id.editTextEmail) EditText editTextEMail;
     @BindView(R.id.textViewIDWarning) TextView textViewIDWarning;
     @BindView(R.id.textViewPWWarning) TextView textViewPWWarning;
     @BindView(R.id.textViewEmailWarning) TextView textViewEmailWarning;
-
+    @BindView(R.id.buttonCreateAccount) Button buttonCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,100 +59,165 @@ public class SignupActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        final Button createAccountButton = (Button) findViewById(R.id.buttonCreateAccount);
-        createAccountButton.setOnClickListener(new OnClickListener(){
+        textViewPWWarning.setEnabled(true);
+        textViewIDWarning.setEnabled(true);
+        textViewEmailWarning.setEnabled(true);
 
-        @Override
-        public void onClick(View view){
 
-        }
-        });
 
     }
 
-    @OnFocusChange(R.id.editTextID)
+    @OnClick (R.id.buttonCreateAccount)
+    void createAccount()
+    {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try
+                {
+                    JSONObject jsonResponse  = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success)
+                    {
+                       Log.e("test", "user id validated");
+
+                    }
+                    else
+                    {
+                        Log.e("test", "validity failed");
+                    }
+
+                }catch(Exception e)
+                {
+                    Log.e("err", "err");
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        ValidateRequest validateRequest = new ValidateRequest(editTextID.getText().toString(), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
+        queue.add(validateRequest);
+        queue.start();
+    }
+
+    @OnTextChanged(value = {R.id.editTextID, R.id.editTextEmail, R.id.editTextPW},
+            callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
+    public void validateView(Editable editable) {
+        View view = getCurrentFocus();
+        switch(view.getId())
+        {
+            case R.id.editTextID:
+
+                validateID = false;
+                String userID = editable.toString();
+                if(userID.equals(null))
+                {
+                    //textViewIDWarning.setText("Please enter ID");
+                    return;
+                }
+                if(userID.length() > 6)
+                {
+                    if(TextUtils.isDigitsOnly(userID.substring(0,1)))
+                    {
+                        //textViewIDWarning.setText("The first character cannot be digit." );
+                    }
+                    else
+                    {
+                        validateID = true;
+                        textViewIDWarning.setText("");
+                    }
+                }
+                else
+                {
+                    //textViewIDWarning.setText("The length should be at least over 6." );
+                }
+                break;
+            case R.id.editTextPW:
+                String password = editTextPW.getText().toString();
+                if(password.length() >= 8)
+                    textViewPWWarning.setText("");
+                validatePW = password.length() < 8 ? false:true;
+                break;
+            case R.id.editTextEmail:
+                String email = editTextEMail.getText().toString().trim();
+                validateEmail = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+                if(validateEmail)
+                {
+                    textViewEmailWarning.setText("");
+                }
+                break;
+            default:
+                break;
+        }
+        buttonCreateAccount.setEnabled(validateID && validatePW && validateEmail);
+    }
+
+    @OnFocusChange({R.id.editTextID, R.id.editTextPW, R.id.editTextEmail})
     public void onFocusChange(View view, boolean hasFocus) {
         if (!hasFocus) {
-            // code to execute when EditText loses focus
-            textViewIDWarning.setEnabled(true);
-            textViewIDWarning.setText("");
-//            editTextID.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable editable) {
-//                     editable.toString();
-//                }
-//            });
-            String userID = editTextID.getText().toString();
-
-            if(editTextID.getText().toString().equals(""))
+            switch(view.getId())
             {
-                textViewIDWarning.setText("Please enter ID");
-                return;
-            }
+                case R.id.editTextID:
 
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try
+                    validateID = false;
+                    String userID = editTextID.getText().toString();
+                    if(userID.equals(null))
                     {
-                        JSONObject jsonResponse  = new JSONObject(response);
-                        boolean success = jsonResponse.getBoolean("success");
-                        Log.e("err", "try");
-                        if(success)
+                        //textViewIDWarning.setText("Please enter ID");
+                        return;
+                    }
+                    if(userID.length() > 6)
+                    {
+                        if(TextUtils.isDigitsOnly(userID.substring(0,1)))
                         {
-                            String userID = editTextID.getText().toString();
-                            textViewIDWarning.setText("userID.length()" );
-                            if(userID.equals(null))
-                            {
-                                Log.e("err", "try");
-                            }
-                            if(userID.length() > 6)
-                            {
-                                if(TextUtils.isDigitsOnly(userID.substring(0,1)))
-                                {
-                                    textViewIDWarning.setText("The first character cannot be digit." );
-                                }
-                                else
-                                {
-                                    textViewIDWarning.setText("You can use this ID." );
-                                    validateID = true;
-                                }
-                            }
-                            else
-                            {
-                                textViewIDWarning.setText("The lengh should be at least over 6." );
-                            }
-
+                            textViewIDWarning.setText("The first character cannot be digit." );
                         }
                         else
                         {
-                            validateID = false;
-                            textViewIDWarning.setText("This ID already exists.");
+                            textViewIDWarning.setText("" );
+                            validateID = true;
                         }
-
-                    }catch(Exception e)
-                    {
-                        Log.e("err", "err");
-                        e.printStackTrace();
                     }
-                }
-            };
+                    else
+                    {
+                        textViewIDWarning.setText(userID.length() == 0? "":"The length should be at least over 6." );
 
-            ValidateRequest validateRequest = new ValidateRequest(userID, responseListener);
-            RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
-            queue.add(validateRequest);
-            queue.start();
+                    }
 
+                    break;
+
+                case R.id.editTextPW:
+                    Log.e("test", "editTextPW");
+                    String password = editTextPW.getText().toString();
+
+                    if(password.length() ==0)
+                    {
+                        textViewPWWarning.setText("");
+                    }
+                    else
+                    {
+                        textViewPWWarning.setText(password.length() < 8 ? "The length should be at least over 8.":"");
+                    }
+                    validatePW = password.length() < 8 ? false:true;
+                    break;
+                case R.id.editTextEmail:
+                    String email = editTextEMail.getText().toString().trim();
+                    validateEmail = !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+                    if(email.length() == 0)
+                    {
+                        textViewEmailWarning.setText("");
+                    }
+                    else
+                    {
+                        textViewEmailWarning.setText(validateEmail?"":"please enter valid email address");
+                    }
+
+                    break;
+                default:
+                    break;
+            }
+            buttonCreateAccount.setEnabled(validateID && validatePW && validateEmail);
         }
     }
     @OnClick(R.id.textViewCancel)
