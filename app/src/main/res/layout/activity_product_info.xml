@@ -2,9 +2,33 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/textviewItemName"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductInfo">
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="287dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorButtonDisabled"
+        android:enabled="false"
+        android:text="Add"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:layout_constraintVertical_bias="0.125"
+        tools:text="Add" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -31,30 +55,251 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="7dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="Fridge Friend"
-                android:textColor="@color/colorMenu"
                 android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textColor="@color/colorMenu"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </android.support.constraint.ConstraintLayout>
 
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="159dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginRight="92dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="36dp"
+        android:text="Item Name"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:text="Item Name" />
+
+    <TextView
+        android:id="@+id/textviewQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:text="Quantity"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/textViewUnits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:text="Quantity" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="217dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="217dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/quantityNum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textviewQuantity"></android.support.v7.widget.AppCompatSpinner>
+
+    <TextView
+        android:id="@+id/textViewUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="134dp"
+        android:layout_marginLeft="79dp"
+        android:layout_marginRight="134dp"
+        android:layout_marginStart="79dp"
+        android:layout_marginTop="24dp"
+        android:text="Units"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerUnits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textviewQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:text="Units" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="31dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/units"
+        app:layout_constraintBottom_toTopOf="@+id/textViewExpDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerQuantity"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUnits"></android.support.v7.widget.AppCompatSpinner>
+
+    <TextView
+        android:id="@+id/textViewExpDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginRight="146dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="31dp"
+        android:text="Expiary Date "
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDay2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerQuantity"
+        tools:text="Expiary Date " />
+
+    <TextView
+        android:id="@+id/textViewYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="71dp"
+        android:text="Year"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerYear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewDay2"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerUnits"
+        tools:text="Year" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="24dp"
+        android:entries="@array/Year"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerDay"
+        app:layout_constraintTop_toBottomOf="@+id/textViewYear"></android.support.v7.widget.AppCompatSpinner>
+
+
+    <TextView
+        android:id="@+id/textViewDay2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:text="Day"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerDay"
+        app:layout_constraintEnd_toStartOf="@+id/textViewYear"
+        app:layout_constraintStart_toEndOf="@+id/textViewMonth"
+        app:layout_constraintTop_toBottomOf="@+id/textViewExpDate"
+        tools:text="Day" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="11dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:entries="@array/Day"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerYear"
+        app:layout_constraintStart_toEndOf="@+id/spinnerMonth"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDay2"></android.support.v7.widget.AppCompatSpinner>
+
+    <TextView
+        android:id="@+id/textViewMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="71dp"
+        android:text="Month"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerMonth"
+        app:layout_constraintEnd_toStartOf="@+id/textViewDay2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerQuantity"
+        tools:text="Month" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spinnerMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="17dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="17dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="24dp"
+        android:entries="@array/Month"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerDay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMonth"></android.support.v7.widget.AppCompatSpinner>
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginLeft="154dp"
+        android:layout_marginRight="153dp"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="42dp"
+        android:text="Category "
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDay"
+        tools:text="Category " />
 
 
 </android.support.constraint.ConstraintLayout>
