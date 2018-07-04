@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CategoryActivity">
+
+
+<LinearLayout
+android:id="@+id/linearLayout"
+android:layout_width="0dp"
+android:layout_height="45dp"
+android:layout_marginBottom="8dp"
+android:background="@color/colorPrimary"
+android:orientation="vertical"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintHorizontal_bias="0.0"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintVertical_bias="0.0">
+
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textViewAppDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Fridge Friend"
+        android:textColor="@color/colorMenu"
+        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
+
+
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="159dp"
+        android:layout_height="37dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginLeft="133dp"
+        android:layout_marginRight="92dp"
+        android:layout_marginStart="133dp"
+        android:layout_marginTop="36dp"
+        android:text="Item Name"
+
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        tools:text="Item Name" />
+
+    <TextView
+        android:id="@+id/textViewCloseIcon"
+        android:layout_width="44dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="85dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="34dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="18dp"
+        android:drawableRight="@drawable/ic_close_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerUnits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textViewImgHolder"
+        android:layout_width="65dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="28dp"
+        android:drawableLeft="@drawable/ic_photo_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/textviewQuantity"
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="287dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorButtonDisabled"
+        android:enabled="false"
+        android:text="Add"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:layout_constraintVertical_bias="0.125"
+        tools:text="Add" />
+
+
+
+</android.support.constraint.ConstraintLayout>
