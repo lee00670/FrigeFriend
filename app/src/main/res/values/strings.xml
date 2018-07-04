@@ -3,7 +3,7 @@
     <string name="title_activity_main">Main</string>
     <string name="title_activity_product_info">ProductInfo</string>
 
-    <!--Product Info Activity -->
+    <!--Product Info Activity & Update Product Info Activity -->
     <string-array name="quantityNum">
         <item>-</item>
         <item>1</item>
@@ -110,6 +110,7 @@
     </string-array>
 
     <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_update_product_info">UpdateProductInfoActivity</string>
 
 
 </resources>
