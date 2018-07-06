@@ -1,5 +1,6 @@
 package com.example.jlee.frigefriend;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
     private boolean validateID = false;
     private boolean validatePW = false;
     private boolean validateEmail = false;
+
     public SignupActivity() {
     }
 
@@ -92,15 +94,32 @@ public class SignupActivity extends AppCompatActivity {
                                 {
                                     JSONObject jsonResponse  = new JSONObject(response);
                                     boolean success = jsonResponse.getBoolean("success");
+                                    Log.e("test"," createIDResponseListener success : "+success);
                                     if(success)
                                     {
-                                        Toast.makeText(getApplicationContext(), "ID is created. Please log in.", Toast.LENGTH_SHORT).show();
-                                        finish();
+                                       // Toast.makeText(getApplicationContext(), "ID is created. Please log in.", Toast.LENGTH_SHORT).show();
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                                        dialog = builder.setMessage("ID is created. Please log in.")
+                                                .setPositiveButton("Ok", new DialogInterface.OnClickListener(){
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        SignupActivity.this.finish();
+                                                    }
+                                                })
+                                                .create();
+                                        dialog.show();
                                     }
                                     else
                                     {
                                         Log.e("test", "create user failed");
-                                        Toast.makeText(getApplicationContext(), "ID is not created. Please try again.", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getApplicationContext(), "ID is not created. Please try again.", Toast.LENGTH_SHORT).show();
+
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                                        dialog = builder.setMessage("ID is not created. Please try again.")
+                                                .setNegativeButton("OK", null)
+                                                .create();
+                                        dialog.show();
 
                                     }
 
@@ -142,6 +161,16 @@ public class SignupActivity extends AppCompatActivity {
         queue.start();
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(dialog != null)
+        {
+            dialog.dismiss();
+            dialog = null;
+        }
+
+    }
     @OnTextChanged(value = {R.id.editTextID, R.id.editTextEmail, R.id.editTextPW},
             callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void validateView(Editable editable) {
