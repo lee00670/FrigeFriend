@@ -16,6 +16,7 @@ import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -81,10 +82,50 @@ public class SignupActivity extends AppCompatActivity {
                     {
                        Log.e("test", "user id validated");
 
+
+
+
+                        Response.Listener<String> createIDResponseListener = new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try
+                                {
+                                    JSONObject jsonResponse  = new JSONObject(response);
+                                    boolean success = jsonResponse.getBoolean("success");
+                                    if(success)
+                                    {
+                                        Toast.makeText(getApplicationContext(), "ID is created. Please log in.", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                    else
+                                    {
+                                        Log.e("test", "create user failed");
+                                        Toast.makeText(getApplicationContext(), "ID is not created. Please try again.", Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }catch(Exception e)
+                                {
+                                    Log.e("err", "err");
+                                    e.printStackTrace();
+                                }
+                            }
+                        };
+
+                        SignupRequest signupRequest = new SignupRequest(editTextID.getText().toString(),
+                                editTextPW.getText().toString(), editTextEMail.getText().toString(), createIDResponseListener);
+                        RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
+                        queue.add(signupRequest);
+                        queue.start();
+
+
                     }
                     else
                     {
                         Log.e("test", "validity failed");
+                        textViewIDWarning.setText("ID already exists. Please enter other one.");
+
+
                     }
 
                 }catch(Exception e)
