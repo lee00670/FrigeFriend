@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +16,9 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.gson.*;
+
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.textViewSignup) TextView textViewSignup;
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.editTextID)  EditText editTextID;
     @BindView(R.id.editTextPW)  EditText editTextPW;
     @BindView(R.id.textViewWarningLogin)  TextView textViewWarningLogin;
+
+    public static final String USER_DATA = "userData";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         Intent signupIntent = new Intent(LoginActivity.this, SignupActivity.class);
         LoginActivity.this.startActivity(signupIntent);
     }
+
     @OnClick(R.id.buttonLogin)
     void callLogin()
     {
@@ -50,11 +54,24 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject jsonResponse  = new JSONObject(response);
                     boolean foundID = jsonResponse.getBoolean("id");
                     boolean foundPW = jsonResponse.getBoolean("pw");
+
+
                     textViewWarningLogin.setEnabled(true);
                     textViewWarningLogin.setText("");
                     if(foundID && foundPW)
                     {
-                        Log.e("test","success");
+                        String jsonStringUserdata = jsonResponse.getString("userdata");
+
+//                        Gson gson = new Gson();
+//                        UserData userData = gson.fromJson(jsonStringUserdata, UserData.class);
+//                        Log.e("test", "userData:"+userData.toString());
+
+                        Intent LoginActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        LoginActivityIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserdata);
+
+                        startActivity(LoginActivityIntent);
+                        finish();
+
                     }
                     else if(foundID && !foundPW)
                     {
