@@ -28,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.textViewWarningLogin)  TextView textViewWarningLogin;
 
     public static final String USER_DATA = "userData";
+    public static final String CAT_DATA = "category";
+    public static final String LC_DATA = "lc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,16 @@ public class LoginActivity extends AppCompatActivity {
                     if(foundID && foundPW)
                     {
                         String jsonStringUserdata = jsonResponse.getString("userdata");
-
+                        String jsonStringCategory = jsonResponse.getString("category");
+                        String jsonStringLC = jsonResponse.getString("large_category");
 //                        Gson gson = new Gson();
 //                        UserData userData = gson.fromJson(jsonStringUserdata, UserData.class);
 //                        Log.e("test", "userData:"+userData.toString());
 
                         Intent LoginActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
                         LoginActivityIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserdata);
+                        LoginActivityIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCategory);
+                        LoginActivityIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
 
                         startActivity(LoginActivityIntent);
                         finish();

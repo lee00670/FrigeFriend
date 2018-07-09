@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/alef</item>
+        <item>@font/arya</item>
+        <item>@font/average</item>
+        <item>@font/cardo</item>
+        <item>@font/cherry_swash</item>
+        <item>@font/coming_soon</item>
+        <item>@font/fredericka_the_great</item>
+        <item>@font/monoton</item>
+        <item>@font/oxygen_light</item>
+    </array>
+</resources>

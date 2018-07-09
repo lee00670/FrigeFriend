@@ -2,7 +2,9 @@
     <string name="app_name">Fridge Friend</string>
     <string name="title_activity_main">Main</string>
     <string name="title_activity_product_info">ProductInfo</string>
-
+    <string name="searchMenu">Search</string>
+    <string name="logoutMenu">Log Out</string>
+    <string name="cartMenu">My Cart</string>
     <!--Product Info Activity & Update Product Info Activity -->
     <string-array name="quantityNum">
         <item>-</item>
