@@ -80,7 +80,7 @@ public class FridgeItem {
                 "\"catImg\" : " + catImg + ", " +
                 "\"quantity\" : " + quantity + ", " +
                 "\"quantityUnit\" : " + quantityUnit+", " +
-                "\"expDate\" : " + expDate+ "}";
+                "\"expDate\" : " + expDate+"}";
     }
     /*
     *  String string = "20100101";
