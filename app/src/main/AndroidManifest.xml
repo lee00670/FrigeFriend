@@ -30,6 +30,11 @@
 
         <activity android:name="com.example.jlee.frigefriend.ViewCart"
             android:parentActivityName="com.example.jlee.frigefriend.MainActivity"></activity>
+
+        <activity android:name="com.example.jlee.frigefriend.ProductInfo"
+            android:parentActivityName="com.example.jlee.frigefriend.MainActivity"></activity>
+
+
     </application>
 
 </manifest>
