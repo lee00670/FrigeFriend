@@ -110,13 +110,13 @@ app:layout_constraintVertical_bias="0.0">
         android:id="@+id/buttonAdd"
         android:layout_width="287dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorButtonDisabled"
+        android:background="#6af1c9"
         android:enabled="false"
         android:text="Add"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
@@ -129,6 +129,51 @@ app:layout_constraintVertical_bias="0.0">
         app:layout_constraintVertical_bias="0.125"
         tools:text="Add" />
 
+    <ListView
+        android:id="@+id/awesome_list"
+        android:layout_width="381dp"
+        android:layout_height="366dp"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <!--<Button-->
+        <!--android:id="@+id/loadItems"-->
+        <!--android:layout_width="146dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_marginBottom="13dp"-->
+        <!--android:layout_marginEnd="119dp"-->
+        <!--android:layout_marginLeft="119dp"-->
+        <!--android:layout_marginRight="119dp"-->
+        <!--android:layout_marginStart="119dp"-->
+        <!--android:layout_marginTop="18dp"-->
+        <!--android:onClick="loadItems"-->
+        <!--android:text="Load Items "-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/text_display"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView4"-->
+        <!--tools:text="Load Items " />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/text_display"-->
+        <!--android:layout_width="341dp"-->
+        <!--android:layout_height="272dp"-->
+        <!--android:layout_marginBottom="23dp"-->
+        <!--android:layout_marginEnd="27dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="27dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="13dp"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/buttonAdd"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/loadItems" />-->
 
 
 </android.support.constraint.ConstraintLayout>
