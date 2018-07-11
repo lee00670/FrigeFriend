@@ -2,6 +2,7 @@ package com.example.jlee.frigefriend;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
@@ -128,17 +129,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             public void onClick(View view)
             {
 
-
-
-                String dtStart = "20101015";
-                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-                try {
-                    Date date1 = format.parse(dtStart);
-                    Log.e("test", "date1: "+date1.toString().substring(0, 15)); // 2010-01-02
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
                 Toast.makeText(context, "click on "+fridgeItemList.get(i).getItemName(), Toast.LENGTH_LONG).show();
             }
         });
@@ -170,10 +160,16 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             super(v);
             mCatImg = (ImageView) v.findViewById(R.id.catImg);
             mTextViewItemName = (TextView) v.findViewById(R.id.textViewItemName);
+
             mTextViewDaysLeft = (TextView) v.findViewById(R.id.textViewDaysLeft);
             mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
             mTextViewExpDate = (TextView) v.findViewById(R.id.textViewExpDate);
             mTextViewQuantity = (TextView) v.findViewById(R.id.textViewQuantity);
+            Typeface typeface = Typeface.createFromAsset(v.getContext().getAssets(), "fonts/Aller_Lt.ttf");
+            mTextViewItemName.setTypeface(typeface);
+            mTextViewDaysLeft.setTypeface(typeface);
+            mTextViewExpDate.setTypeface(typeface);
+            mTextViewQuantity.setTypeface(typeface);
         }
 
     }

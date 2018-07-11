@@ -72,7 +72,7 @@ public class ProductInfo extends Activity {
             int day = cal.get(Calendar.DAY_OF_MONTH);
 
             DatePickerDialog dialog = new DatePickerDialog(ProductInfo.this,
-                    android.R.style.TextAppearance_Theme_Dialog,
+                    android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                     mDateSetListener,
                     year, month, day);
 

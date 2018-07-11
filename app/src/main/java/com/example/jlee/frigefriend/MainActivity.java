@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     TextView sortCat;
     @BindView (R.id.recyclerView)
     RecyclerView rv;
+    @BindView( (R.id.floatingActionButton))
+    FloatingActionButton mFab;
 
     String jsonStringUserData = null;
     String jsonStringCat = null;
@@ -97,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test", "MaingActivity: LCData:" + LCData.toString());
         listFridgeItem = userData.getFrideItems();
 
-        listFridgeItem.add(new FridgeItem(2, "Coffee Milk   testteesttesttest", 17, R.drawable.milk, 1, "cup", "20170801"));
+        listFridgeItem.add(new FridgeItem(2, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801"));
         listFridgeItem.add(new FridgeItem(3, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801"));
         listFridgeItem.add(new FridgeItem(4, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801"));
         listFridgeItem.add(new FridgeItem(5, "Brown Eggs", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180803"));
@@ -287,5 +290,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         sortCat.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
-
+    @OnClick(R.id.floatingActionButton)
+    public void addItem()
+    {
+        Intent addItemIntent = new Intent(this, ProductInfo.class);
+       // addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+        //addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
+        //addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
+        startActivity(addItemIntent);
+    }
 }
