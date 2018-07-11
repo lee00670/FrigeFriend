@@ -17,7 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorButtonDisabled"
+        android:background="@color/colorWarning"
         android:enabled="false"
         android:text="Add"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
