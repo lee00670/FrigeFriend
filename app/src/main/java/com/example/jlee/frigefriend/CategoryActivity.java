@@ -50,6 +50,48 @@ public class CategoryActivity extends Activity {
         categoryList.add(new categoryItem(R.drawable.butter, "Butter"));
         categoryList.add(new categoryItem(R.drawable.eggs, "Eggs"));
 
+       categoryList.add(new categoryItem(R.drawable.pork, "Beef"));
+       categoryList.add(new categoryItem(R.drawable.chicken, "Chicken"));
+       categoryList.add(new categoryItem(R.drawable.pork, "Lamb"));
+       categoryList.add(new categoryItem(R.drawable.chicken, "Turkey"));
+       categoryList.add(new categoryItem(R.drawable.pork, "Pork"));
+       categoryList.add(new categoryItem(R.drawable.sausague, "Sausages"));
+       categoryList.add(new categoryItem(R.drawable.bacon, "Bacon"));
+       categoryList.add(new categoryItem(R.drawable.salami, "Salami"));
+       categoryList.add(new categoryItem(R.drawable.fish, "Fish"));
+       categoryList.add(new categoryItem(R.drawable.othermeat, "Other Meat"));
+
+       categoryList.add(new categoryItem(R.drawable.apple, "Apple"));
+       categoryList.add(new categoryItem(R.drawable.pineapple, "Pineapple"));
+       categoryList.add(new categoryItem(R.drawable.pear, "Pear"));
+       categoryList.add(new categoryItem(R.drawable.orange, "Oranges"));
+       categoryList.add(new categoryItem(R.drawable.lemon, "Lemon"));
+       categoryList.add(new categoryItem(R.drawable.melon,"Melon"));
+       categoryList.add(new categoryItem(R.drawable.kiwi, "Kiwi"));
+       categoryList.add(new categoryItem(R.drawable.grapes, "Grapes"));
+       categoryList.add(new categoryItem(R.drawable.strawberry, "Strawberries"));
+       categoryList.add(new categoryItem(R.drawable.berries, "Berries"));
+       categoryList.add(new categoryItem(R.drawable.avocado, "Avocado"));
+       categoryList.add(new categoryItem(R.drawable.otherfruits, "Other Fruit"));
+
+       categoryList.add(new categoryItem(R.drawable.cucummber, "Cucumber"));
+       categoryList.add(new categoryItem(R.drawable.broccoli, "Broccoli"));
+       categoryList.add(new categoryItem(R.drawable.carrots, "Carrots"));
+       categoryList.add(new categoryItem(R.drawable.pepper, "Pepper"));
+       categoryList.add(new categoryItem(R.drawable.lettuce, "Lettuce"));
+       categoryList.add(new categoryItem(R.drawable.tomato, "Tomatoes"));
+       categoryList.add(new categoryItem(R.drawable.potato, "Potatoes"));
+       categoryList.add(new categoryItem(R.drawable.mushroom, "Mushrooms"));
+       categoryList.add(new categoryItem(R.drawable.garlic, "Garlic"));
+       categoryList.add(new categoryItem(R.drawable.ginger, "Ginger"));
+       categoryList.add(new categoryItem(R.drawable.onion, "Onions"));
+       categoryList.add(new categoryItem(R.drawable.chili, "Chili"));
+       categoryList.add(new categoryItem(R.drawable.corn, "Corn"));
+       categoryList.add(new categoryItem(R.drawable.peas, "Peas"));
+       categoryList.add(new categoryItem(R.drawable.eggplant, "Eggplant"));
+       categoryList.add(new categoryItem(R.drawable.herbs, "Herbs"));
+       categoryList.add(new categoryItem(R.drawable.otherveggies, "Other Vegetables"));
+
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new categoryAdapter(categoryList);
