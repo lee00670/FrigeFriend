@@ -197,38 +197,39 @@ app:layout_constraintVertical_bias="0.0">
         <!--tools:layout_editor_absoluteY="195dp"-->
         <!--tools:text="Meat" />-->
 
-    <TextView
-        android:id="@+id/textViewDairyPro2"
-        android:layout_width="262dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="13dp"
-        android:layout_marginEnd="106dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
-        android:text="Dairy Products"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        tools:text="Dairy products" />
+    <!--<TextView-->
+        <!--android:id="@+id/textViewDairyPro2"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="26dp"-->
+        <!--android:layout_marginBottom="13dp"-->
+        <!--android:layout_marginEnd="106dp"-->
+        <!--android:layout_marginStart="16dp"-->
+        <!--android:layout_marginTop="18dp"-->
+        <!--android:text="Dairy Products"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--app:layout_constraintBottom_toTopOf="@+id/recyclerView"-->
+        <!--app:layout_constraintEnd_toEndOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/textView4"-->
+        <!--tools:text="Dairy products" />-->
 
     <view
         android:id="@+id/recyclerView"
         class="android.support.v7.widget.RecyclerView"
         android:layout_width="383dp"
         android:layout_height="404dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="17dp"
         android:background="@android:color/darker_gray"
         android:padding="4dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDairyPro2">
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
 
     </view>
 
