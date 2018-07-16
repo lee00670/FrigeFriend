@@ -32,6 +32,10 @@ public class ProductInfo extends Activity {
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
+    String jsonStringUserData;
+    String jsonStringCat;
+    String jsonStringLC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,12 @@ public class ProductInfo extends Activity {
 
         quantitySpinner.setAdapter(quantityAdapter);
 
+        Intent intent = getIntent();
+        jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
+        jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
+        jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
+
+
 //      When Category is clicked directs to CategoryActivity
         TextView CategoryTextView = (TextView) findViewById(R.id.textViewCategory);
         CategoryTextView.setOnClickListener(new View.OnClickListener(){
@@ -54,9 +64,14 @@ public class ProductInfo extends Activity {
             @Override
             public void onClick(View view) {
                 Intent CategoryIntent = new Intent(ProductInfo.this, CategoryActivity.class);
+                CategoryIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+                CategoryIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
+                CategoryIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
                 ProductInfo.this.startActivity(CategoryIntent);
+
             }
         });
+
 
         // Date picker
 
@@ -93,6 +108,16 @@ public class ProductInfo extends Activity {
                 mDisplayDate.setText(date);
             }
         };
+
+
+//        View btn = findViewById(R.id.Button_fab);
+//
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(ProductInfo.this, MainActivity.class));
+//            }
+//        });
 
     }
 
