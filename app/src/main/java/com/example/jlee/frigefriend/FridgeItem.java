@@ -8,8 +8,9 @@ public class FridgeItem {
     private  int quantity;
     private String quantityUnit;
     private String expDate;
+    private int checked;
 
-    public FridgeItem(int itemID, String itemName, int catID, int catImg, int quantity, String quantityUnit, String expDate) {
+    public FridgeItem(int itemID, String itemName, int catID, int catImg, int quantity, String quantityUnit, String expDate, int checked) {
         this.itemID = itemID;
         this.itemName = itemName;
         this.catID = catID;
@@ -17,6 +18,15 @@ public class FridgeItem {
         this.quantity = quantity;
         this.quantityUnit = quantityUnit;
         this.expDate = expDate;
+        this.checked = checked;
+    }
+
+    public int getChecked() {
+        return checked;
+    }
+
+    public void setChecked(int checked) {
+        this.checked = checked;
     }
 
     public int getCatImg() {
@@ -80,7 +90,8 @@ public class FridgeItem {
                 "\"catImg\" : " + catImg + ", " +
                 "\"quantity\" : " + quantity + ", " +
                 "\"quantityUnit\" : " + quantityUnit+", " +
-                "\"expDate\" : " + expDate+"}";
+                "\"expDate\" : " + expDate+", " +
+                "\"checked\" : " + checked+"}";
     }
     /*
     *  String string = "20100101";

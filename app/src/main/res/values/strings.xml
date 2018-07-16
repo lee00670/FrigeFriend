@@ -7,7 +7,7 @@
     <string name="cartMenu">My Cart</string>
     <!--Product Info Activity & Update Product Info Activity -->
     <string-array name="quantityNum">
-        <item>-</item>
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -41,7 +41,7 @@
     </string-array>
 
     <string-array name="units">
-        <item>---</item>
+        <item>unit</item>
         <item>Package(s)</item>
         <item>Bag(s)</item>
         <item>Bundle(s)</item>

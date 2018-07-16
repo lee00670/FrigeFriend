@@ -1,14 +1,18 @@
 package com.example.jlee.frigefriend;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -17,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +32,7 @@ import android.app.SearchManager;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.loopeer.itemtouchhelperextension.ItemTouchHelperExtension;
 
 import org.w3c.dom.Text;
 
@@ -36,12 +42,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 
@@ -58,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     RecyclerView rv;
     @BindView( (R.id.floatingActionButton))
     FloatingActionButton mFab;
+    @BindView( (R.id.fabAddToCart))
+    FloatingActionButton mFabAddToCart;
+    @BindView( (R.id.fabDelete))
+    FloatingActionButton mFabDelete;
+
+
 
     String jsonStringUserData = null;
     String jsonStringCat = null;
@@ -65,11 +79,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     UserData userData;
     List<CategoryData> CategoryData;
     List<LCData> LCData;
+    CheckBox mCheckBox;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
+    List<FridgeItem> selectedlistFridgeItem;
     MainActivityAdapter adapter;
     SearchView searchView;
 
+    public ItemTouchHelperExtension.Callback mCallback;
+    public ItemTouchHelperExtension mItemTouchHelper;
+    final static public String ServerURL="http://192.168.0.132/";
+
+    private List<FridgeItem> currentSelectedItems = new ArrayList<>();
+
+    private List<CartItem> myCartList = new ArrayList<>();
 
     private static final int SORT_BY_DATE = 0;
     private static final int SORT_BY_NAME = 1;
@@ -99,21 +122,53 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test", "MaingActivity: CategoryData:" + CategoryData.toString());
         Log.e("test", "MaingActivity: LCData:" + LCData.toString());
         listFridgeItem = userData.getFrideItems();
+        mCheckBox = findViewById(R.id.checkboxRV);
 
-        listFridgeItem.add(new FridgeItem(2, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801"));
-        listFridgeItem.add(new FridgeItem(3, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801"));
-        listFridgeItem.add(new FridgeItem(4, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801"));
-        listFridgeItem.add(new FridgeItem(5, "Brown Eggs", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180803"));
-        listFridgeItem.add(new FridgeItem(5, "Brown Eggs1", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180715"));
-        listFridgeItem.add(new FridgeItem(5, "Brown Eggs2", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180714"));
-        listFridgeItem.add(new FridgeItem(5, "White Egg", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180716"));
 
+        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
+        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
+        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801",0));
+        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180803",0));
+        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180715",0));
+        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180714",0));
+        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180716",0));
 
         initializeViews();
 
-
-
+        MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
     }
+
+    MainActivityAdapter.OnItemCheckListener onItemCheckListener = new MainActivityAdapter.OnItemCheckListener() {
+        @Override
+        public void onItemCheck(FridgeItem item) {
+            currentSelectedItems.add(item);
+
+            if(currentSelectedItems.size()==1)
+            {
+                mFab.setVisibility(View.INVISIBLE);
+                mFabAddToCart.setVisibility(View.VISIBLE);
+                mFabDelete.setVisibility(View.VISIBLE);
+            }
+
+            Log.e("test","currentSelectedItems.add ");
+            Log.e("test","currentSelectedItems.size:  "+currentSelectedItems.size());
+        }
+
+        @Override
+        public void onItemUncheck(FridgeItem item) {
+            currentSelectedItems.remove(item);
+            Log.e("test","currentSelectedItems.remove");
+
+            if(currentSelectedItems.size()==0)
+            {
+                mFab.setVisibility(View.VISIBLE);
+                mFabAddToCart.setVisibility(View.INVISIBLE);
+                mFabDelete.setVisibility(View.INVISIBLE);
+
+            }
+        }
+    };
+
     private void initializeViews()
     {
         rv.setHasFixedSize(true);
@@ -123,10 +178,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         rv.setLayoutManager(linearlayoutmanager);
 
         //set adapter
-        adapter = new MainActivityAdapter(listFridgeItem, CategoryData, MainActivity.this );
+        adapter = new MainActivityAdapter(listFridgeItem, CategoryData, MainActivity.this , onItemCheckListener);
+
         rv.setAdapter(adapter);
+        rv.addItemDecoration(new DividerItemDecoration(this));
 
         sortData(SORT_BY_DATE);
+
+        mCallback = new ItemTouchHelperCallback();
+        mItemTouchHelper = new ItemTouchHelperExtension(mCallback);
+        mItemTouchHelper.attachToRecyclerView(rv);
+        adapter.setItemTouchHelperExtension(mItemTouchHelper);
+
 
 
     }
@@ -182,13 +245,33 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //        }
 //    }
 
+    public void GoToMyCart()
+    {
+        Intent viewCartIntent = new Intent(this, ViewCart.class);
+        Gson gson = new Gson();
+        String jsonCartList = gson.toJson(myCartList);
+        viewCartIntent.putExtra(LoginActivity.CART_DATA, jsonCartList);
+
+        viewCartIntent.putExtra(LoginActivity.USER_EMAIL, userData.getUserEmail());
+        startActivityForResult(viewCartIntent, 1);
+        //startActivity(viewCartIntent);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+                String jsonStringCartData = data.getStringExtra(LoginActivity.CART_DATA);
+                Gson gson = new Gson();
+                myCartList = gson.fromJson(jsonStringCartData,new TypeToken<List<CartItem>>() {}.getType());
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cartMenu:
-                Intent viewCartIntent = new Intent(this, ViewCart.class);
-                viewCartIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
-                startActivity(viewCartIntent);
+                GoToMyCart();
                 break;
 
             case R.id.logoutMenu:
@@ -249,10 +332,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             default:
         }
         //adapter
-        adapter = new MainActivityAdapter(listFridgeItem, CategoryData, MainActivity.this);
+        adapter = new MainActivityAdapter(listFridgeItem, CategoryData, MainActivity.this, onItemCheckListener);
         rv.setAdapter(adapter);
     }
-
 
     @OnClick(R.id.sortDate)
     void sortByDate() {
@@ -299,4 +381,85 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         //addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
         startActivity(addItemIntent);
     }
+    @OnClick(R.id.fabDelete)
+    public void deleteList()
+    {
+        mFab.setVisibility(View.VISIBLE);
+        mFabAddToCart.setVisibility(View.INVISIBLE);
+        mFabDelete.setVisibility(View.INVISIBLE);
+
+        for(FridgeItem item: currentSelectedItems)
+        {
+            int index = listFridgeItem.indexOf(item);
+            adapter.doDelete(index);
+        }
+
+        Iterator<FridgeItem> iter = currentSelectedItems.iterator();
+        while (iter.hasNext())
+        {
+            FridgeItem item = iter.next();
+            iter.remove();
+        }
+
+        Log.e("test","deleteList:"+  this.currentSelectedItems.size());
+    }
+    @OnClick(R.id.fabAddToCart)
+    public void addToCart()
+    {
+        mFab.setVisibility(View.VISIBLE);
+        mFabAddToCart.setVisibility(View.INVISIBLE);
+        mFabDelete.setVisibility(View.INVISIBLE);
+        Log.e("test","fabAddToCart:"+ this.currentSelectedItems.size());
+        for(FridgeItem item: currentSelectedItems)
+        {
+            int index = listFridgeItem.indexOf(item);
+            adapter.doUncheck(index);
+            Boolean found = false;
+            for(CartItem cartItem: myCartList)
+            {
+                if(cartItem.getItemID() == item.getItemID())
+                {
+                    cartItem.setQuantity(cartItem.getQuantity() + 1);
+                    found = true;
+                    break;
+                }
+            }
+            if(!found)
+            {
+                CartItem cartItem = new CartItem(item.getItemID(), item.getItemName(),item.getCatID(),item.getCatImg(), 1, item.getQuantityUnit());
+                myCartList.add(cartItem);
+            }
+
+        }
+
+        Iterator<FridgeItem> iter = currentSelectedItems.iterator();
+        while (iter.hasNext())
+        {
+            FridgeItem item = iter.next();
+            iter.remove();
+        }
+
+        new AlertDialog.Builder(new ContextThemeWrapper(MainActivity.this,R.style.AlertDialogCustom))
+                .setMessage("Do you want to go to your cart?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //MyActivity.this.finish();
+                        GoToMyCart();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //dialog.cancel();
+                    }
+                })
+                .create()
+                .show();
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+
+
+    }
+
 }
