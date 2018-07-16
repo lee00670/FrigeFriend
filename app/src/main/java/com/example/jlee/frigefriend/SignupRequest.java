@@ -10,7 +10,8 @@ import java.util.Map;
 
 public class SignupRequest extends StringRequest {
 
-    final static private String URL="http://192.168.0.132/UserSignup.php";
+    //final static private String URL="http://192.168.0.132/UserSignup.php";
+    final static private String URL=MainActivity.ServerURL + "UserSignup.php";
     private Map<String, String> parameters;
 
     public SignupRequest(String userID, String userPassword, String userEmail, Response.Listener<String> listener){

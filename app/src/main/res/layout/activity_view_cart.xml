@@ -5,10 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ViewCart">
-    <include
-        layout="@layout/app_bar"
-        android:id="@+id/app_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"></include>
 
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewCart"
+        android:layout_width="match_parent"
+        android:layout_height="495dp"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar"
+        tools:layout_editor_absoluteX="2dp" />
+
+    <Button
+        android:id="@+id/buttonMail"
+        android:layout_width="149dp"
+        android:layout_height="53dp"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+        android:padding="10dp"
+        android:shadowRadius="5"
+        android:text="Send Email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCart"
+        app:layout_constraintVertical_bias="1.0" />
 </android.support.constraint.ConstraintLayout>

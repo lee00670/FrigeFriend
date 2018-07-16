@@ -10,7 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginRequest extends StringRequest {
-    final static private String URL="http://192.168.0.132/UserLogin.php";
+    //final static private String URL="http://192.168.0.132/UserLogin.php";
+    final static private String URL= MainActivity.ServerURL + "UserLogin.php";
+
+
     private Map<String, String> parameters;
 
     public LoginRequest(String userID, String userPassword, Response.Listener<String> listener){

@@ -68,8 +68,8 @@ public class CartItem {
                 "\"itemName\" : " + itemName + ", " +
                 "\"catID\" : " + catID + ", " +
                 "\"catImg\" : " + catImg + ", " +
-                "\"quantity\" : " + quantity +
-                ", \"quantityUnit\" : " + quantityUnit +
+                "\"quantity\" : " + quantity+ ", " +
+                ", \"quantityUnit\" : " + quantityUnit+
                 "}";
     }
 }
