@@ -7,29 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".ProductInfo">
 
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="287dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/colorWarning"
-        android:enabled="false"
-        android:text="Add"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.382"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.125"
-        tools:text="Add" />
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -119,10 +96,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="47dp"
         android:layout_marginEnd="74dp"
-        android:layout_marginLeft="49dp"
-        android:layout_marginRight="74dp"
         android:layout_marginStart="49dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:entries="@array/quantityNum"
         app:layout_constraintBottom_toTopOf="@+id/textViewCategory"
         app:layout_constraintEnd_toStartOf="@+id/spinnerUnits"
@@ -133,11 +108,10 @@
         android:id="@+id/textViewUnits"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="32dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:text="Units"
         android:textColor="@color/colorMenu"
         android:textSize="18sp"
@@ -151,14 +125,10 @@
         android:id="@+id/spinnerUnits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="163dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="32dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="36dp"
         android:entries="@array/units"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/spinnerQuantity"
         app:layout_constraintTop_toBottomOf="@+id/textViewUnits"></android.support.v7.widget.AppCompatSpinner>
@@ -183,123 +153,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewImgHolder"
         tools:text="Expiary Date " />
 
-    <!--<TextView-->
-        <!--android:id="@+id/textViewYear"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:layout_marginEnd="1dp"-->
-        <!--android:layout_marginLeft="1dp"-->
-        <!--android:layout_marginRight="1dp"-->
-        <!--android:layout_marginStart="1dp"-->
-        <!--android:layout_marginTop="71dp"-->
-        <!--android:text="Year"-->
-        <!--android:textColor="@color/colorMenu"-->
-        <!--android:textSize="18sp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/spinnerYear"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/textViewDay2"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/spinnerUnits"-->
-        <!--tools:text="Year" />-->
 
-    <!--<android.support.v7.widget.AppCompatSpinner-->
-        <!--android:id="@+id/spinnerYear"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="16dp"-->
-        <!--android:layout_marginLeft="13dp"-->
-        <!--android:layout_marginRight="16dp"-->
-        <!--android:layout_marginStart="13dp"-->
-        <!--android:layout_marginTop="24dp"-->
-        <!--android:entries="@array/Year"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/spinnerDay"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textViewYear"></android.support.v7.widget.AppCompatSpinner>-->
-
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewDay2"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:layout_marginLeft="1dp"-->
-        <!--android:layout_marginStart="1dp"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:text="Day"-->
-        <!--android:textColor="@color/colorMenu"-->
-        <!--android:textSize="18sp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/spinnerDay"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/textViewYear"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/textViewMonth"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textViewExpDate"-->
-        <!--tools:text="Day" />-->
-
-    <!--<android.support.v7.widget.AppCompatSpinner-->
-        <!--android:id="@+id/spinnerDay"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="11dp"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="11dp"-->
-        <!--android:layout_marginStart="10dp"-->
-        <!--android:layout_marginTop="25dp"-->
-        <!--android:entries="@array/Day"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/spinnerYear"-->
-        <!--app:layout_constraintStart_toEndOf="@+id/spinnerMonth"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textViewDay2"></android.support.v7.widget.AppCompatSpinner>-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewMonth"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="24dp"-->
-        <!--android:layout_marginEnd="1dp"-->
-        <!--android:layout_marginLeft="1dp"-->
-        <!--android:layout_marginRight="1dp"-->
-        <!--android:layout_marginStart="1dp"-->
-        <!--android:layout_marginTop="71dp"-->
-        <!--android:text="Month"-->
-        <!--android:textColor="@color/colorMenu"-->
-        <!--android:textSize="18sp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/spinnerMonth"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/textViewDay2"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/spinnerQuantity"-->
-        <!--tools:text="Month" />-->
-
-    <!--<android.support.v7.widget.AppCompatSpinner-->
-        <!--android:id="@+id/spinnerMonth"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginEnd="17dp"-->
-        <!--android:layout_marginLeft="29dp"-->
-        <!--android:layout_marginRight="17dp"-->
-        <!--android:layout_marginStart="29dp"-->
-        <!--android:layout_marginTop="24dp"-->
-        <!--android:entries="@array/Month"-->
-        <!--app:layout_constraintEnd_toStartOf="@+id/spinnerDay"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textViewMonth"></android.support.v7.widget.AppCompatSpinner>-->
 
     <TextView
         android:id="@+id/textViewCategory"
         android:layout_width="78dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="88dp"
-        android:layout_marginEnd="288dp"
-        android:layout_marginLeft="19dp"
-        android:layout_marginRight="288dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="41dp"
+        android:layout_marginBottom="131dp"
+        android:layout_marginEnd="274dp"
+        android:layout_marginStart="32dp"
+
         android:text="Category "
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerMonth"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerQuantity"
         tools:text="Category " />
 
     <TextView
@@ -344,16 +215,32 @@
         android:layout_height="28dp"
         android:layout_marginBottom="45dp"
         android:layout_marginEnd="92dp"
-        android:layout_marginLeft="127dp"
-        android:layout_marginRight="92dp"
         android:layout_marginStart="127dp"
         android:layout_marginTop="55dp"
         android:text="Display Date"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewUnits"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/Button_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="368dp"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="true"
+        android:src="@drawable/baseline_add_white_small_18dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCloseIcon" />
 
 
 </android.support.constraint.ConstraintLayout>
