@@ -106,74 +106,134 @@ app:layout_constraintVertical_bias="0.0">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <Button
-        android:id="@+id/buttonAdd"
-        android:layout_width="287dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/Button_fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:background="#6af1c9"
-        android:enabled="false"
-        android:text="Add"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:visibility="visible"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="368dp"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="true"
+        android:src="@drawable/baseline_add_white_small_18dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
-        app:layout_constraintVertical_bias="0.125"
-        tools:text="Add" />
-
-    <ListView
-        android:id="@+id/awesome_list"
-        android:layout_width="381dp"
-        android:layout_height="366dp"
-        android:layout_marginBottom="11dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAdd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <!--<Button-->
-        <!--android:id="@+id/loadItems"-->
-        <!--android:layout_width="146dp"-->
-        <!--android:layout_height="35dp"-->
-        <!--android:layout_marginBottom="13dp"-->
-        <!--android:layout_marginEnd="119dp"-->
-        <!--android:layout_marginLeft="119dp"-->
-        <!--android:layout_marginRight="119dp"-->
-        <!--android:layout_marginStart="119dp"-->
-        <!--android:layout_marginTop="18dp"-->
-        <!--android:onClick="loadItems"-->
-        <!--android:text="Load Items "-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/text_display"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textView4"-->
-        <!--tools:text="Load Items " />-->
+        app:layout_constraintTop_toBottomOf="@+id/textViewCloseIcon"
+        app:layout_constraintVertical_bias="0.0" />
 
     <!--<TextView-->
-        <!--android:id="@+id/text_display"-->
-        <!--android:layout_width="341dp"-->
-        <!--android:layout_height="272dp"-->
-        <!--android:layout_marginBottom="23dp"-->
-        <!--android:layout_marginEnd="27dp"-->
-        <!--android:layout_marginLeft="16dp"-->
-        <!--android:layout_marginRight="27dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="13dp"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/buttonAdd"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/loadItems" />-->
+        <!--android:id="@+id/textViewVeggies"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:text="Vegetables"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="292dp"-->
+        <!--tools:text="Vegetables" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewOtherFood"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:text="Other Food"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="436dp"-->
+        <!--tools:text="Other Food" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewBakeryPro"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:text="Bakery Products"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="389dp"-->
+        <!--tools:text="Bakery Products" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewBeverages"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:text="Beverages"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="339dp"-->
+        <!--tools:text="Beverages" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewFruits2"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="23dp"-->
+        <!--android:text="Fruits"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="246dp"-->
+        <!--tools:text="Fruits" />-->
+
+    <!--<TextView-->
+        <!--android:id="@+id/textViewMeat2"-->
+        <!--android:layout_width="262dp"-->
+        <!--android:layout_height="26dp"-->
+        <!--android:text="Meat"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="14sp"-->
+        <!--android:textStyle="bold"-->
+        <!--tools:layout_editor_absoluteX="16dp"-->
+        <!--tools:layout_editor_absoluteY="195dp"-->
+        <!--tools:text="Meat" />-->
+
+    <TextView
+        android:id="@+id/textViewDairyPro2"
+        android:layout_width="262dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginEnd="106dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:text="Dairy Products"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        tools:text="Dairy products" />
+
+    <view
+        android:id="@+id/recyclerView"
+        class="android.support.v7.widget.RecyclerView"
+        android:layout_width="383dp"
+        android:layout_height="404dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@android:color/darker_gray"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDairyPro2">
+
+    </view>
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>
