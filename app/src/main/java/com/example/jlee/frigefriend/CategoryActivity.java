@@ -10,13 +10,16 @@ import java.util.Collections;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -26,7 +29,8 @@ import butterknife.OnClick;
 public class CategoryActivity extends Activity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    //private RecyclerView.Adapter mAdapter;
+    private categoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
 
@@ -43,7 +47,9 @@ public class CategoryActivity extends Activity {
         jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
 
-        ArrayList<categoryItem> categoryList = new ArrayList<>();
+//        findViewById(R.id.headerDairy);
+
+        final ArrayList<categoryItem> categoryList = new ArrayList<>();
         categoryList.add(new categoryItem(R.drawable.milk, "Milk"));
         categoryList.add(new categoryItem(R.drawable.yogurt, "Yogurt"));
         categoryList.add(new categoryItem(R.drawable.cheese, "Cheese"));
@@ -100,6 +106,19 @@ public class CategoryActivity extends Activity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+
+
+        mAdapter.setOnItemClickListener(new categoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                categoryList.get(position).changetext1("Clicked");
+                categoryList.get(position).displayCheck(R.drawable.ic_check_black_24dp);
+                mAdapter.notifyItemChanged(position);
+            }
+        });
+
+
+
         TextView btn = findViewById(R.id.textViewCloseIcon);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +152,10 @@ public class CategoryActivity extends Activity {
 //        startActivity(addItemIntent);
 //    }
 
+
+
    }
+
 
 
 
