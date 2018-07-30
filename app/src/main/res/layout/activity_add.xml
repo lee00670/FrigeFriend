@@ -32,12 +32,12 @@
                 android:gravity="center_horizontal">
 
                 <TextView
-                    android:id="@+id/sortName"
+                    android:id="@+id/sortAlpha"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/sort_option_color"
                     android:gravity="center_horizontal"
-                    android:text="Name" />
+                    android:text="Alpha." />
             </LinearLayout>
 
             <LinearLayout
@@ -76,7 +76,28 @@
         </view>
 
 
+
+
     </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/Button_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="368dp"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="true"
+        android:src="@drawable/baseline_add_white_small_18dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCloseIcon"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 
