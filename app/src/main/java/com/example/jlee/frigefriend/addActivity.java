@@ -1,25 +1,36 @@
 package com.example.jlee.frigefriend;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import android.content.Intent;
+import android.view.View;
+import android.widget.TextView;
+
 
 public class addActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    //private addAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    //private ArrayList<addItem> maddList;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+
 
         ArrayList<addItem> addList = new ArrayList<>();
 
@@ -99,9 +110,40 @@ public class addActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
 
+        View btnAdd = findViewById(R.id.Button_fab);
 
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(addActivity.this, ProductInfo.class));
+            }
+        });
+
+        // sort List Alphabetically
+//        TextView sortAlpha = findViewById(R.id.sortAlpha);
+//        sortAlpha.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                sortArrayList();
+//            }
+//        });
 
 
     } // END of  protected void onCreate(Bundle savedInstanceState)
+
+
+    // Sort List Alphabetically
+//    private void sortArrayList(){
+//        Collections.sort(maddList, new Comparator<addItem>() {
+//            @Override
+//            public int compare(addItem addItem, addItem t1) {
+//                return 01.getText1().compareTo(02.getText1());
+//            }
+//        });
+//
+//        mAdapter.notifyDataSetChanged();
+//
+//    }
+
 
 } // END of public class addActivity extends AppCompatActivity
