@@ -1,5 +1,6 @@
 package com.example.jlee.frigefriend;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -129,9 +130,21 @@ public class addActivity extends AppCompatActivity {
 //        });
 
 
+
+
     } // END of  protected void onCreate(Bundle savedInstanceState)
 
-
+//    @Override
+//    public void onItemClick(View view, int position) {
+//        Context context=view.getContext();
+//        Intent intent=new Intent();
+//        switch (position){
+//            case 0:
+//                intent =  new Intent(context, ProductInfo.class);
+//                context.startActivity(intent);
+//                break;
+//        }
+//    }
     // Sort List Alphabetically
 //    private void sortArrayList(){
 //        Collections.sort(maddList, new Comparator<addItem>() {
@@ -144,6 +157,9 @@ public class addActivity extends AppCompatActivity {
 //        mAdapter.notifyDataSetChanged();
 //
 //    }
+
+
+
 
 
 } // END of public class addActivity extends AppCompatActivity

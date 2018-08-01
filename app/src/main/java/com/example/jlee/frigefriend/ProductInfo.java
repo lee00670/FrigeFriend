@@ -77,6 +77,7 @@ public class ProductInfo extends Activity {
 
         mDisplayDate = findViewById(R.id.textViewDisplayDate);
 
+
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
         @Override
             public void onClick (View view) {

@@ -54,5 +54,7 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
     public int getItemCount() {
         return maddList.size();
     }
+
+
 } // END OF public class addAdapter e
 

@@ -113,6 +113,8 @@
 
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_update_product_info">UpdateProductInfoActivity</string>
+    <string name="title_activity_update_info">updateInfoActivity</string>
+    <string name="title_activity_add">addActivity</string>
 
 
 </resources>

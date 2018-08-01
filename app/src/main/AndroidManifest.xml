@@ -14,27 +14,40 @@
 
         <!-- android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"> -->
 
-        <activity android:name="com.example.jlee.frigefriend.LoginActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.jlee.frigefriend.SignupActivity" />
-        <activity android:name="com.example.jlee.frigefriend.MainActivity" />
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name="com.example.jlee.frigefriend.ViewCart"
-            android:parentActivityName="com.example.jlee.frigefriend.MainActivity"></activity>
+        <activity
+            android:name=".ViewCart"
+            android:parentActivityName=".MainActivity" />
+        <!--<activity-->
+            <!--android:name=".ProductInfo"-->
+            <!--android:parentActivityName=".MainActivity" />-->
+        <activity
+            android:name=".addActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ProductInfo"
+            android:parentActivityName=".addActivity" />
+        <activity
+            android:name=".CategoryActivity"
+            android:parentActivityName=".ProductInfo" />
 
-        <activity android:name="com.example.jlee.frigefriend.ProductInfo"
-            android:parentActivityName="com.example.jlee.frigefriend.MainActivity"></activity>
-
-
+        <!--<activity-->
+            <!--android:name=".addActivity"-->
+            <!--android:label="@string/title_activity_add"-->
+            <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
     </application>
 
 </manifest>
