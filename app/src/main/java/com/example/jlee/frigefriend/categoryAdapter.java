@@ -27,7 +27,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
     public static class CategoryViewHolder extends RecyclerView.ViewHolder{
         public ImageView mImageView;
         public TextView mTextView1;
-//        public ImageView mImageCheck;
+        public ImageView mImageCheck;
 
 
         public CategoryViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
@@ -35,7 +35,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
 
             mImageView = itemView.findViewById(R.id.imageview1);
             mTextView1 = itemView.findViewById(R.id.textView1);
-//            mImageCheck = itemView.findViewById(R.id.imageViewCheckMark);
+            mImageCheck = itemView.findViewById(R.id.imageViewCheckMark);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +71,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
 
         categoryViewHolder.mImageView.setImageResource(currentItem.getmImageResource());
         categoryViewHolder.mTextView1.setText(currentItem.getmText1());
-
-
+        categoryViewHolder.mImageCheck.setImageResource(currentItem.getCheckImageResource());
     }
 
     @Override

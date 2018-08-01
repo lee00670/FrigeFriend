@@ -1,3 +1,7 @@
+/*
+* * Signup Activity
+*
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.DialogInterface;
@@ -34,8 +38,6 @@ import butterknife.OnFocusChange;
 import butterknife.OnTextChanged;
 
 public class SignupActivity extends AppCompatActivity {
-
-
     private String userPassword;
     private String userEmail;
     private AlertDialog dialog;
@@ -66,8 +68,6 @@ public class SignupActivity extends AppCompatActivity {
         textViewIDWarning.setEnabled(true);
         textViewEmailWarning.setEnabled(true);
 
-
-
     }
 
     @OnClick (R.id.buttonCreateAccount)
@@ -84,9 +84,6 @@ public class SignupActivity extends AppCompatActivity {
                     {
                        Log.e("test", "user id validated");
 
-
-
-
                         Response.Listener<String> createIDResponseListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -98,7 +95,6 @@ public class SignupActivity extends AppCompatActivity {
                                     if(success)
                                     {
                                        // Toast.makeText(getApplicationContext(), "ID is created. Please log in.", Toast.LENGTH_SHORT).show();
-
                                         AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
                                         dialog = builder.setMessage("ID is created. Please log in.")
                                                 .setPositiveButton("Ok", new DialogInterface.OnClickListener(){

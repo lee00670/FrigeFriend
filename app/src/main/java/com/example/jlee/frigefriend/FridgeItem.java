@@ -1,3 +1,8 @@
+/*
+* FridgeItem Class
+*  The fridge item information shows id, name, category id, category image, quantity, quantity unit, expiration date, flag for check box.
+*
+* */
 package com.example.jlee.frigefriend;
 
 public class FridgeItem {
@@ -93,11 +98,5 @@ public class FridgeItem {
                 "\"expDate\" : " + expDate+", " +
                 "\"checked\" : " + checked+"}";
     }
-    /*
-    *  String string = "20100101";
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd", Locale.ENGLISH);
-                    LocalDate date = LocalDate.parse(string, formatter);
-                    Log.e("test", "date: "+date); // 2010-01-02
-    *
-    * */
+
 }

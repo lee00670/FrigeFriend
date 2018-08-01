@@ -1,3 +1,9 @@
+/*
+* CartItem
+*  Item information in cart list
+*  This shows id, name, category id, category image, quantity, quantity unit.
+* */
+
 package com.example.jlee.frigefriend;
 
 public class CartItem {
@@ -7,7 +13,7 @@ public class CartItem {
     private int catImg;
     private  int quantity;
     private String quantityUnit;
-
+//constructor
     public CartItem(int itemID, String itemName, int catID, int catImg, int quantity, String quantityUnit) {
         this.itemID = itemID;
         this.itemName = itemName;
@@ -16,7 +22,7 @@ public class CartItem {
         this.quantity = quantity;
         this.quantityUnit = quantityUnit;
     }
-
+//getter and setter
     public int getCatImg() {
         return catImg;
     }
@@ -62,6 +68,7 @@ public class CartItem {
     public String getQuantityUnit(){
         return quantityUnit;
     }
+
     @Override
     public String toString() {
         return "{\"itemID\" : " + itemID + ", " +

@@ -10,6 +10,7 @@ import java.util.Collections;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.view.View;
@@ -38,6 +39,8 @@ public class CategoryActivity extends Activity {
     String jsonStringCat;
     String jsonStringLC;
 
+    int positionUserClicked = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,82 +52,82 @@ public class CategoryActivity extends Activity {
 
 
         final ArrayList<categoryItem> categoryList = new ArrayList<>();
+//
+//        categoryList.add(new categoryItem(R.drawable.dairy, "Dairy Products"));
+//        categoryList.add(new categoryItem(R.drawable.otherfruits, "Fruits"));
+//        categoryList.add(new categoryItem(R.drawable.otherveggies, "Vegetables"));
+//        categoryList.add(new categoryItem(R.drawable.othermeat, "Meat Products"));
+//        categoryList.add(new categoryItem(R.drawable.otherbakery, "Bakery & Sweets"));
+//        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Beverages"));
+//        categoryList.add(new categoryItem(R.drawable.otherfood, "Other"));
 
-        categoryList.add(new categoryItem(R.drawable.dairy, "Dairy Products"));
-        categoryList.add(new categoryItem(R.drawable.otherfruits, "Fruits"));
-        categoryList.add(new categoryItem(R.drawable.otherveggies, "Vegetables"));
-        categoryList.add(new categoryItem(R.drawable.othermeat, "Meat Products"));
-        categoryList.add(new categoryItem(R.drawable.otherbakery, "Bakery & Sweets"));
-        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Beverages"));
-        categoryList.add(new categoryItem(R.drawable.otherfood, "Other"));
 
-//        categoryList.add(new categoryItem(R.drawable.milk, "Milk"));
-//        categoryList.add(new categoryItem(R.drawable.yogurt, "Yogurt"));
-//        categoryList.add(new categoryItem(R.drawable.cheese, "Cheese"));
-//        categoryList.add(new categoryItem(R.drawable.butter, "Butter"));
-//        categoryList.add(new categoryItem(R.drawable.eggs, "Eggs"));
-//
-//       categoryList.add(new categoryItem(R.drawable.pork, "Beef"));
-//       categoryList.add(new categoryItem(R.drawable.chicken, "Chicken"));
-//       categoryList.add(new categoryItem(R.drawable.pork, "Lamb"));
-//       categoryList.add(new categoryItem(R.drawable.chicken, "Turkey"));
-//       categoryList.add(new categoryItem(R.drawable.pork, "Pork"));
-//       categoryList.add(new categoryItem(R.drawable.sausague, "Sausages"));
-//       categoryList.add(new categoryItem(R.drawable.bacon, "Bacon"));
-//       categoryList.add(new categoryItem(R.drawable.salami, "Salami"));
-//       categoryList.add(new categoryItem(R.drawable.fish, "Fish"));
-//       categoryList.add(new categoryItem(R.drawable.othermeat, "Other Meat"));
-//
-//       categoryList.add(new categoryItem(R.drawable.apple, "Apple"));
-//       categoryList.add(new categoryItem(R.drawable.pineapple, "Pineapple"));
-//       categoryList.add(new categoryItem(R.drawable.pear, "Pear"));
-//       categoryList.add(new categoryItem(R.drawable.orange, "Oranges"));
-//       categoryList.add(new categoryItem(R.drawable.lemon, "Lemon"));
-//       categoryList.add(new categoryItem(R.drawable.melon,"Melon"));
-//       categoryList.add(new categoryItem(R.drawable.kiwi, "Kiwi"));
-//       categoryList.add(new categoryItem(R.drawable.grapes, "Grapes"));
-//       categoryList.add(new categoryItem(R.drawable.strawberry, "Strawberries"));
-//       categoryList.add(new categoryItem(R.drawable.berries, "Berries"));
-//       categoryList.add(new categoryItem(R.drawable.avocado, "Avocado"));
-//       categoryList.add(new categoryItem(R.drawable.otherfruits, "Other Fruit"));
-//
-//       categoryList.add(new categoryItem(R.drawable.cucummber, "Cucumber"));
-//       categoryList.add(new categoryItem(R.drawable.broccoli, "Broccoli"));
-//       categoryList.add(new categoryItem(R.drawable.carrots, "Carrots"));
-//       categoryList.add(new categoryItem(R.drawable.pepper, "Pepper"));
-//       categoryList.add(new categoryItem(R.drawable.lettuce, "Lettuce"));
-//       categoryList.add(new categoryItem(R.drawable.tomato, "Tomatoes"));
-//       categoryList.add(new categoryItem(R.drawable.potato, "Potatoes"));
-//       categoryList.add(new categoryItem(R.drawable.mushroom, "Mushrooms"));
-//       categoryList.add(new categoryItem(R.drawable.garlic, "Garlic"));
-//       categoryList.add(new categoryItem(R.drawable.ginger, "Ginger"));
-//       categoryList.add(new categoryItem(R.drawable.onion, "Onions"));
-//       categoryList.add(new categoryItem(R.drawable.chili, "Chili"));
-//       categoryList.add(new categoryItem(R.drawable.corn, "Corn"));
-//       categoryList.add(new categoryItem(R.drawable.peas, "Peas"));
-//       categoryList.add(new categoryItem(R.drawable.eggplant, "Eggplant"));
-//       categoryList.add(new categoryItem(R.drawable.herbs, "Herbs"));
-//       categoryList.add(new categoryItem(R.drawable.otherveggies, "Other Vegetables"));
-//
-//        categoryList.add(new categoryItem(R.drawable.bread, "Bread"));
-//        categoryList.add(new categoryItem(R.drawable.bagel, "Bagel"));
-//        categoryList.add(new categoryItem(R.drawable.donuts, "Doughnuts"));
-//        categoryList.add(new categoryItem(R.drawable.cake, "Cake"));
-//        categoryList.add(new categoryItem(R.drawable.cookies, "Cookies"));
-//        categoryList.add(new categoryItem(R.drawable.chocolate, "Chocolate"));
-//        categoryList.add(new categoryItem(R.drawable.pie, "Pie"));
-//        categoryList.add(new categoryItem(R.drawable.icecream, "Ice Cream"));
-//        categoryList.add(new categoryItem(R.drawable.otherbakery, "Other Bakery&Sweets"));
-//
-//        categoryList.add(new categoryItem(R.drawable.softdrink, "Soft Drinks"));
-//        categoryList.add(new categoryItem(R.drawable.soda, "Soda"));
-//        categoryList.add(new categoryItem(R.drawable.jucie, "Juice"));
-//        categoryList.add(new categoryItem(R.drawable.icedtea, "Iced Tea"));
-//        categoryList.add(new categoryItem(R.drawable.coffee, "Coffee"));
-//        categoryList.add(new categoryItem(R.drawable.water, "Water"));
-//        categoryList.add(new categoryItem(R.drawable.smoothie, "Smoothies"));
-//        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Other Beverages"));
+        categoryList.add(new categoryItem(R.drawable.milk, "Milk"));
+        categoryList.add(new categoryItem(R.drawable.yogurt, "Yogurt"));
+        categoryList.add(new categoryItem(R.drawable.cheese, "Cheese"));
+        categoryList.add(new categoryItem(R.drawable.butter, "Butter"));
+        categoryList.add(new categoryItem(R.drawable.eggs, "Eggs"));
 
+        categoryList.add(new categoryItem(R.drawable.pork, "Beef"));
+        categoryList.add(new categoryItem(R.drawable.chicken, "Chicken"));
+        categoryList.add(new categoryItem(R.drawable.pork, "Lamb"));
+        categoryList.add(new categoryItem(R.drawable.chicken, "Turkey"));
+        categoryList.add(new categoryItem(R.drawable.pork, "Pork"));
+        categoryList.add(new categoryItem(R.drawable.sausague, "Sausages"));
+        categoryList.add(new categoryItem(R.drawable.bacon, "Bacon"));
+        categoryList.add(new categoryItem(R.drawable.salami, "Salami"));
+        categoryList.add(new categoryItem(R.drawable.fish, "Fish"));
+        categoryList.add(new categoryItem(R.drawable.othermeat, "Other Meat"));
+
+        categoryList.add(new categoryItem(R.drawable.apple, "Apple"));
+        categoryList.add(new categoryItem(R.drawable.pineapple, "Pineapple"));
+        categoryList.add(new categoryItem(R.drawable.pear, "Pear"));
+        categoryList.add(new categoryItem(R.drawable.orange, "Oranges"));
+        categoryList.add(new categoryItem(R.drawable.lemon, "Lemon"));
+        categoryList.add(new categoryItem(R.drawable.melon,"Melon"));
+        categoryList.add(new categoryItem(R.drawable.kiwi, "Kiwi"));
+        categoryList.add(new categoryItem(R.drawable.grapes, "Grapes"));
+        categoryList.add(new categoryItem(R.drawable.strawberry, "Strawberries"));
+        categoryList.add(new categoryItem(R.drawable.berries, "Berries"));
+        categoryList.add(new categoryItem(R.drawable.avocado, "Avocado"));
+        categoryList.add(new categoryItem(R.drawable.otherfruits, "Other Fruit"));
+
+        categoryList.add(new categoryItem(R.drawable.cucummber, "Cucumber"));
+        categoryList.add(new categoryItem(R.drawable.broccoli, "Broccoli"));
+        categoryList.add(new categoryItem(R.drawable.carrots, "Carrots"));
+        categoryList.add(new categoryItem(R.drawable.pepper, "Pepper"));
+        categoryList.add(new categoryItem(R.drawable.lettuce, "Lettuce"));
+        categoryList.add(new categoryItem(R.drawable.tomato, "Tomatoes"));
+        categoryList.add(new categoryItem(R.drawable.potato, "Potatoes"));
+        categoryList.add(new categoryItem(R.drawable.mushroom, "Mushrooms"));
+        categoryList.add(new categoryItem(R.drawable.garlic, "Garlic"));
+        categoryList.add(new categoryItem(R.drawable.ginger, "Ginger"));
+        categoryList.add(new categoryItem(R.drawable.onion, "Onions"));
+        categoryList.add(new categoryItem(R.drawable.chili, "Chili"));
+        categoryList.add(new categoryItem(R.drawable.corn, "Corn"));
+        categoryList.add(new categoryItem(R.drawable.peas, "Peas"));
+        categoryList.add(new categoryItem(R.drawable.eggplant, "Eggplant"));
+        categoryList.add(new categoryItem(R.drawable.herbs, "Herbs"));
+        categoryList.add(new categoryItem(R.drawable.otherveggies, "Other Vegetables"));
+
+        categoryList.add(new categoryItem(R.drawable.bread, "Bread"));
+        categoryList.add(new categoryItem(R.drawable.bagel, "Bagel"));
+        categoryList.add(new categoryItem(R.drawable.donuts, "Doughnuts"));
+        categoryList.add(new categoryItem(R.drawable.cake, "Cake"));
+        categoryList.add(new categoryItem(R.drawable.cookies, "Cookies"));
+        categoryList.add(new categoryItem(R.drawable.chocolate, "Chocolate"));
+        categoryList.add(new categoryItem(R.drawable.pie, "Pie"));
+        categoryList.add(new categoryItem(R.drawable.icecream, "Ice Cream"));
+        categoryList.add(new categoryItem(R.drawable.otherbakery, "Other Bakery&Sweets"));
+
+        categoryList.add(new categoryItem(R.drawable.softdrink, "Soft Drinks"));
+        categoryList.add(new categoryItem(R.drawable.soda, "Soda"));
+        categoryList.add(new categoryItem(R.drawable.jucie, "Juice"));
+        categoryList.add(new categoryItem(R.drawable.icedtea, "Iced Tea"));
+        categoryList.add(new categoryItem(R.drawable.coffee, "Coffee"));
+        categoryList.add(new categoryItem(R.drawable.water, "Water"));
+        categoryList.add(new categoryItem(R.drawable.smoothie, "Smoothies"));
+        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Other Beverages"));
 
 
 
@@ -141,8 +144,12 @@ public class CategoryActivity extends Activity {
         mAdapter.setOnItemClickListener(new categoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                  categoryList.get(position).changetext1("Clicked");
-//                categoryList.get(position).displayCheck(R.drawable.ic_check_black_24dp);
+                  //categoryList.get(position).changetext1("Clicked");
+                categoryList.get(position).displayCheck(R.drawable.ic_check_black_24dp);
+                Log.e("test","position: "+position+" previous: "+ positionUserClicked);
+                categoryList.get(positionUserClicked).hideCheck(R.drawable.berries);
+                positionUserClicked = position;
+
                 mAdapter.notifyItemChanged(position);
             }
         });

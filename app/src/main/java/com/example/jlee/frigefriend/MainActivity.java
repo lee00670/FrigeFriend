@@ -1,3 +1,7 @@
+/*
+* Fridge food list view
+*
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.Context;
@@ -71,28 +75,24 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @BindView( (R.id.fabDelete))
     FloatingActionButton mFabDelete;
 
-
-
     String jsonStringUserData = null;
     String jsonStringCat = null;
     String jsonStringLC = null;
     UserData userData;
     List<CategoryData> CategoryData;
     List<LCData> LCData;
-    CheckBox mCheckBox;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
-    List<FridgeItem> selectedlistFridgeItem;
+    private List<FridgeItem> currentSelectedItems = new ArrayList<>();
+    private List<CartItem> myCartList = new ArrayList<>();
+
     MainActivityAdapter adapter;
-    SearchView searchView;
 
     public ItemTouchHelperExtension.Callback mCallback;
     public ItemTouchHelperExtension mItemTouchHelper;
-    final static public String ServerURL="http://192.168.0.132/";
 
-    private List<FridgeItem> currentSelectedItems = new ArrayList<>();
-
-    private List<CartItem> myCartList = new ArrayList<>();
+    //final static public String ServerURL="http://10.65.65.124/";
+    final static public String ServerURL="http://10.70.145.193/";
 
     private static final int SORT_BY_DATE = 0;
     private static final int SORT_BY_NAME = 1;
@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
         jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
-        Log.e("test", "UserData:" + jsonStringUserData);
-        Log.e("test", "Category:" + jsonStringCat);
-        Log.e("test", "LC:" + jsonStringLC);
+//        Log.e("test", "UserData:" + jsonStringUserData);
+//        Log.e("test", "Category:" + jsonStringCat);
+//        Log.e("test", "LC:" + jsonStringLC);
 
         Gson gson = new Gson();
         userData = gson.fromJson(jsonStringUserData, UserData.class);
@@ -122,9 +122,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test", "MaingActivity: CategoryData:" + CategoryData.toString());
         Log.e("test", "MaingActivity: LCData:" + LCData.toString());
         listFridgeItem = userData.getFrideItems();
-        mCheckBox = findViewById(R.id.checkboxRV);
 
-
+        //for test input
         listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
         listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
         listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801",0));
@@ -134,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180716",0));
 
         initializeViews();
-
         MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
     }
 
@@ -181,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter = new MainActivityAdapter(listFridgeItem, CategoryData, MainActivity.this , onItemCheckListener);
 
         rv.setAdapter(adapter);
-        rv.addItemDecoration(new DividerItemDecoration(this));
+        //rv.addItemDecoration(new DividerItemDecoration(this));
 
         sortData(SORT_BY_DATE);
 
@@ -189,8 +187,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mItemTouchHelper = new ItemTouchHelperExtension(mCallback);
         mItemTouchHelper.attachToRecyclerView(rv);
         adapter.setItemTouchHelperExtension(mItemTouchHelper);
-
-
 
     }
 
@@ -220,30 +216,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             {
                 newList.add(item);
             }
-
         }
         adapter.setFilter(newList);
         return false;
     }
-
-//    private void changeSearchViewTextColor(View view)
-//    {
-//        if(view != null)
-//        {
-//            if(view instanceof TextView)
-//            {
-//                ((TextView) view).setTextColor(Color.BLUE);
-//                return;
-//            }else if(view instanceof ViewGroup)
-//            {
-//                ViewGroup viewGroup = (ViewGroup) view;
-//                for(int i=0; i<viewGroup.getChildCount(); i++)
-//                {
-//                    changeSearchViewTextColor(viewGroup.getChildAt(i));
-//                }
-//            }
-//        }
-//    }
 
     public void GoToMyCart()
     {
@@ -375,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @OnClick(R.id.floatingActionButton)
     public void addItem()
     {
-        Intent addItemIntent = new Intent(this, ProductInfo.class);
+        Intent addItemIntent = new Intent(this, addActivity.class);
        // addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
         //addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
         //addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
@@ -400,9 +376,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             FridgeItem item = iter.next();
             iter.remove();
         }
-
         Log.e("test","deleteList:"+  this.currentSelectedItems.size());
     }
+
     @OnClick(R.id.fabAddToCart)
     public void addToCart()
     {
@@ -455,11 +431,4 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 .create()
                 .show();
     }
-    @Override
-    public void onResume(){
-        super.onResume();
-
-
-    }
-
-}
+ }

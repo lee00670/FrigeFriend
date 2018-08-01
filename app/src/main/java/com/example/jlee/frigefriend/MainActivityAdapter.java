@@ -1,3 +1,8 @@
+/*
+*
+* RecyclerView List Adapter
+*
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.Context;
@@ -53,14 +58,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     }
     final private OnItemCheckListener onItemClickListener;
 
-
-
     public MainActivityAdapter (List<FridgeItem> items, @NonNull OnItemCheckListener onItemCheckListener) {
-
         this.onItemClickListener = onItemCheckListener;
     }
-    ;
-
 
     public MainActivityAdapter(List<FridgeItem> fridgeItemList, List<CategoryData> categoryDataList, Context context, @NonNull OnItemCheckListener onItemCheckListener) {
         this.fridgeItemList = fridgeItemList;
@@ -77,24 +77,23 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     @Override
     public Holderview onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View layout = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.fridge_item, viewGroup, false);
-
-        return new ItemSwipeWithActionWidthViewHolder(layout);
-
-
-        //return new Holderview(layout);
+        //return new ItemSwipeWithActionWidthViewHolder(layout);
+        return new Holderview(layout);
     }
     private Map<String, Boolean> checkBoxStates = new HashMap<>();
     private Boolean bUncheck = false;
     @Override
     public void onBindViewHolder(@NonNull Holderview holderview, final int i) {
         //bind data
-
         final Holderview baseViewHolder = (Holderview) holderview;
         baseViewHolder.bind(fridgeItemList.get(i), i);
+
         baseViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view)
             {
+                //FridgeItem item = (FridgeItem) view.findViewById(R.id.item_layout);
+                //Log.e("test","clicked: "+view.getItemName(i)+", pos: "+i);
                 Toast.makeText(context, "click on "+fridgeItemList.get(i).getItemName(), Toast.LENGTH_LONG).show();
             }
         });
@@ -109,6 +108,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         Log.e("test","Clicked;0");
     }
     public void doDelete(int adapterPosition) {
+        Log.e("test", "delete: "+fridgeItemList.get(adapterPosition).getItemName()+", pos: "+adapterPosition);
         fridgeItemList.remove(adapterPosition);
         notifyItemRemoved(adapterPosition);
     }
@@ -117,7 +117,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         bUncheck = true;
         notifyDataSetChanged();
         bUncheck = false;
-
     }
     public void move(int from, int to) {
         FridgeItem prev = fridgeItemList.remove(from);
@@ -210,7 +209,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             Log.e("test", "diff: "+diff);
             String sDaysLeftMessage = "";
 
-
             mTextViewDaysLeft.setText((diff < 0 ? " Expired" : (diff == 0 ? " Last day":
                     (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+" days left":""))));
 
@@ -267,16 +265,12 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                     } else {
                         onItemClickListener.onItemUncheck(currentItem);
                     }
-
 //                    Toast.makeText(
 //                            v.getContext(), ""+pos + cb.isChecked(), Toast.LENGTH_LONG).show();
                 }
             });
-
         }
     }
-
-
 
     class ItemSwipeWithActionWidthViewHolder extends Holderview implements Extension {
 

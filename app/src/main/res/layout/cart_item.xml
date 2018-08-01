@@ -50,7 +50,7 @@
                 <Spinner
                     android:id="@+id/spinnerQuantityOnCart"
                     style="@style/Base.Widget.AppCompat.Spinner.Underlined"
-                    android:layout_width="104dp"
+                    android:layout_width="109dp"
                     android:layout_height="match_parent" />
 
                 <Spinner

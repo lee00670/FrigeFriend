@@ -1,3 +1,6 @@
+/*
+* Cart view
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.Intent;
@@ -42,7 +45,6 @@ public class ViewCart extends AppCompatActivity {
     private String userEmail;
     private String jsonStringCartData;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,6 @@ public class ViewCart extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-
                 Intent upIntent = NavUtils.getParentActivityIntent(this);
                 if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
                     TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
@@ -90,7 +91,7 @@ public class ViewCart extends AppCompatActivity {
                     Gson gson = new Gson();
                     String jsonCartList = gson.toJson(listCartItem);
                     upIntent.putExtra(LoginActivity.CART_DATA,jsonCartList);
-                    setResult(RESULT_OK, upIntent);
+                    setResult(RESULT_OK, upIntent); //go back to main activity
                     //startActivity(upIntent);
                     finish();
                 }

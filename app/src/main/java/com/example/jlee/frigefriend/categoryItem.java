@@ -9,6 +9,7 @@ public class categoryItem {
 
         mImageResource= imageRecourse;
         mText1=text1;
+
     }
 
 //    public categoryItem(int milk, String milk1) {
@@ -22,10 +23,16 @@ public class categoryItem {
         mImageCheck = image;
     }
 
+    public void hideCheck(int image) {
+        mImageCheck = image;
+    }
 
 
     public int getmImageResource(){
         return mImageResource;
+    }
+    public int getCheckImageResource(){
+        return mImageCheck;
     }
 
 

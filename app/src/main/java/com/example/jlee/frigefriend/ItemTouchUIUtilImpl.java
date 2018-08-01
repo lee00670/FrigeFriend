@@ -1,3 +1,6 @@
+/*
+* ItemTouchHelper related class for drag and drop by long press.
+* */
 package com.example.jlee.frigefriend;
 
 import android.graphics.Canvas;

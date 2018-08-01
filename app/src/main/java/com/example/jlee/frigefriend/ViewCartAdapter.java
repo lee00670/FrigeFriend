@@ -1,3 +1,6 @@
+/*
+*  Cart View RecyclerView Adapter
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.Context;

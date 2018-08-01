@@ -1,3 +1,6 @@
+/*
+* Login Request class: set the parameter of id and password what user entered.
+* */
 package com.example.jlee.frigefriend;
 
 import android.util.Log;
@@ -10,10 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginRequest extends StringRequest {
-    //final static private String URL="http://192.168.0.132/UserLogin.php";
     final static private String URL= MainActivity.ServerURL + "UserLogin.php";
-
-
     private Map<String, String> parameters;
 
     public LoginRequest(String userID, String userPassword, Response.Listener<String> listener){
@@ -21,10 +21,8 @@ public class LoginRequest extends StringRequest {
         parameters = new HashMap<>();
         parameters.put("userID", userID);
         parameters.put("userPassword", userPassword);
-
-        Log.e("test", "userID : "+userID);
-        Log.e("test", "userPassword : "+userPassword);
-        //test again
+//        Log.e("test", "userID : "+userID);
+//        Log.e("test", "userPassword : "+userPassword);
     }
 
     @Override

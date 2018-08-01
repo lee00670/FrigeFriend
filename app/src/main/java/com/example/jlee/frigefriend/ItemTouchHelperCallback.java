@@ -1,3 +1,8 @@
+/*
+* This is for swiping the item in recycler view and is not used currently for swiping.
+* It is for drag and drop by long press on item.
+*
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.res.Resources;

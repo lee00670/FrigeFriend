@@ -1,3 +1,6 @@
+/*
+* Large Category data class
+* */
 package com.example.jlee.frigefriend;
 
 public class LCData {

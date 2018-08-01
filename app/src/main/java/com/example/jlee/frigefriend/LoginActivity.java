@@ -1,3 +1,7 @@
+/*
+* Login page
+*
+* */
 package com.example.jlee.frigefriend;
 
 import android.content.Intent;
@@ -50,11 +54,12 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick(R.id.buttonLogin)
     void callLogin()
     {
-        Response.Listener<String> userLoginListener = new Response.Listener<String>() {
+          Response.Listener<String> userLoginListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try
                 {
+                    // parse the ID, PW from response of server
                     JSONObject jsonResponse  = new JSONObject(response);
                     boolean foundID = jsonResponse.getBoolean("id");
                     boolean foundPW = jsonResponse.getBoolean("pw");
@@ -62,14 +67,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     textViewWarningLogin.setEnabled(true);
                     textViewWarningLogin.setText("");
+                    //if id and password are found
                     if(foundID && foundPW)
                     {
                         String jsonStringUserdata = jsonResponse.getString("userdata");
                         String jsonStringCategory = jsonResponse.getString("category");
                         String jsonStringLC = jsonResponse.getString("large_category");
-//                        Gson gson = new Gson();
-//                        UserData userData = gson.fromJson(jsonStringUserdata, UserData.class);
-//                        Log.e("test", "userData:"+userData.toString());
 
                         Intent LoginActivityIntent = new Intent(LoginActivity.this, MainActivity.class);
                         LoginActivityIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserdata);
