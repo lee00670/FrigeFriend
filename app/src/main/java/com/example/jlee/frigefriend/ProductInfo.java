@@ -128,17 +128,29 @@ public class ProductInfo extends Activity {
         };
 
 
+        // Add button directs to Main activity
+        View btn = findViewById(R.id.Button_fab);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductInfo.this, MainActivity.class));
+            }
+        });
 
-//        View btn = findViewById(R.id.Button_fab);
-//
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(ProductInfo.this, MainActivity.class));
-//            }
-//        });
+        // Close button directs to Add activity
+        View btnClose = findViewById(R.id.textViewCloseIcon);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProductInfo.this, addActivity.class));
+            }
+        });
+
 
     }
+
+
+
 
 
 }
