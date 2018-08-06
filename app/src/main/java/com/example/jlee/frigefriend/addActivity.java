@@ -47,15 +47,15 @@ public class addActivity extends AppCompatActivity {
         });
 
 
-//
-//        // sort List Alphabetically
-//        TextView sortAlpha = findViewById(R.id.sortAlpha);
-//        sortAlpha.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                sortArrayList();
-//            }
-//        });
+
+        // sort List Alphabetically
+        TextView sortAlpha = findViewById(R.id.sortAlpha);
+        sortAlpha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortArrayList();
+            }
+        });
 
 
     } // END of  protected void onCreate(Bundle savedInstanceState)
@@ -143,6 +143,7 @@ public class addActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
+        // click item send info to product Info page
         mAdapter.setOnClickListner(new addAdapter.OnItemClickListner() {
             @Override
             public void onItemClick(int position) {
@@ -156,21 +157,21 @@ public class addActivity extends AppCompatActivity {
     }
 
 
-//    // Sort List Alphabetically
-//    private void sortArrayList(){
-//        Collections.sort(maddList, new Comparator<addItem>() {
-//            @Override
-//            public int compare(addItem o1, addItem o2) {
-//                return (o1.getText1()).compareTo(o2.getText1());
-//            }
-//        });
-//        mAdapter.notifyDataSetChanged();
-//    }
+    // Sort List Alphabetically
+    private void sortArrayList(){
+        Collections.sort(maddList, new Comparator<addItem>() {
+            @Override
+            public int compare(addItem o1, addItem o2) {
+                return (o1.getText1()).compareTo(o2.getText1());
+            }
+        });
+        mAdapter.notifyDataSetChanged();
+    }
 
-    //    @Override
+//        @Override
 //    public void onItemClick(View view, int position) {
 //        Context context=view.getContext();
-//        Intent intent=new Intent();
+//        Intent intent = new Intent();
 //        switch (position){
 //            case 0:
 //                intent =  new Intent(context, ProductInfo.class);
