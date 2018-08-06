@@ -1,6 +1,6 @@
 # FrigeFriend
 
-This is Fridge Friend application which manages the freshness of fridge as the expiration date. 
+This is Fridge Friend application which manages the freshness of fridge items by displaying expiration date. 
 
 
 ### Functions
@@ -9,6 +9,7 @@ This is Fridge Friend application which manages the freshness of fridge as the e
  - cart list to buy next time
 
 ### Authors
- * Jieun Lee - login, signup, food list and cart 
- * Hadiyah Dhodhi - food edit and add view
+ * Jieun Lee - login, signup, food list and cart. 
+ * Hadiyah Dhodhi - food item information, category, add view. 
+
 
