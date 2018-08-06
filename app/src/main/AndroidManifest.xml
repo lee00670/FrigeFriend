@@ -39,7 +39,8 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ProductInfo"
-            android:parentActivityName=".addActivity" />
+            android:parentActivityName=".addActivity" />\
+
         <activity
             android:name=".CategoryActivity"
             android:parentActivityName=".ProductInfo" />

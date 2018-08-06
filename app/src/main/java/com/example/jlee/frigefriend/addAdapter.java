@@ -13,17 +13,39 @@ import java.util.ArrayList;
 public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
 
     private ArrayList<addItem> maddList;
+    private OnItemClickListner mListner;
+
+    public interface OnItemClickListner {
+        void onItemClick(int position);
+    }
+
+    public void setOnClickListner(OnItemClickListner listner) {
+        mListner = listner;
+    }
+
 
     public static class addViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView mImageView;
         public TextView mtextView1;
 
-        public addViewHolder(@NonNull View itemView) {
+        public addViewHolder(@NonNull View itemView, final OnItemClickListner listner) {
             super(itemView);
 
             mImageView = itemView.findViewById(R.id.imageview1);
             mtextView1 = itemView.findViewById(R.id.textView1);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick (View v){
+                    if (listner != null) {
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listner.onItemClick(position);
+                        }
+                    }
+                }
+            });
 
         }
     } //END OF public static class addViewHolder
@@ -37,7 +59,7 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
     @Override
     public addViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.add_item, viewGroup, false);
-        addViewHolder avh = new addViewHolder(v);
+        addViewHolder avh = new addViewHolder(v, mListner);
         return avh;
     }
 

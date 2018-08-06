@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +37,26 @@ public class ProductInfo extends Activity {
     String jsonStringCat;
     String jsonStringLC;
 
+    private  int imageRes;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_info);
+
+        // Will display the image and text of the item clicked from add page to proInfo page.
+        Intent intent = getIntent();
+        addItem addItem1  = intent.getParcelableExtra("addItem");
+
+        imageRes = addItem1.getimageResource();
+        String line1 = addItem1.getText1();
+
+        ImageView imageView = findViewById(R.id.textViewImgHolder);
+        imageView.setImageResource(imageRes);
+
+        TextView textView1 = findViewById(R.id.textView4);
+        textView1.setText(line1);
 
 //        Displays Quantity in dropdown list
         Spinner quantitySpinner = (Spinner) findViewById(R.id.spinnerQuantity);
@@ -51,10 +68,10 @@ public class ProductInfo extends Activity {
 
         quantitySpinner.setAdapter(quantityAdapter);
 
-        Intent intent = getIntent();
-        jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
-        jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
-        jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
+        Intent intent1 = getIntent();
+        jsonStringUserData = intent1.getStringExtra(LoginActivity.USER_DATA);
+        jsonStringCat = intent1.getStringExtra(LoginActivity.CAT_DATA);
+        jsonStringLC = intent1.getStringExtra(LoginActivity.LC_DATA);
 
 
 //      When Category is clicked directs to CategoryActivity
@@ -109,6 +126,7 @@ public class ProductInfo extends Activity {
                 mDisplayDate.setText(date);
             }
         };
+
 
 
 //        View btn = findViewById(R.id.Button_fab);
