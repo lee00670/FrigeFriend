@@ -91,8 +91,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public ItemTouchHelperExtension.Callback mCallback;
     public ItemTouchHelperExtension mItemTouchHelper;
 
-    //final static public String ServerURL="http://10.65.65.124/";
-    final static public String ServerURL="http://10.70.145.193/";
+    //final static public String ServerURL="http://192.168.0.132/";
+    final static public String ServerURL="http://10.70.146.117/";
 
     private static final int SORT_BY_DATE = 0;
     private static final int SORT_BY_NAME = 1;
@@ -147,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 mFabAddToCart.setVisibility(View.VISIBLE);
                 mFabDelete.setVisibility(View.VISIBLE);
             }
-
             Log.e("test","currentSelectedItems.add ");
             Log.e("test","currentSelectedItems.size:  "+currentSelectedItems.size());
         }
@@ -368,6 +367,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         {
             int index = listFridgeItem.indexOf(item);
             adapter.doDelete(index);
+
         }
 
         Iterator<FridgeItem> iter = currentSelectedItems.iterator();
@@ -377,6 +377,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             iter.remove();
         }
         Log.e("test","deleteList:"+  this.currentSelectedItems.size());
+
+        adapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.fabAddToCart)
