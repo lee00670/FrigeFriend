@@ -46,6 +46,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -91,8 +92,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public ItemTouchHelperExtension.Callback mCallback;
     public ItemTouchHelperExtension mItemTouchHelper;
 
-    //final static public String ServerURL="http://10.65.65.124/";
-    final static public String ServerURL="http://10.70.145.193/";
+    final static public String ServerURL="http://192.168.0.132/";
+    //final static public String ServerURL="http://10.70.146.117/";
 
     private static final int SORT_BY_DATE = 0;
     private static final int SORT_BY_NAME = 1;
@@ -123,14 +124,16 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test", "MaingActivity: LCData:" + LCData.toString());
         listFridgeItem = userData.getFrideItems();
 
+        setCategoryData();
+
         //for test input
         listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
         listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
         listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801",0));
-        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180803",0));
-        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180715",0));
-        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180714",0));
-        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.ic_add_circle_outline_black_24dp, 1, "cup", "20180716",0));
+        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "cup", "20180803",0));
+        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "cup", "20180715",0));
+        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "cup", "20180714",0));
+        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.eggs, 1, "cup", "20180716",0));
 
         initializeViews();
         MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
@@ -147,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 mFabAddToCart.setVisibility(View.VISIBLE);
                 mFabDelete.setVisibility(View.VISIBLE);
             }
-
             Log.e("test","currentSelectedItems.add ");
             Log.e("test","currentSelectedItems.size:  "+currentSelectedItems.size());
         }
@@ -166,6 +168,94 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
     };
+    private HashMap<String, Integer> createCategoryHashMap()
+    {
+        HashMap<String, Integer> hashMapCategory = new HashMap<String, Integer>();
+        hashMapCategory.put("Milk",              R.drawable.milk);
+        hashMapCategory.put("Yogurt",            R.drawable.yogurt);
+        hashMapCategory.put("Cheese",            R.drawable.cheese);
+        hashMapCategory.put("Butter",            R.drawable.butter);
+        hashMapCategory.put("Eggs",              R.drawable.eggs);
+
+        hashMapCategory.put("Beef",               R.drawable.pork);
+        hashMapCategory.put("Chicken",            R.drawable.chicken);
+        hashMapCategory.put("Lamb",               R.drawable.pork);
+        hashMapCategory.put("Turkey",             R.drawable.chicken);
+        hashMapCategory.put("Pork",               R.drawable.pork);
+        hashMapCategory.put("Sausages",           R.drawable.sausague);
+        hashMapCategory.put("Bacon",              R.drawable.bacon);
+        hashMapCategory.put("Salami",             R.drawable.salami);
+        hashMapCategory.put("Fish",               R.drawable.fish);
+        hashMapCategory.put("Other Meat",          R.drawable.othermeat);
+
+        hashMapCategory.put("Apple",              R.drawable.apple);
+        hashMapCategory.put("Pineapple",          R.drawable.pineapple);
+        hashMapCategory.put("Pear",               R.drawable.pear);
+        hashMapCategory.put("Oranges",            R.drawable.orange);
+        hashMapCategory.put("Lemon",              R.drawable.lemon);
+        hashMapCategory.put("Melon",              R.drawable.melon);
+        hashMapCategory.put("Kiwi",               R.drawable.kiwi);
+        hashMapCategory.put("Grapes",             R.drawable.grapes);
+        hashMapCategory.put("Strawberries",       R.drawable.strawberry);
+        hashMapCategory.put("Berries",            R.drawable.berries);
+        hashMapCategory.put("Avocado",            R.drawable.avocado);
+        hashMapCategory.put("Other Fruit",         R.drawable.otherfruits);
+
+        hashMapCategory.put("Cucumber",           R.drawable.cucummber);
+        hashMapCategory.put("Broccoli",           R.drawable.broccoli);
+        hashMapCategory.put("Carrots",            R.drawable.carrots);
+        hashMapCategory.put("Pepper",             R.drawable.pepper);
+        hashMapCategory.put("Lettuce",            R.drawable.lettuce);
+        hashMapCategory.put("Tomatoes",           R.drawable.tomato);
+        hashMapCategory.put("Potatoes",           R.drawable.potato);
+        hashMapCategory.put("Mushrooms",          R.drawable.mushroom);
+        hashMapCategory.put("Garlic",             R.drawable.garlic);
+        hashMapCategory.put("Ginger",             R.drawable.ginger);
+        hashMapCategory.put("Onions",             R.drawable.onion);
+        hashMapCategory.put("Chili",              R.drawable.chili);
+        hashMapCategory.put("Corn",               R.drawable.corn);
+        hashMapCategory.put("Peas",               R.drawable.peas);
+        hashMapCategory.put("Eggplant",           R.drawable.eggplant);
+        hashMapCategory.put("Herbs",              R.drawable.herbs);
+        hashMapCategory.put("Other Vegetables",    R.drawable.otherveggies);
+
+        hashMapCategory.put("Bread",              R.drawable.bread);
+        hashMapCategory.put("Bagel",              R.drawable.bagel);
+        hashMapCategory.put("Doughnuts",          R.drawable.donuts);
+        hashMapCategory.put("Cake",               R.drawable.cake);
+        hashMapCategory.put("Cookies",            R.drawable.cookies);
+        hashMapCategory.put("Chocolate",          R.drawable.chocolate);
+        hashMapCategory.put("Pie",                R.drawable.pie);
+        hashMapCategory.put("Ice Cream",           R.drawable.icecream);
+        hashMapCategory.put("Other Bakery&Sweets", R.drawable.otherbakery);
+
+        hashMapCategory.put("Soft Drinks",         R.drawable.softdrink);
+        hashMapCategory.put("Soda",               R.drawable.soda);
+        hashMapCategory.put("Juice",              R.drawable.jucie);
+        hashMapCategory.put("Iced Tea",            R.drawable.icedtea);
+        hashMapCategory.put("Coffee",             R.drawable.coffee);
+        hashMapCategory.put("Water",              R.drawable.water);
+        hashMapCategory.put("Smoothies",          R.drawable.smoothie);
+        hashMapCategory.put("Other Beverages",     R.drawable.otherbeverages);
+
+        hashMapCategory.put("Pasta",          R.drawable.pasta);
+        hashMapCategory.put("Rice",          R.drawable.rice);
+        hashMapCategory.put("Leftovers",          R.drawable.leftovers);
+        hashMapCategory.put("Pizza",          R.drawable.pizza);
+        hashMapCategory.put("Other food",          R.drawable.otherfood);
+        return hashMapCategory;
+    }
+    private void setCategoryData()
+    {
+        HashMap<String, Integer> catHashMap = createCategoryHashMap();
+
+        for( CategoryData catData : CategoryData)
+        {
+            //Log.e("test", "catName: "+catData.getCatName()+", img : "+catHashMap.get(catData.getCatName()));
+            catData.setCatImg(catHashMap.get(catData.getCatName()));
+            //Log.e("test", "setCatImg: "+catData.getCatImg());
+        }
+    }
 
     private void initializeViews()
     {
@@ -368,6 +458,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         {
             int index = listFridgeItem.indexOf(item);
             adapter.doDelete(index);
+
         }
 
         Iterator<FridgeItem> iter = currentSelectedItems.iterator();
@@ -377,6 +468,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             iter.remove();
         }
         Log.e("test","deleteList:"+  this.currentSelectedItems.size());
+
+        adapter.notifyDataSetChanged();
     }
 
     @OnClick(R.id.fabAddToCart)
