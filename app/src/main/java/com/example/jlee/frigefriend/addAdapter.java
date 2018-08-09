@@ -77,6 +77,12 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
         return maddList.size();
     }
 
+    // Search Bar
+   public void filterList (ArrayList<addItem> filteredList){
+        maddList = filteredList;
+        notifyDataSetChanged();
+   }
+
 
 } // END OF public class addAdapter e
 
