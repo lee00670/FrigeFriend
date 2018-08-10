@@ -251,9 +251,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         for( CategoryData catData : CategoryData)
         {
-            //Log.e("test", "catName: "+catData.getCatName()+", img : "+catHashMap.get(catData.getCatName()));
+            Log.e("test", "catName: "+catData.getCatName()+", img : "+catHashMap.get(catData.getCatName()));
             catData.setCatImg(catHashMap.get(catData.getCatName()));
-            //Log.e("test", "setCatImg: "+catData.getCatImg());
+            Log.e("test", "setCatImg: "+catData.getCatImg());
         }
     }
 
@@ -442,10 +442,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void addItem()
     {
         Intent addItemIntent = new Intent(this, addActivity.class);
-       // addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
-        //addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
-        //addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
+         //addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+        Gson gson = new Gson();
+        String jsonCategoryList = gson.toJson(CategoryData);
+        addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategoryList);
+        addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
         startActivity(addItemIntent);
+        //startActivityForResult(addItemIntent, 1);
     }
     @OnClick(R.id.fabDelete)
     public void deleteList()

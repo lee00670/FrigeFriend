@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
 
-    private ArrayList<addItem> maddList;
+    private List<CategoryData> listCategoryData;
     private OnItemClickListner mListner;
 
     public interface OnItemClickListner {
@@ -50,8 +52,8 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
         }
     } //END OF public static class addViewHolder
 
-    public addAdapter(ArrayList<addItem> addList) {
-        maddList = addList;
+    public addAdapter(List<CategoryData> addList) {
+        listCategoryData = addList;
 
     }
 
@@ -65,21 +67,22 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull addViewHolder addViewHolder, int i) {
-        addItem currentItem = maddList.get(i);
+        final addViewHolder baseViewHolder = (addViewHolder) addViewHolder;
+        CategoryData currentItem = listCategoryData.get(i);
 
-        addViewHolder.mImageView.setImageResource(currentItem.getimageResource());
-        addViewHolder.mtextView1.setText(currentItem.getText1());
+        addViewHolder.mImageView.setImageResource(currentItem.getCatImg());
+        addViewHolder.mtextView1.setText(currentItem.getCatName());
 
     }
 
     @Override
     public int getItemCount() {
-        return maddList.size();
+        return listCategoryData.size();
     }
 
     // Search Bar
-   public void filterList (ArrayList<addItem> filteredList){
-        maddList = filteredList;
+   public void filterList (List<CategoryData> filteredList){
+       listCategoryData = filteredList;
         notifyDataSetChanged();
    }
 

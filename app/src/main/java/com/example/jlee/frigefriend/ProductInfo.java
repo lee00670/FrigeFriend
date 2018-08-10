@@ -46,11 +46,8 @@ public class ProductInfo extends Activity {
         setContentView(R.layout.activity_product_info);
 
         // Will display the image and text of the item clicked from add page to proInfo page.
-        Intent intent = getIntent();
-        addItem addItem1  = intent.getParcelableExtra("addItem");
-
-        imageRes = addItem1.getimageResource();
-        String line1 = addItem1.getText1();
+        imageRes = getIntent().getIntExtra("cat_image", 1);
+        String line1 = getIntent().getStringExtra("cat_name");
 
         ImageView imageView = findViewById(R.id.textViewImgHolder);
         imageView.setImageResource(imageRes);
