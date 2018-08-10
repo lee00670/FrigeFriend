@@ -90,6 +90,8 @@ public class ProductInfo extends Activity {
         });
 
 
+
+
         // Date picker
 
         mDisplayDate = findViewById(R.id.textViewDisplayDate);
@@ -142,7 +144,7 @@ public class ProductInfo extends Activity {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(ProductInfo.this, addActivity.class));
+               // startActivity(new Intent(ProductInfo.this, addActivity.class));
                 finish();
             }
         });
