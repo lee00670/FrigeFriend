@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     //final static public String ServerURL="http://10.70.146.117/";
 
     private static final int SORT_BY_DATE = 0;
-    private static final int SORT_BY_NAME = 1;
-    private static final int SORT_BY_CAT = 2;
+    public static final int SORT_BY_NAME = 1;
+    public static final int SORT_BY_CAT = 2;
     private int sort_by = SORT_BY_DATE;
 
     @Override
