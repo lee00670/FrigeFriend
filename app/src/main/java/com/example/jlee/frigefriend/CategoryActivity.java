@@ -165,7 +165,7 @@ public class CategoryActivity extends Activity {
             }
         });
 
-
+        // Add btn when clicked directs to Product Info Activity
         View btnAdd = findViewById(R.id.Button_fab);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +174,17 @@ public class CategoryActivity extends Activity {
                 startActivity(new Intent(CategoryActivity.this, ProductInfo.class));
             }
         });
+
+        View btnClose = findViewById(R.id.textViewCloseIcon);
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //startActivity(new Intent(CategoryActivity.this, ProductInfo.class));
+                finish();
+            }
+        });
+
 
     } // END of protected void onCreate(Bundle savedInstanceState)
 
