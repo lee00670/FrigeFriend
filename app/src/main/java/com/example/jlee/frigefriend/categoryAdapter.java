@@ -30,6 +30,7 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
         public ImageView mImageCheck;
 
 
+
         public CategoryViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
