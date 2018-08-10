@@ -20,6 +20,9 @@ import java.util.List;
 
 import android.content.Intent;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -33,10 +36,12 @@ public class addActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private ArrayList<addItem> maddList;
+    List<CategoryData> listCategoryData;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
     private List<FridgeItem> currentSelectedItems = new ArrayList<>();
-
+    private String jsonStringCatData;
+    private String jsonStringLCatData;
 
 
     @Override
@@ -44,13 +49,20 @@ public class addActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
+        //get the category list from the intent
+        Intent intent = getIntent();
+        jsonStringCatData = intent.getStringExtra(LoginActivity.CAT_DATA);
+        jsonStringLCatData = intent.getStringExtra(LoginActivity.LC_DATA);
 
+        Log.e("test","addActivity cat_data :"+jsonStringCatData);
+        Gson gson = new Gson();
+        listCategoryData = gson.fromJson(jsonStringCatData,new TypeToken<List<CategoryData>>() {}.getType());
 
         createAddList();
         buildRecyclerView();
 
     // (+) btn when clicked directs to product Info activity
-        View btnAdd = findViewById(R.id.Button_fab);
+        View btnAdd = findViewById(R.id.Button_fab_addActivity);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,94 +114,92 @@ public class addActivity extends AppCompatActivity {
 
     // search bar
     private void filter (String text){
-        ArrayList<addItem> filteredList = new ArrayList<>();
+        List<CategoryData>  filteredList = new ArrayList<>();
 
-        for (addItem item: maddList){
-            if (item.getText1().toLowerCase().contains(text.toLowerCase())) {
+        for (CategoryData item: listCategoryData){
+            if (item.getCatName().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }
         mAdapter.filterList(filteredList);
     }
 
-
    public void createAddList(){
 //       ArrayList<addItem> addList = new ArrayList<>();
-       maddList =new ArrayList<>();
-
-       maddList.add(new addItem(R.drawable.milk, "Milk", "dairy"));
-       maddList.add(new addItem(R.drawable.yogurt, "Yogurt", "dairy"));
-       maddList.add(new addItem(R.drawable.cheese, "Cheese", "dairy"));
-       maddList.add(new addItem(R.drawable.butter, "Butter", "dairy"));
-       maddList.add(new addItem(R.drawable.eggs, "Eggs", "dairy"));
-
-       maddList.add(new addItem(R.drawable.pork, "Beef", "meat"));
-       maddList.add(new addItem(R.drawable.chicken, "Chicken", "meat"));
-       maddList.add(new addItem(R.drawable.pork, "Lamb", "meat"));
-       maddList.add(new addItem(R.drawable.chicken, "Turkey", "meat"));
-       maddList.add(new addItem(R.drawable.pork, "Pork", "meat"));
-       maddList.add(new addItem(R.drawable.sausague, "Sausages", "meat"));
-       maddList.add(new addItem(R.drawable.bacon, "Bacon", "meat"));
-       maddList.add(new addItem(R.drawable.salami, "Salami", "meat"));
-       maddList.add(new addItem(R.drawable.fish, "Fish", "meat"));
-       maddList.add(new addItem(R.drawable.othermeat, "Other Meat", "meat"));
-
-       maddList.add(new addItem(R.drawable.apple, "Apple" , "fruit"));
-       maddList.add(new addItem(R.drawable.pineapple, "Pineapple", "fruit"));
-       maddList.add(new addItem(R.drawable.pear, "Pear", "fruit"));
-       maddList.add(new addItem(R.drawable.orange, "Oranges", "fruit"));
-       maddList.add(new addItem(R.drawable.lemon, "Lemon", "fruit"));
-       maddList.add(new addItem(R.drawable.melon,"Melon", "fruit"));
-       maddList.add(new addItem(R.drawable.kiwi, "Kiwi", "fruit"));
-       maddList.add(new addItem(R.drawable.grapes, "Grapes", "fruit"));
-       maddList.add(new addItem(R.drawable.strawberry, "Strawberries", "fruit"));
-       maddList.add(new addItem(R.drawable.berries, "Berries", "fruit"));
-       maddList.add(new addItem(R.drawable.avocado, "Avocado", "fruit"));
-       maddList.add(new addItem(R.drawable.otherfruits, "Other Fruit", "fruit"));
-
-       maddList.add(new addItem(R.drawable.cucummber, "Cucumber", "veggies"));
-       maddList.add(new addItem(R.drawable.broccoli, "Broccoli", "veggies"));
-       maddList.add(new addItem(R.drawable.carrots, "Carrots", "veggies"));
-       maddList.add(new addItem(R.drawable.pepper, "Pepper", "veggies"));
-       maddList.add(new addItem(R.drawable.lettuce, "Lettuce", "veggies"));
-       maddList.add(new addItem(R.drawable.tomato, "Tomatoes", "veggies"));
-       maddList.add(new addItem(R.drawable.potato, "Potatoes", "veggies"));
-       maddList.add(new addItem(R.drawable.mushroom, "Mushrooms", "veggies"));
-       maddList.add(new addItem(R.drawable.garlic, "Garlic", "veggies"));
-       maddList.add(new addItem(R.drawable.ginger, "Ginger", "veggies"));
-       maddList.add(new addItem(R.drawable.onion, "Onions", "veggies"));
-       maddList.add(new addItem(R.drawable.chili, "Chili", "veggies"));
-       maddList.add(new addItem(R.drawable.corn, "Corn", "veggies"));
-       maddList.add(new addItem(R.drawable.peas, "Peas", "veggies"));
-       maddList.add(new addItem(R.drawable.eggplant, "Eggplant", "veggies"));
-       maddList.add(new addItem(R.drawable.herbs, "Herbs", "veggies"));
-       maddList.add(new addItem(R.drawable.otherveggies, "Other Vegetables", "veggies"));
-
-       maddList.add(new addItem(R.drawable.bread, "Bread", "bakery"));
-       maddList.add(new addItem(R.drawable.bagel, "Bagel", "bakery"));
-       maddList.add(new addItem(R.drawable.donuts, "Doughnuts", "bakery"));
-       maddList.add(new addItem(R.drawable.cake, "Cake", "bakery"));
-       maddList.add(new addItem(R.drawable.cookies, "Cookies", "bakery"));
-       maddList.add(new addItem(R.drawable.chocolate, "Chocolate", "bakery"));
-       maddList.add(new addItem(R.drawable.pie, "Pie", "bakery"));
-       maddList.add(new addItem(R.drawable.icecream, "Ice Cream", "bakery"));
-       maddList.add(new addItem(R.drawable.otherbakery, "Other Bakery&Sweets", "bakery"));
-
-       maddList.add(new addItem(R.drawable.softdrink, "Soft Drinks", "beverages"));
-       maddList.add(new addItem(R.drawable.soda, "Soda", "beverages"));
-       maddList.add(new addItem(R.drawable.jucie, "Juice", "beverages"));
-       maddList.add(new addItem(R.drawable.icedtea, "Iced Tea", "beverages"));
-       maddList.add(new addItem(R.drawable.coffee, "Coffee", "beverages"));
-       maddList.add(new addItem(R.drawable.water, "Water", "beverages"));
-       maddList.add(new addItem(R.drawable.smoothie, "Smoothies", "beverages"));
-       maddList.add(new addItem(R.drawable.otherbeverages, "Other Beverages", "beverages"));
-
+//       maddList =new ArrayList<>();
+//
+//       maddList.add(new addItem(R.drawable.milk, "Milk", "dairy"));
+//       maddList.add(new addItem(R.drawable.yogurt, "Yogurt", "dairy"));
+//       maddList.add(new addItem(R.drawable.cheese, "Cheese", "dairy"));
+//       maddList.add(new addItem(R.drawable.butter, "Butter", "dairy"));
+//       maddList.add(new addItem(R.drawable.eggs, "Eggs", "dairy"));
+//
+//       maddList.add(new addItem(R.drawable.pork, "Beef", "meat"));
+//       maddList.add(new addItem(R.drawable.chicken, "Chicken", "meat"));
+//       maddList.add(new addItem(R.drawable.pork, "Lamb", "meat"));
+//       maddList.add(new addItem(R.drawable.chicken, "Turkey", "meat"));
+//       maddList.add(new addItem(R.drawable.pork, "Pork", "meat"));
+//       maddList.add(new addItem(R.drawable.sausague, "Sausages", "meat"));
+//       maddList.add(new addItem(R.drawable.bacon, "Bacon", "meat"));
+//       maddList.add(new addItem(R.drawable.salami, "Salami", "meat"));
+//       maddList.add(new addItem(R.drawable.fish, "Fish", "meat"));
+//       maddList.add(new addItem(R.drawable.othermeat, "Other Meat", "meat"));
+//
+//       maddList.add(new addItem(R.drawable.apple, "Apple" , "fruit"));
+//       maddList.add(new addItem(R.drawable.pineapple, "Pineapple", "fruit"));
+//       maddList.add(new addItem(R.drawable.pear, "Pear", "fruit"));
+//       maddList.add(new addItem(R.drawable.orange, "Oranges", "fruit"));
+//       maddList.add(new addItem(R.drawable.lemon, "Lemon", "fruit"));
+//       maddList.add(new addItem(R.drawable.melon,"Melon", "fruit"));
+//       maddList.add(new addItem(R.drawable.kiwi, "Kiwi", "fruit"));
+//       maddList.add(new addItem(R.drawable.grapes, "Grapes", "fruit"));
+//       maddList.add(new addItem(R.drawable.strawberry, "Strawberries", "fruit"));
+//       maddList.add(new addItem(R.drawable.berries, "Berries", "fruit"));
+//       maddList.add(new addItem(R.drawable.avocado, "Avocado", "fruit"));
+//       maddList.add(new addItem(R.drawable.otherfruits, "Other Fruit", "fruit"));
+//
+//       maddList.add(new addItem(R.drawable.cucummber, "Cucumber", "veggies"));
+//       maddList.add(new addItem(R.drawable.broccoli, "Broccoli", "veggies"));
+//       maddList.add(new addItem(R.drawable.carrots, "Carrots", "veggies"));
+//       maddList.add(new addItem(R.drawable.pepper, "Pepper", "veggies"));
+//       maddList.add(new addItem(R.drawable.lettuce, "Lettuce", "veggies"));
+//       maddList.add(new addItem(R.drawable.tomato, "Tomatoes", "veggies"));
+//       maddList.add(new addItem(R.drawable.potato, "Potatoes", "veggies"));
+//       maddList.add(new addItem(R.drawable.mushroom, "Mushrooms", "veggies"));
+//       maddList.add(new addItem(R.drawable.garlic, "Garlic", "veggies"));
+//       maddList.add(new addItem(R.drawable.ginger, "Ginger", "veggies"));
+//       maddList.add(new addItem(R.drawable.onion, "Onions", "veggies"));
+//       maddList.add(new addItem(R.drawable.chili, "Chili", "veggies"));
+//       maddList.add(new addItem(R.drawable.corn, "Corn", "veggies"));
+//       maddList.add(new addItem(R.drawable.peas, "Peas", "veggies"));
+//       maddList.add(new addItem(R.drawable.eggplant, "Eggplant", "veggies"));
+//       maddList.add(new addItem(R.drawable.herbs, "Herbs", "veggies"));
+//       maddList.add(new addItem(R.drawable.otherveggies, "Other Vegetables", "veggies"));
+//
+//       maddList.add(new addItem(R.drawable.bread, "Bread", "bakery"));
+//       maddList.add(new addItem(R.drawable.bagel, "Bagel", "bakery"));
+//       maddList.add(new addItem(R.drawable.donuts, "Doughnuts", "bakery"));
+//       maddList.add(new addItem(R.drawable.cake, "Cake", "bakery"));
+//       maddList.add(new addItem(R.drawable.cookies, "Cookies", "bakery"));
+//       maddList.add(new addItem(R.drawable.chocolate, "Chocolate", "bakery"));
+//       maddList.add(new addItem(R.drawable.pie, "Pie", "bakery"));
+//       maddList.add(new addItem(R.drawable.icecream, "Ice Cream", "bakery"));
+//       maddList.add(new addItem(R.drawable.otherbakery, "Other Bakery&Sweets", "bakery"));
+//
+//       maddList.add(new addItem(R.drawable.softdrink, "Soft Drinks", "beverages"));
+//       maddList.add(new addItem(R.drawable.soda, "Soda", "beverages"));
+//       maddList.add(new addItem(R.drawable.jucie, "Juice", "beverages"));
+//       maddList.add(new addItem(R.drawable.icedtea, "Iced Tea", "beverages"));
+//       maddList.add(new addItem(R.drawable.coffee, "Coffee", "beverages"));
+//       maddList.add(new addItem(R.drawable.water, "Water", "beverages"));
+//       maddList.add(new addItem(R.drawable.smoothie, "Smoothies", "beverages"));
+//       maddList.add(new addItem(R.drawable.otherbeverages, "Other Beverages", "beverages"));
    }
 
     public void buildRecyclerView(){
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new addAdapter(maddList);
+        mAdapter = new addAdapter(listCategoryData);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -200,7 +210,9 @@ public class addActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
                 Intent intent = new Intent(addActivity.this, ProductInfo.class);
-                intent.putExtra("addItem", maddList.get(position));
+                //intent.putExtra("addItem", listCategoryData.get(position));
+                intent.putExtra("cat_image", listCategoryData.get(position).getCatImg());
+                intent.putExtra("cat_name", listCategoryData.get(position).getCatName());
 
                 startActivity(intent);
 
@@ -227,10 +239,10 @@ public class addActivity extends AppCompatActivity {
                 });
                 break;
             case MainActivity.SORT_BY_NAME:
-                Collections.sort(maddList, new Comparator<addItem>() {
+                Collections.sort(listCategoryData, new Comparator<CategoryData>() {
                     @Override
-                    public int compare(addItem o1, addItem o2) {
-                        return (o1.getText1()).compareTo(o2.getText1());
+                    public int compare(CategoryData o1, CategoryData o2) {
+                        return (o1.getCatName()).compareTo(o2.getCatName());
                     }
                 });
                 break;
