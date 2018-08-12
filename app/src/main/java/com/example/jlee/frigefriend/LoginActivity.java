@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String CAT_DATA = "category";
     public static final String LC_DATA = "lc";
     public static final String CART_DATA = "cart";
+    public static final String EDIT_ITEM = "updateItem";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

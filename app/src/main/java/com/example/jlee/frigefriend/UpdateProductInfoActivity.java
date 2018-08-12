@@ -23,7 +23,7 @@ public class UpdateProductInfoActivity extends Activity {
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
-    String jsonStringUserData;
+    String jsonFridgeItem;
     String jsonStringCat;
     String jsonStringLC;
 
@@ -32,7 +32,13 @@ public class UpdateProductInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_product_info);
 
-        //        Displays Quantity in dropdown list
+        //get the intent data for category and selected fridge item.
+        Intent intent = getIntent();
+        jsonFridgeItem = intent.getStringExtra(LoginActivity.EDIT_ITEM);
+        jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
+        Log.e("test", "updateItem: "+jsonFridgeItem);
+
+        // Displays Quantity in dropdown list
         Spinner quantitySpinner = (Spinner) findViewById(R.id.spinnerQuantity);
 
         ArrayAdapter <String> quantityAdapter = new ArrayAdapter<String>(UpdateProductInfoActivity.this,
@@ -42,11 +48,6 @@ public class UpdateProductInfoActivity extends Activity {
 
         quantitySpinner.setAdapter(quantityAdapter);
 
-        Intent intent = getIntent();
-        jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
-        jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
-        jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
-
 
 //      When Category is clicked directs to CategoryActivity
         TextView CategoryTextView = (TextView) findViewById(R.id.textViewCategory);
@@ -55,7 +56,7 @@ public class UpdateProductInfoActivity extends Activity {
             @Override
             public void onClick(View view) {
                 Intent CategoryIntent = new Intent(UpdateProductInfoActivity.this, CategoryActivity.class);
-                CategoryIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+
                 CategoryIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
                 CategoryIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
                 UpdateProductInfoActivity.this.startActivity(CategoryIntent);
@@ -106,7 +107,8 @@ public class UpdateProductInfoActivity extends Activity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UpdateProductInfoActivity.this, MainActivity.class));
+                finish();
+                //startActivity(new Intent(UpdateProductInfoActivity.this, MainActivity.class));
             }
         });
 
@@ -115,7 +117,8 @@ public class UpdateProductInfoActivity extends Activity {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(UpdateProductInfoActivity.this, MainActivity.class));
+                finish();
+
             }
         });
     }

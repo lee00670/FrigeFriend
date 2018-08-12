@@ -55,6 +55,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
     interface OnItemCheckListener {
         void onItemCheck(FridgeItem item);
         void onItemUncheck(FridgeItem item);
+        void onItemClick(FridgeItem item);
     }
     final private OnItemCheckListener onItemClickListener;
 
@@ -93,7 +94,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             public void onClick(View view)
             {
                 //FridgeItem item = (FridgeItem) view.findViewById(R.id.item_layout);
-                //Log.e("test","clicked: "+view.getItemName(i)+", pos: "+i);
+                Log.e("test","clicked: "+fridgeItemList.get(i).getItemName()+", pos: "+i);
+                onItemClickListener.onItemClick(fridgeItemList.get(i));
                 Toast.makeText(context, "click on "+fridgeItemList.get(i).getItemName(), Toast.LENGTH_LONG).show();
             }
         });

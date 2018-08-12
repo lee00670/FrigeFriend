@@ -35,6 +35,9 @@
             android:name=".addActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".UpdateProductInfoActivity"
+            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".ProductInfo"

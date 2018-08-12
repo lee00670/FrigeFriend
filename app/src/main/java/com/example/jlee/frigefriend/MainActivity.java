@@ -167,7 +167,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
             }
         }
+        @Override
+        public void onItemClick(FridgeItem item) {
+            Log.e("test","onItemClick : "+item.getItemName());
+            setUpdateIntent(item);
+            //addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+        }
     };
+
+    private void setUpdateIntent(FridgeItem item)
+    {
+        Intent updateItemIntent = new Intent(this, UpdateProductInfoActivity.class);
+        Gson gson = new Gson();
+        String jsonFridgeItem = gson.toJson(item);
+        String jsonCategory = gson.toJson(CategoryData);
+        Log.e("test","setUpdateIntent : "+jsonFridgeItem);
+        updateItemIntent.putExtra(LoginActivity.EDIT_ITEM, jsonFridgeItem);
+        updateItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategory);
+        startActivity(updateItemIntent);
+    }
     private HashMap<String, Integer> createCategoryHashMap()
     {
         HashMap<String, Integer> hashMapCategory = new HashMap<String, Integer>();
