@@ -8,14 +8,20 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,182 +29,112 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Scanner;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CategoryActivity extends Activity {
+public class CategoryActivity extends AppCompatActivity {
+
+    @BindView(R.id.app_bar_cat)
+    Toolbar toolbar;
+    @BindView(R.id.imageViewClose)
+    ImageView mImageClose;
+    @BindView(R.id.imageViewCat)
+    ImageView mImageViewCat;
+    @BindView(R.id.textViewItemName)
+    TextView mTextViewItemName;
 
     private RecyclerView mRecyclerView;
-    //private RecyclerView.Adapter mAdapter;
     private categoryAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-
-    String jsonStringUserData;
+    String jsonStringFridgeItem;
     String jsonStringCat;
     String jsonStringLC;
+    Boolean bParentActivityUpdate;
+    FridgeItem mSelectedItem;
+    List<CategoryData> listCategoryData;
 
-    int positionUserClicked = 0;
+    int positionUserClicked = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
+        ButterKnife.bind(this);
+
+        //set the action bar with title
+        setSupportActionBar(toolbar);
+        setTitle("Category");
+
         Intent intent = getIntent();
-        jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
+        jsonStringFridgeItem = intent.getStringExtra(LoginActivity.EDIT_ITEM);
         jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
+        bParentActivityUpdate = intent.getBooleanExtra("parentActivityUpdate",false);
 
+        Gson gson = new Gson();
+        mSelectedItem = gson.fromJson(jsonStringFridgeItem, FridgeItem.class);
+        listCategoryData = gson.fromJson(jsonStringCat,new TypeToken<List<CategoryData>>() {}.getType());
 
-        final ArrayList<categoryItem> categoryList = new ArrayList<>();
-//
-//        categoryList.add(new categoryItem(R.drawable.dairy, "Dairy Products"));
-//        categoryList.add(new categoryItem(R.drawable.otherfruits, "Fruits"));
-//        categoryList.add(new categoryItem(R.drawable.otherveggies, "Vegetables"));
-//        categoryList.add(new categoryItem(R.drawable.othermeat, "Meat Products"));
-//        categoryList.add(new categoryItem(R.drawable.otherbakery, "Bakery & Sweets"));
-//        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Beverages"));
-//        categoryList.add(new categoryItem(R.drawable.otherfood, "Other"));
-
-
-        categoryList.add(new categoryItem(R.drawable.milk, "Milk"));
-        categoryList.add(new categoryItem(R.drawable.yogurt, "Yogurt"));
-        categoryList.add(new categoryItem(R.drawable.cheese, "Cheese"));
-        categoryList.add(new categoryItem(R.drawable.butter, "Butter"));
-        categoryList.add(new categoryItem(R.drawable.eggs, "Eggs"));
-
-        categoryList.add(new categoryItem(R.drawable.pork, "Beef"));
-        categoryList.add(new categoryItem(R.drawable.chicken, "Chicken"));
-        categoryList.add(new categoryItem(R.drawable.pork, "Lamb"));
-        categoryList.add(new categoryItem(R.drawable.chicken, "Turkey"));
-        categoryList.add(new categoryItem(R.drawable.pork, "Pork"));
-        categoryList.add(new categoryItem(R.drawable.sausague, "Sausages"));
-        categoryList.add(new categoryItem(R.drawable.bacon, "Bacon"));
-        categoryList.add(new categoryItem(R.drawable.salami, "Salami"));
-        categoryList.add(new categoryItem(R.drawable.fish, "Fish"));
-        categoryList.add(new categoryItem(R.drawable.othermeat, "Other Meat"));
-
-        categoryList.add(new categoryItem(R.drawable.apple, "Apple"));
-        categoryList.add(new categoryItem(R.drawable.pineapple, "Pineapple"));
-        categoryList.add(new categoryItem(R.drawable.pear, "Pear"));
-        categoryList.add(new categoryItem(R.drawable.orange, "Oranges"));
-        categoryList.add(new categoryItem(R.drawable.lemon, "Lemon"));
-        categoryList.add(new categoryItem(R.drawable.melon,"Melon"));
-        categoryList.add(new categoryItem(R.drawable.kiwi, "Kiwi"));
-        categoryList.add(new categoryItem(R.drawable.grapes, "Grapes"));
-        categoryList.add(new categoryItem(R.drawable.strawberry, "Strawberries"));
-        categoryList.add(new categoryItem(R.drawable.berries, "Berries"));
-        categoryList.add(new categoryItem(R.drawable.avocado, "Avocado"));
-        categoryList.add(new categoryItem(R.drawable.otherfruits, "Other Fruit"));
-
-        categoryList.add(new categoryItem(R.drawable.cucummber, "Cucumber"));
-        categoryList.add(new categoryItem(R.drawable.broccoli, "Broccoli"));
-        categoryList.add(new categoryItem(R.drawable.carrots, "Carrots"));
-        categoryList.add(new categoryItem(R.drawable.pepper, "Pepper"));
-        categoryList.add(new categoryItem(R.drawable.lettuce, "Lettuce"));
-        categoryList.add(new categoryItem(R.drawable.tomato, "Tomatoes"));
-        categoryList.add(new categoryItem(R.drawable.potato, "Potatoes"));
-        categoryList.add(new categoryItem(R.drawable.mushroom, "Mushrooms"));
-        categoryList.add(new categoryItem(R.drawable.garlic, "Garlic"));
-        categoryList.add(new categoryItem(R.drawable.ginger, "Ginger"));
-        categoryList.add(new categoryItem(R.drawable.onion, "Onions"));
-        categoryList.add(new categoryItem(R.drawable.chili, "Chili"));
-        categoryList.add(new categoryItem(R.drawable.corn, "Corn"));
-        categoryList.add(new categoryItem(R.drawable.peas, "Peas"));
-        categoryList.add(new categoryItem(R.drawable.eggplant, "Eggplant"));
-        categoryList.add(new categoryItem(R.drawable.herbs, "Herbs"));
-        categoryList.add(new categoryItem(R.drawable.otherveggies, "Other Vegetables"));
-
-        categoryList.add(new categoryItem(R.drawable.bread, "Bread"));
-        categoryList.add(new categoryItem(R.drawable.bagel, "Bagel"));
-        categoryList.add(new categoryItem(R.drawable.donuts, "Doughnuts"));
-        categoryList.add(new categoryItem(R.drawable.cake, "Cake"));
-        categoryList.add(new categoryItem(R.drawable.cookies, "Cookies"));
-        categoryList.add(new categoryItem(R.drawable.chocolate, "Chocolate"));
-        categoryList.add(new categoryItem(R.drawable.pie, "Pie"));
-        categoryList.add(new categoryItem(R.drawable.icecream, "Ice Cream"));
-        categoryList.add(new categoryItem(R.drawable.otherbakery, "Other Bakery&Sweets"));
-
-        categoryList.add(new categoryItem(R.drawable.softdrink, "Soft Drinks"));
-        categoryList.add(new categoryItem(R.drawable.soda, "Soda"));
-        categoryList.add(new categoryItem(R.drawable.jucie, "Juice"));
-        categoryList.add(new categoryItem(R.drawable.icedtea, "Iced Tea"));
-        categoryList.add(new categoryItem(R.drawable.coffee, "Coffee"));
-        categoryList.add(new categoryItem(R.drawable.water, "Water"));
-        categoryList.add(new categoryItem(R.drawable.smoothie, "Smoothies"));
-        categoryList.add(new categoryItem(R.drawable.otherbeverages, "Other Beverages"));
-
-
-
-        mRecyclerView = findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerViewCategory);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new categoryAdapter(categoryList);
+        mAdapter = new categoryAdapter(listCategoryData);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-
+        mImageViewCat.setImageResource(mSelectedItem.getCatImg());
+        mTextViewItemName.setText(mSelectedItem.getItemName());
 
         mAdapter.setOnItemClickListener(new categoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                  //categoryList.get(position).changetext1("Clicked");
-                categoryList.get(position).displayCheck(R.drawable.ic_check_black_24dp);
+                //listCategoryData.get(position).displayCheck(R.drawable.ic_check_black_24dp);
                 Log.e("test","position: "+position+" previous: "+ positionUserClicked);
-                categoryList.get(positionUserClicked).hideCheck(R.drawable.berries);
+                //listCategoryData.get(positionUserClicked).hideCheck(R.drawable.berries);
+                ImageView imageViewCat = findViewById(R.id.imageViewCat);
+                imageViewCat.setImageResource(listCategoryData.get(position).getCatImg());
+                listCategoryData.get(position).setChecked(true);
+                if(positionUserClicked > -1){
+                    listCategoryData.get(positionUserClicked).setChecked(false);
+                }
                 positionUserClicked = position;
-
-                mAdapter.notifyItemChanged(position);
-            }
-        });
-
-
-
-        TextView btn = findViewById(R.id.textViewCloseIcon);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CategoryActivity.this, ProductInfo.class));
-            }
-        });
-
-        // Add btn when clicked directs to Product Info Activity
-        View btnAdd = findViewById(R.id.Button_fab);
-
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(CategoryActivity.this, ProductInfo.class));
-            }
-        });
-
-        View btnClose = findViewById(R.id.textViewCloseIcon);
-
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(CategoryActivity.this, ProductInfo.class));
-                finish();
+                mAdapter.notifyDataSetChanged();
             }
         });
 
 
     } // END of protected void onCreate(Bundle savedInstanceState)
 
+    @OnClick({R.id.fab_save_category, R.id.imageViewClose})
+    public void saveCategory(View v)
+    {
+        if(v.getId() == R.id.fab_save_category)
+        {
+            if(positionUserClicked > -1){
+                mSelectedItem.setCatImg(listCategoryData.get(positionUserClicked).getCatImg());
+                int catid = listCategoryData.get(positionUserClicked).getCatID();
+                mSelectedItem.setCatID(catid);
+                Log.e("test", "categoryActivity: cat id: "+listCategoryData.get(positionUserClicked).getCatID());
+                Log.e("test", "categoryActivity: cat id: "+catid);
+                Log.e("test", "categoryActivity: cat id: "+mSelectedItem.getCatID());
+            }
+        }
 
-
-//    @OnClick(R.id.Button_fab)
-//    public void addItem()
-//    {
-//        Intent addItemIntent = new Intent(this, ProductInfo.class);
-//        addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
-//        addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
-//        addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
-//        startActivity(addItemIntent);
-//    }
+        Intent upIntent = new Intent(this, bParentActivityUpdate?UpdateProductInfoActivity.class:ProductInfo.class);
+        upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Gson gson = new Gson();
+        String jsonEditedItem = gson.toJson(mSelectedItem);
+        upIntent.putExtra(LoginActivity.EDIT_ITEM,jsonEditedItem);
+        Log.e("test", "categoryActivity: jsonEditedItem: "+jsonEditedItem);
+        setResult(RESULT_OK, upIntent); //go back to main activity
+        finish();
+    }
 
 
 
