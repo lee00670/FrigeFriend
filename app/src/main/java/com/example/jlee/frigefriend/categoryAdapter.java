@@ -10,10 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.CategoryViewHolder>{
 
-    private  ArrayList<categoryItem> mcategoryList;
+    private  List<CategoryData> mCategoryList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -25,17 +26,14 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
     }
 
     public static class CategoryViewHolder extends RecyclerView.ViewHolder{
-        public ImageView mImageView;
-        public TextView mTextView1;
+        public ImageView mImageViewCat;
+        public TextView mTextViewCat;
         public ImageView mImageCheck;
-
-
-
         public CategoryViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
 
-            mImageView = itemView.findViewById(R.id.imageview1);
-            mTextView1 = itemView.findViewById(R.id.textView1);
+            mImageViewCat = itemView.findViewById(R.id.imageCat);
+            mTextViewCat = itemView.findViewById(R.id.textViewCat);
             mImageCheck = itemView.findViewById(R.id.imageViewCheckMark);
 
 
@@ -54,8 +52,8 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
         }
     }
 
-    public  categoryAdapter(ArrayList<categoryItem> categoryList){
-        mcategoryList = categoryList;
+    public  categoryAdapter(List<CategoryData> categoryList){
+        mCategoryList = categoryList;
     }
 
     @NonNull
@@ -68,15 +66,17 @@ public class categoryAdapter extends RecyclerView.Adapter<categoryAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder categoryViewHolder, int i) {
-        categoryItem currentItem = mcategoryList.get(i);
+        CategoryData currentItem = mCategoryList.get(i);
 
-        categoryViewHolder.mImageView.setImageResource(currentItem.getmImageResource());
-        categoryViewHolder.mTextView1.setText(currentItem.getmText1());
-        categoryViewHolder.mImageCheck.setImageResource(currentItem.getCheckImageResource());
+        categoryViewHolder.mImageViewCat.setImageResource(currentItem.getCatImg());
+        categoryViewHolder.mTextViewCat.setText(currentItem.getCatName());
+        categoryViewHolder.mImageCheck.setImageResource(R.drawable.ic_check_black_24dp);
+        categoryViewHolder.mImageCheck.setVisibility(currentItem.isChecked()?View.VISIBLE:View.INVISIBLE);
+
     }
 
     @Override
     public int getItemCount() {
-        return mcategoryList.size();
+        return mCategoryList.size();
     }
 }
