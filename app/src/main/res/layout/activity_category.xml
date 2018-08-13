@@ -56,7 +56,7 @@ app:layout_constraintVertical_bias="0.0">
 </LinearLayout>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textViewItemName"
         android:layout_width="159dp"
         android:layout_height="37dp"
         android:layout_marginEnd="92dp"
@@ -85,7 +85,7 @@ app:layout_constraintVertical_bias="0.0">
         app:layout_constraintBottom_toTopOf="@+id/spinnerUnits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintStart_toEndOf="@+id/textViewItemName"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <TextView
@@ -98,7 +98,7 @@ app:layout_constraintVertical_bias="0.0">
         android:layout_marginTop="16dp"
         android:drawableLeft="@drawable/ic_photo_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/textviewQuantity"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/textViewItemName"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
@@ -226,7 +226,7 @@ app:layout_constraintVertical_bias="0.0">
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemName">
 
     </view>
 

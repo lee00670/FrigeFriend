@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private static final int SORT_BY_DATE = 0;
     public static final int SORT_BY_NAME = 1;
     public static final int SORT_BY_CAT = 2;
+    public static final int REQUEST_CODE_CART = 1;
+    public static final int REQUEST_CODE_EDIT = 2;
     private int sort_by = SORT_BY_DATE;
 
     @Override
@@ -127,13 +129,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setCategoryData();
 
         //for test input
-        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
-        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "cup", "20170801",0));
-        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "cup", "20180801",0));
-        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "cup", "20180803",0));
-        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "cup", "20180715",0));
-        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "cup", "20180714",0));
-        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.eggs, 1, "cup", "20180716",0));
+        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "Kilogram(s)", "20170801",0));
+        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "Package(s)", "20170801",0));
+        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "Package(s)", "20180801",0));
+        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "can(s)", "20180803",0));
+        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "Jar(s)", "20180715",0));
+        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "Jar(s)", "20180714",0));
+        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.eggs, 1, "Jar(s)", "20180716",0));
 
         initializeViews();
         MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
@@ -184,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test","setUpdateIntent : "+jsonFridgeItem);
         updateItemIntent.putExtra(LoginActivity.EDIT_ITEM, jsonFridgeItem);
         updateItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategory);
-        startActivity(updateItemIntent);
+        startActivityForResult(updateItemIntent, REQUEST_CODE_EDIT);
     }
     private HashMap<String, Integer> createCategoryHashMap()
     {
@@ -337,18 +339,46 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         viewCartIntent.putExtra(LoginActivity.CART_DATA, jsonCartList);
 
         viewCartIntent.putExtra(LoginActivity.USER_EMAIL, userData.getUserEmail());
-        startActivityForResult(viewCartIntent, 1);
+        startActivityForResult(viewCartIntent, REQUEST_CODE_CART);
         //startActivity(viewCartIntent);
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        if (requestCode == REQUEST_CODE_CART) {
             if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
                 String jsonStringCartData = data.getStringExtra(LoginActivity.CART_DATA);
                 Gson gson = new Gson();
                 myCartList = gson.fromJson(jsonStringCartData,new TypeToken<List<CartItem>>() {}.getType());
             }
+        }else if (requestCode == REQUEST_CODE_EDIT) {
+            if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+
+                String jsonEditedItem = data.getStringExtra(LoginActivity.EDIT_ITEM);
+                Log.e("test", "REQUEST_CODE_EDIT: "+jsonEditedItem);
+                Gson gson = new Gson();
+                FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
+                updateItem(item);
+            }
         }
+    }
+
+    public void updateItem(FridgeItem updatedItem)
+    {
+        Log.e("test", "updateItem: "+updatedItem);
+        //find the updated item
+        for(FridgeItem item: listFridgeItem)
+        {
+            if(item.getItemID() == updatedItem.getItemID())
+            {
+                item.setCatID(updatedItem.getCatID());
+                item.setCatImg(updatedItem.getCatImg());
+                item.setQuantity(updatedItem.getQuantity());
+                item.setQuantityUnit(updatedItem.getQuantityUnit());
+                item.setExpDate(updatedItem.getExpDate());
+            }
+
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

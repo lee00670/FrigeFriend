@@ -7,23 +7,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Activity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import butterknife.OnClick;
 
 
 public class ProductInfo extends Activity {
@@ -52,7 +44,7 @@ public class ProductInfo extends Activity {
         ImageView imageView = findViewById(R.id.textViewImgHolder);
         imageView.setImageResource(imageRes);
 
-        TextView textView1 = findViewById(R.id.textView4);
+        TextView textView1 = findViewById(R.id.textViewItemName);
         textView1.setText(line1);
 
 //        Displays Quantity in dropdown list
