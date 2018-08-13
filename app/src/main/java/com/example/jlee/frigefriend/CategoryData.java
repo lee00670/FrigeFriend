@@ -6,12 +6,23 @@ public class CategoryData {
     private String catName;
     private int catImg;
     private int LCID;
+    private boolean checked;
 
-    public CategoryData(int catID, String catName, int catImg, int LCID) {
+    public CategoryData(int catID, String catName, int catImg, int LCID, boolean checked) {
         this.catID = catID;
         this.catName = catName;
         this.catImg = catImg;
         this.LCID = LCID;
+        this.checked = checked;
+    }
+
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public int getCatID() {
@@ -49,6 +60,6 @@ public class CategoryData {
     @Override
     public String toString() {
         return "{\"catID\" : " + catID + ", \"catName\" : " + catName + ", \"catImg\" : " + catImg+
-                ", \"LCID\" : " + LCID+ "}";
+                ", \"LCID\" : " + LCID+ ", \"checked\" : " + checked+"}";
     }
 }
