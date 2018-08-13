@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static final int SORT_BY_CAT = 2;
     public static final int REQUEST_CODE_CART = 1;
     public static final int REQUEST_CODE_EDIT = 2;
+    public static final int REQUEST_CODE_EDIT_CAT = 3;
     private int sort_by = SORT_BY_DATE;
 
     @Override
@@ -129,9 +130,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         setCategoryData();
 
         //for test input
-        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 17, R.drawable.milk, 1, "Kilogram(s)", "20170801",0));
-        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 17, R.drawable.milk, 1, "Package(s)", "20170801",0));
-        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 17, R.drawable.milk, 1, "Package(s)", "20180801",0));
+        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 0, R.drawable.milk, 1, "Kilogram(s)", "20170801",0));
+        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 0, R.drawable.milk, 1, "Package(s)", "20170801",0));
+        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 0, R.drawable.milk, 1, "Package(s)", "20180801",0));
         listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "can(s)", "20180803",0));
         listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "Jar(s)", "20180715",0));
         listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "Jar(s)", "20180714",0));
@@ -358,6 +359,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Gson gson = new Gson();
                 FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
                 updateItem(item);
+
             }
         }
     }
@@ -379,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         }
         adapter.notifyDataSetChanged();
+        sortData(sort_by);
     }
 
     @Override
@@ -457,6 +460,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 //                PorterDuffColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY));
 //        sortDate.setCompoundDrawablesRelativeWithIntrinsicBounds(mDrawable, 0, 0, 0b0);
         sortData(SORT_BY_DATE);
+        sort_by = SORT_BY_DATE;
         setTextViewDrawableColor(sortDate, R.color.colorAccent );
         setTextViewDrawableColor(sortName, R.color.colorPrimaryDark );
         setTextViewDrawableColor(sortCat, R.color.colorPrimaryDark );
@@ -468,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @OnClick(R.id.sortName)
     void sortByName() {
         sortData(SORT_BY_NAME);
+        sort_by = SORT_BY_NAME;
         setTextViewDrawableColor(sortDate, R.color.colorPrimaryDark );
         setTextViewDrawableColor(sortName, R.color.colorAccent );
         setTextViewDrawableColor(sortCat, R.color.colorPrimaryDark );
@@ -478,6 +483,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @OnClick(R.id.sortCat)
     void sortByCat() {
         sortData(SORT_BY_CAT);
+        sort_by = SORT_BY_CAT;
         setTextViewDrawableColor(sortDate, R.color.colorPrimaryDark );
         setTextViewDrawableColor(sortName, R.color.colorPrimaryDark );
         setTextViewDrawableColor(sortCat, R.color.colorAccent );
