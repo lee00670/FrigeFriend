@@ -43,6 +43,8 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
     FloatingActionButton mFabAddToCart;
     @BindView( (R.id.textViewCategory))
     TextView mTextViewCategory;
+    @BindView( (R.id.textViewItemName))
+    TextView mTextViewItemName;
     @BindView( (R.id.imageViewCategory))
     ImageView mImageViewCategory;
     @BindView( (R.id.catImage))
@@ -58,8 +60,8 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
     String jsonStringCat;
     String jsonStringLC;
     FridgeItem mSelectedItem;
-    List<CategoryData> listCategoryData;
     private DatePicker datePicker;
+    FridgeItem mItemCategorySaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,6 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
         jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
         Gson gson = new Gson();
         mSelectedItem = gson.fromJson(jsonFridgeItem, FridgeItem.class);
-        listCategoryData = gson.fromJson(jsonStringCat,new TypeToken<List<CategoryData>>() {}.getType());
 
         initView();
 
@@ -87,11 +88,8 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
     public void initView(){
 
         // set item image and name
-        ImageView imageView = findViewById(R.id.imageViewCategory);
-        imageView.setImageResource(mSelectedItem.getCatImg());
-
-        TextView textView1 = findViewById(R.id.textViewItemName);
-        textView1.setText(mSelectedItem.getItemName());
+        mImageViewCategory.setImageResource(mSelectedItem.getCatImg());
+        mTextViewItemName.setText(mSelectedItem.getItemName());
 
         // Displays Quantity in dropdown list
         Spinner quantitySpinner = (Spinner) findViewById(R.id.spinnerQuantity);
@@ -112,10 +110,6 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
         unitsSpinner.setSelection(spinnerPosition);
         Log.e("test", "selection: "+spinnerPosition);
         Log.e("test", "getQuantityUnit: "+mSelectedItem.getQuantityUnit());
-
-
-
-
 
         // Date picker
         Calendar cal = Calendar.getInstance();
@@ -149,11 +143,28 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
         Intent CategoryIntent = new Intent(UpdateProductInfoActivity.this, CategoryActivity.class);
         CategoryIntent.putExtra(LoginActivity.CAT_DATA, jsonStringCat);
         CategoryIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
-        UpdateProductInfoActivity.this.startActivity(CategoryIntent);
-
+        Gson gson = new Gson();
+        String jsonEditedItem = gson.toJson(mSelectedItem);
+        CategoryIntent.putExtra(LoginActivity.EDIT_ITEM, jsonEditedItem);
+        CategoryIntent.putExtra("parentActivityUpdate", true);
+        startActivityForResult(CategoryIntent, MainActivity.REQUEST_CODE_EDIT_CAT);
     }
 
-    public FridgeItem saveCurrentItem()
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivity.REQUEST_CODE_EDIT_CAT) {
+            if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+                String jsonEditedItem = data.getStringExtra(LoginActivity.EDIT_ITEM);
+                Gson gson = new Gson();
+                mItemCategorySaved = gson.fromJson(jsonEditedItem,FridgeItem.class);
+                Log.e("test", "updateItem: "+mItemCategorySaved);
+                Log.e("test", "update: cat id: "+mItemCategorySaved.getCatID());
+                mImageViewCategory.setImageResource(mItemCategorySaved.getCatImg());
+            }
+        }
+    }
+
+    public void saveCurrentItem()
     {
         //save the current date to the item
         Calendar calendar = Calendar.getInstance();
@@ -170,7 +181,13 @@ public class UpdateProductInfoActivity extends AppCompatActivity {
         Log.e("test", "quanUnit: "+mSelectedItem.getQuantityUnit());
 
         //save the category
-        return mSelectedItem;
+        if(mItemCategorySaved != null)
+        {
+            mSelectedItem.setCatID(mItemCategorySaved.getCatID());
+            mSelectedItem.setCatImg(mItemCategorySaved.getCatImg());
+            Log.e("test", "cat id: "+mSelectedItem.getCatID());
+        }
+
     }
 
     @Override
