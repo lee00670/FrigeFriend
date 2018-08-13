@@ -51,7 +51,7 @@ public class FridgeItem {
     }
 
     public void setCatID(int catID) {
-        catID = catID;
+        this.catID = catID;
     }
 
     public void setItemID(int itemID) {
