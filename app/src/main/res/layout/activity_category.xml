@@ -5,233 +5,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CategoryActivity">
-
+    <include
+        android:id="@+id/app_bar_cat"
+        layout="@layout/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
 
 <LinearLayout
-android:id="@+id/linearLayout"
-android:layout_width="0dp"
-android:layout_height="45dp"
-android:layout_marginBottom="8dp"
-android:background="@color/colorPrimary"
-android:orientation="vertical"
-app:layout_constraintBottom_toBottomOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintHorizontal_bias="0.0"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintTop_toTopOf="parent"
-app:layout_constraintVertical_bias="0.0">
-
-
-<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/linearLayout">
+    <FrameLayout
+        android:id="@+id/framelayout_cat"
+        android:layout_marginTop="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="2dp"
+            android:layout_marginLeft="30dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageViewCat"
+            android:layout_gravity="left|center_vertical"/>
 
+        <TextView
+            android:id="@+id/textViewItemName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="categoryName"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"/>
 
-    <TextView
-        android:id="@+id/textViewAppDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="Fridge Friend"
-        android:textColor="@color/colorMenu"
-        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageViewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_close_black_24dp"
+            />
+    </FrameLayout>
 
-
-</android.support.constraint.ConstraintLayout>
-
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginTop="10dp"
+        android:id="@+id/recyclerViewCategory"
+        class="android.support.v7.widget.RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
-
-    <TextView
-        android:id="@+id/textViewItemName"
-        android:layout_width="159dp"
-        android:layout_height="37dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="16dp"
-        android:text="Item Name"
-
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:text="Item Name" />
-
-    <TextView
-        android:id="@+id/textViewCloseIcon"
-        android:layout_width="44dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="85dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="8dp"
-        android:drawableRight="@drawable/ic_close_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerUnits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewItemName"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/textViewImgHolder"
-        android:layout_width="65dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="26dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/ic_photo_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/textviewQuantity"
-        app:layout_constraintEnd_toStartOf="@+id/textViewItemName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/Button_fab"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="368dp"
-        android:backgroundTint="@color/colorAccent"
-        android:clickable="true"
-        android:src="@drawable/baseline_add_white_small_18dp"
-        app:fabSize="normal"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.817"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCloseIcon"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
 
-    <!--<TextView-->
-        <!--android:id="@+id/textViewVeggies"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="23dp"-->
-        <!--android:text="Vegetables"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="292dp"-->
-        <!--tools:text="Vegetables" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewOtherFood"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="23dp"-->
-        <!--android:text="Other Food"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="436dp"-->
-        <!--tools:text="Other Food" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewBakeryPro"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="23dp"-->
-        <!--android:text="Bakery Products"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="389dp"-->
-        <!--tools:text="Bakery Products" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewBeverages"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="23dp"-->
-        <!--android:text="Beverages"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="339dp"-->
-        <!--tools:text="Beverages" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewFruits2"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="23dp"-->
-        <!--android:text="Fruits"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="246dp"-->
-        <!--tools:text="Fruits" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewMeat2"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="26dp"-->
-        <!--android:text="Meat"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--tools:layout_editor_absoluteX="16dp"-->
-        <!--tools:layout_editor_absoluteY="195dp"-->
-        <!--tools:text="Meat" />-->
-
-    <!--<TextView-->
-        <!--android:id="@+id/textViewDairyPro2"-->
-        <!--android:layout_width="262dp"-->
-        <!--android:layout_height="26dp"-->
-        <!--android:layout_marginBottom="13dp"-->
-        <!--android:layout_marginEnd="106dp"-->
-        <!--android:layout_marginStart="16dp"-->
-        <!--android:layout_marginTop="18dp"-->
-        <!--android:text="Dairy Products"-->
-        <!--android:textColor="@android:color/black"-->
-        <!--android:textSize="14sp"-->
-        <!--android:textStyle="bold"-->
-        <!--app:layout_constraintBottom_toTopOf="@+id/recyclerView"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/textView4"-->
-        <!--tools:text="Dairy products" />-->
-
-    <view
-        android:id="@+id/recyclerView"
-        class="android.support.v7.widget.RecyclerView"
-        android:layout_width="398dp"
-        android:layout_height="455dp"
-        android:layout_marginBottom="28dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="17dp"
-        android:background="@android:color/darker_gray"
-        android:padding="4dp"
-        android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewItemName">
-
-    </view>
-
-
-
-
+        >
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_save_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:backgroundTint="@color/colorAccent"
+            />
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Select"
+            android:elevation="6dp"
+            android:textSize="16dp"
+            android:textColor="#fff"
+            app:layout_anchor="@id/fab_save_category"
+            app:layout_anchorGravity="center"/>
+    </android.support.design.widget.CoordinatorLayout>
 
 </android.support.constraint.ConstraintLayout>

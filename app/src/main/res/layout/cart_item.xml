@@ -16,10 +16,10 @@
 
         <ImageView
             android:id="@+id/catImg"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="center_vertical"
-            android:padding="0.75dp"
+            android:padding="2dp"
             android:scaleType="centerCrop" />
 
         <LinearLayout

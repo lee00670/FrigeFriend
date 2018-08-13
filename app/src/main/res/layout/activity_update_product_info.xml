@@ -22,9 +22,9 @@
         app:layout_constraintTop_toBottomOf="@+id/app_bar_update">
 
         <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:padding="0.75dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="2dp"
             android:scaleType="centerCrop"
             android:id="@+id/imageViewCategory"/>
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-
+            android:textSize="16dp"
             android:id="@+id/textViewItemName"/>
 
     </LinearLayout>
