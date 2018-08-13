@@ -53,7 +53,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/textViewItemName"
         android:layout_width="159dp"
         android:layout_height="37dp"
@@ -62,6 +62,8 @@
         android:layout_marginStart="133dp"
         android:layout_marginTop="36dp"
 
+        android:editable="true"
+        android:focusableInTouchMode="true"
         android:text="Item Name"
         android:textColor="@android:color/black"
         android:textSize="24sp"
