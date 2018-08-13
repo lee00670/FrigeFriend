@@ -1,7 +1,10 @@
 package com.example.jlee.frigefriend;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,25 +95,46 @@ public class addActivity extends AppCompatActivity {
         });
 
         // sort List Alphabetically
-        TextView sortAlpha = findViewById(R.id.sortAlpha);
+        final TextView sortAlpha = findViewById(R.id.sortAlpha);
         sortAlpha.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sortList(MainActivity.SORT_BY_NAME);
+
+                // Change color when clicked
+                setTextViewDrawableColor(sortAlpha, R.color.colorAccent );
+                sortAlpha.setTextColor(getResources().getColor(R.color.colorAccent));
+                //sortCat.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+
             }
         });
 
         // sort List categorically
-        TextView sortCat = findViewById(R.id.sortCat1);
+        final TextView sortCat = findViewById(R.id.sortCat1);
         sortCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sortList(MainActivity.SORT_BY_CAT);
+
+                setTextViewDrawableColor(sortCat, R.color.colorAccent );
+                sortCat.setTextColor(getResources().getColor(R.color.colorAccent));
+                sortAlpha.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
         });
 
 
     } // END of  protected void onCreate(Bundle savedInstanceState)
+
+    // To change color when on click Alpha or Cat.
+    private void setTextViewDrawableColor(TextView textView, int color) {
+        for (Drawable drawable : textView.getCompoundDrawables()) {
+            if (drawable != null) {
+                DrawableCompat.setTint(drawable, ContextCompat.getColor(getApplicationContext(), color) );
+                //drawable.setColorFilter(new PorterDuffColorFilter(getResources().getColor(color), PorterDuff.Mode.SRC_IN));
+            }
+        }
+    }
+
 
     // search bar
     private void filter (String text){
