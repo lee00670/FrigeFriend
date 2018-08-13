@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class ProductInfo extends Activity {
         ImageView imageView = findViewById(R.id.textViewImgHolder);
         imageView.setImageResource(imageRes);
 
-        TextView textView1 = findViewById(R.id.textViewItemName);
+        EditText textView1 = findViewById(R.id.textViewItemName);
         textView1.setText(line1);
 
 //        Displays Quantity in dropdown list
@@ -138,6 +139,15 @@ public class ProductInfo extends Activity {
             }
         });
 
+        // click Dots directs to Category activity
+        View btnDots = findViewById(R.id.imageView);
+        btnDots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 startActivity(new Intent(ProductInfo.this, CategoryActivity.class));
+                //finish();
+            }
+        });
 
     }
 
