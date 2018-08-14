@@ -47,7 +47,7 @@ public class addActivity extends AppCompatActivity {
     private String jsonStringCatData;
     private String jsonStringLCatData;
 
-    @BindView(R.id.app_bar_update)
+    @BindView(R.id.app_bar)
     Toolbar toolbar;
 
 
@@ -56,10 +56,10 @@ public class addActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        //set the action bar with title
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(R.string.addMenu);
+//        //set the action bar with title
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        setTitle(R.string.addMenu);
 
         //get the category list from the intent
         Intent intent = getIntent();
