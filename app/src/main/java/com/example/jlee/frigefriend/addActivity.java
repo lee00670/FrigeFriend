@@ -8,6 +8,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,11 +47,19 @@ public class addActivity extends AppCompatActivity {
     private String jsonStringCatData;
     private String jsonStringLCatData;
 
+    @BindView(R.id.app_bar_update)
+    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        //set the action bar with title
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(R.string.addMenu);
 
         //get the category list from the intent
         Intent intent = getIntent();
@@ -64,15 +73,7 @@ public class addActivity extends AppCompatActivity {
         createAddList();
         buildRecyclerView();
 
-    // (+) btn when clicked directs to product Info activity
-        View btnAdd = findViewById(R.id.Button_fab_addActivity);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(addActivity.this, ProductInfo.class));
-            }
-        });
 
     // Search Bar
         EditText editTextSearch = findViewById(R.id.editTextSearchBar);
