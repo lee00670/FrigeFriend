@@ -6,6 +6,7 @@
     <string name="logoutMenu">Log Out</string>
     <string name="cartMenu">My Cart</string>
     <string name="editMenu">Edit Item</string>
+    <string name="addMenu">Add New Item</string>
     <!--Product Info Activity & Update Product Info Activity -->
     <string-array name="quantityNum">
         <item>0</item>
