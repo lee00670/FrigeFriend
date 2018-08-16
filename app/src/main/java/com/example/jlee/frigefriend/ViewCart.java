@@ -4,6 +4,7 @@
 package com.example.jlee.frigefriend;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
@@ -23,7 +24,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopeer.itemtouchhelperextension.ItemTouchHelperExtension;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -99,9 +103,37 @@ public class ViewCart extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    ViewCartAdapter.OnSpinnerQuantityClickListener onItemCheckListener = new ViewCartAdapter.OnSpinnerQuantityClickListener() {
+    public void savePreference(List<CartItem> listCart)
+    {
+        SharedPreferences pref = getSharedPreferences(MainActivity.PREFERENCE, MODE_PRIVATE);
+
+        //get the user data from shared preference
+        String sJsonUserData = pref.getString("ud", "");
+        Log.e("test", "sSPUserData: "+ sJsonUserData);
+        Gson gson = new Gson();
+        UserData userData = gson.fromJson(sJsonUserData, UserData.class);
+
+        //update the time of user data
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String dateTime = dateFormat.format(currentDate);
+        Log.e("test", "userData.setUpdateTime(dateTime): "+ dateTime);
+        userData.setUpdateTime(dateTime);
+
+        Log.e("test", "userData: "+ userData);
+        userData.setCartItems(listCart);
+        String sNewJsonUserData = gson.toJson(userData);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("ud", sNewJsonUserData);
+        editor.putString("dt", dateTime);
+        Log.e("test", "sNewJsonUserData: "+ sNewJsonUserData);
+        editor.commit();
+
+    }
+
+    ViewCartAdapter.OnViewCartClickListener onItemCheckListener = new ViewCartAdapter.OnViewCartClickListener() {
         @Override
-        public void onItemCheck(CartItem item, int newQuantity) {
+        public void onQuanItemCheck(CartItem item, int newQuantity) {
             Log.e("test","newQunatity: "+newQuantity);
             for(CartItem i: listCartItem)
             {
@@ -110,11 +142,26 @@ public class ViewCart extends AppCompatActivity {
                     i.setQuantity(newQuantity);
                 }
             }
+            savePreference(listCartItem);
         }
 
         @Override
-        public void onItemUncheck(CartItem item) {
+        public void onQuanUnitItemCheck(CartItem item, String newUnit) {
+            Log.e("test","newUnit: "+newUnit);
+            for(CartItem i: listCartItem)
+            {
+                if(i.getItemID() == item.getItemID())
+                {
+                    i.setQuantityUnit(newUnit);
+                }
+            }
+            savePreference(listCartItem);
+        }
 
+        @Override
+        public void onDeleteItem(List<CartItem> listCart) {
+            Log.e("test","listCart: "+listCart);
+            savePreference(listCartItem);
         }
     };
 
