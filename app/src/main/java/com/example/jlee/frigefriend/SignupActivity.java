@@ -29,6 +29,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
@@ -127,8 +130,13 @@ public class SignupActivity extends AppCompatActivity {
                             }
                         };
 
+                        //update time of saving user data
+                        Date currentDate = Calendar.getInstance().getTime();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                        String dateTime = dateFormat.format(currentDate);
+
                         SignupRequest signupRequest = new SignupRequest(editTextID.getText().toString(),
-                                editTextPW.getText().toString(), editTextEMail.getText().toString(), createIDResponseListener);
+                                editTextPW.getText().toString(), editTextEMail.getText().toString(),dateTime, createIDResponseListener);
                         RequestQueue queue = Volley.newRequestQueue(SignupActivity.this);
                         queue.add(signupRequest);
                         queue.start();

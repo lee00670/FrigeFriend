@@ -37,17 +37,20 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.Holder
     private List<CartItem> cartItemList;
     private Context context;
 
-    interface OnSpinnerQuantityClickListener {
-        void onItemCheck(CartItem item, int newQuantity);
-        void onItemUncheck(CartItem item);
+    interface OnViewCartClickListener {
+        void onQuanItemCheck(CartItem item, int newQuantity);
+        void onQuanUnitItemCheck(CartItem item, String newUnit);
+        void onDeleteItem(List<CartItem> listCart);
     }
-    final private OnSpinnerQuantityClickListener onSpinnerQuantityClickListener;
 
 
-    public ViewCartAdapter(List<CartItem> cartItemList, Context context, @NonNull OnSpinnerQuantityClickListener onSpinnerQuantityClickListener) {
+    final private OnViewCartClickListener onViewCartClickListener;
+
+
+    public ViewCartAdapter(List<CartItem> cartItemList, Context context, @NonNull OnViewCartClickListener onViewCartClickListener) {
         this.cartItemList = cartItemList;
         this.context = context;
-        this.onSpinnerQuantityClickListener = onSpinnerQuantityClickListener;
+        this.onViewCartClickListener = onViewCartClickListener;
     }
 
     @NonNull
@@ -129,6 +132,7 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.Holder
                     CheckBox cb = (CheckBox) v;
                     if (mCheckBox.isChecked()) {
                         doDelete(pos);
+                        mCheckBox.setChecked(false);
                     }
                 }
             });
@@ -136,9 +140,21 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.Holder
                 @Override
                 public void onItemSelected(AdapterView<?> arg0, View arg1,
                                            int arg2, long arg3) {
+                    onViewCartClickListener.onQuanItemCheck(currentItem, mSpinnerQuantity.getSelectedItemPosition());
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
                     // TODO Auto-generated method stub
-                    String msupplier=mSpinnerQuantity.getSelectedItem().toString();
-                    onSpinnerQuantityClickListener.onItemCheck(currentItem, mSpinnerQuantity.getSelectedItemPosition());
+                }
+            });
+            mSpinnerQuantityUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+                    onViewCartClickListener.onQuanUnitItemCheck(currentItem, mSpinnerQuantityUnit.getSelectedItem().toString());
+
                 }
 
                 @Override
@@ -153,6 +169,8 @@ public class ViewCartAdapter extends RecyclerView.Adapter<ViewCartAdapter.Holder
         Log.e("test","cartItemList.size() : "+ cartItemList.size());
 
         cartItemList.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
+        //notifyItemRemoved(adapterPosition);
+        notifyDataSetChanged();
+        onViewCartClickListener.onDeleteItem(cartItemList);
     }
 }

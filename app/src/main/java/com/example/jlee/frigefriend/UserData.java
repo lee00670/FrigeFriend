@@ -9,10 +9,35 @@ public class UserData  {
     private String userID;
     private String userPW;
     private String userEmail;
+    private String updateTime;
+
+
     private List<FridgeItem> fridgeItems;
     private List<CartItem> cartItems;
+    public UserData(String userID, String userPW, String userEmail, String updateTime, List<FridgeItem> fridgeItems, List<CartItem> cartItems) {
+        this.userID = userID;
+        this.userPW = userPW;
+        this.userEmail = userEmail;
+        this.updateTime = updateTime;
+        this.fridgeItems = fridgeItems;
+        this.cartItems = cartItems;
+    }
 
+    public String getUpdateTime() {
+        return updateTime;
+    }
 
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public List<FridgeItem> getFridgeItems() {
+        return fridgeItems;
+    }
+
+    public void setFridgeItems(List<FridgeItem> fridgeItems) {
+        this.fridgeItems = fridgeItems;
+    }
 
     public String getUserID(){
         return userID;
@@ -46,7 +71,11 @@ public class UserData  {
 
     @Override
     public String toString() {
-        return "{\"userID\" : " + userID + ", \"userPW\" : " + userPW + ", \"userEmail\" : " + userEmail+
-                ", \"fridgeItems\" : " + fridgeItems+ ", \"cartItems\" : " + cartItems+ "}";
+        return "{\"userID\" : " + userID +
+                ", \"userPW\" : " + userPW + ", " +
+                "\"userEmail\" : " + userEmail+
+                ", \"updateTime\" : " + updateTime+
+                ", \"fridgeItems\" : " + fridgeItems+
+                ", \"cartItems\" : " + cartItems+ "}";
     }
 }

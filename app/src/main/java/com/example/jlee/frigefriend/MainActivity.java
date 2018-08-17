@@ -7,6 +7,7 @@ package com.example.jlee.frigefriend;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -31,15 +32,21 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.SearchManager;
+import android.widget.Toast;
 
 
-
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopeer.itemtouchhelperextension.ItemTouchHelperExtension;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -52,6 +59,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.versionedparcelable.VersionedParcel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -76,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @BindView( (R.id.fabDelete))
     FloatingActionButton mFabDelete;
 
+    public static final String PREFERENCE = "com.buildup.frigefriend";
     String jsonStringUserData = null;
     String jsonStringCat = null;
     String jsonStringLC = null;
@@ -92,8 +101,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public ItemTouchHelperExtension.Callback mCallback;
     public ItemTouchHelperExtension mItemTouchHelper;
 
+    //server IP address
     final static public String ServerURL="http://192.168.0.132/";
-    //final static public String ServerURL="http://10.70.146.117/";
+    //final static public String ServerURL="http://10.70.146.167/";
 
     private static final int SORT_BY_DATE = 0;
     public static final int SORT_BY_NAME = 1;
@@ -110,38 +120,180 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
+        //get intent
         Intent intent = getIntent();
         jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
         jsonStringCat = intent.getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLC = intent.getStringExtra(LoginActivity.LC_DATA);
-//        Log.e("test", "UserData:" + jsonStringUserData);
-//        Log.e("test", "Category:" + jsonStringCat);
-//        Log.e("test", "LC:" + jsonStringLC);
 
+        //choose the recent data between server or shared preferences
+        checkSharedPreferences();
+
+        //set the class data with json string files
         Gson gson = new Gson();
         userData = gson.fromJson(jsonStringUserData, UserData.class);
         CategoryData = gson.fromJson(jsonStringCat,new TypeToken<List<CategoryData>>() {}.getType());
         LCData = gson.fromJson(jsonStringLC,new TypeToken<List<LCData>>() {}.getType());
-        Log.e("test", "MaingActivity: userData:" + userData.toString());
-        Log.e("test", "MaingActivity: CategoryData:" + CategoryData.toString());
-        Log.e("test", "MaingActivity: LCData:" + LCData.toString());
+//        Log.e("test", "MaingActivity: userData:" + userData.toString());
+//        Log.e("test", "MaingActivity: CategoryData:" + CategoryData.toString());
+//        Log.e("test", "MaingActivity: LCData:" + LCData.toString());
         listFridgeItem = userData.getFrideItems();
+        myCartList = userData.getCartItems();
+        //initPreference(); // to delete shared preferences for test
+
+        //update the shared preferences with the current user data and category data
+        updatePreferences();
 
         setCategoryData();
 
         //for test input
-        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 0, R.drawable.milk, 1, "Kilogram(s)", "20170801",0));
-        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 0, R.drawable.milk, 1, "Package(s)", "20170801",0));
-        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 0, R.drawable.milk, 1, "Package(s)", "20180801",0));
-        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "can(s)", "20180803",0));
-        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "Jar(s)", "20180715",0));
-        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "Jar(s)", "20180714",0));
-        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.eggs, 1, "Jar(s)", "20180716",0));
+//        listFridgeItem.add(new FridgeItem(14, "Coffee Milk", 0, R.drawable.milk, 1, "Kilogram(s)", "20170801",0));
+//        listFridgeItem.add(new FridgeItem(15, "Strawberry Milk", 0, R.drawable.milk, 1, "Package(s)", "20170801",0));
+//        listFridgeItem.add(new FridgeItem(16, "Coconut Milk", 0, R.drawable.milk, 1, "Package(s)", "20180801",0));
+//        listFridgeItem.add(new FridgeItem(17, "Brown Eggs", 2, R.drawable.eggs, 1, "can(s)", "20180803",0));
+//        listFridgeItem.add(new FridgeItem(18, "Brown Eggs1", 2, R.drawable.eggs, 1, "Jar(s)", "20180715",0));
+//        listFridgeItem.add(new FridgeItem(19, "Brown Eggs2", 2, R.drawable.eggs, 1, "Jar(s)", "20180714",0));
+//        listFridgeItem.add(new FridgeItem(20, "White Egg", 2, R.drawable.eggs, 1, "Jar(s)", "20180716",0));
 
         initializeViews();
         MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
     }
 
+    /*
+    * update json string variables to the recent data between server or shared preferences
+    * */
+    public void checkSharedPreferences()
+    {
+        String sSPDate = getPreferenceString("dt"); // date when the data is saved
+
+        //sSPDate = "2018-08-14T23:18:04Z";
+        if(sSPDate != "")
+        {
+            Gson gson = new Gson();
+            UserData serverData = gson.fromJson(jsonStringUserData, UserData.class);
+            String sServerDate = serverData.getUpdateTime();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            try{
+                Date dSPDate = sdf.parse(sSPDate);
+                Date dServerDate = sdf.parse(sServerDate);
+//                Log.e("test", "dSPDate: "+dSPDate.toString());
+//                Log.e("test", "dServerDate: "+dServerDate.toString());
+                if (dServerDate.before(dSPDate)) {
+
+                    //get the shared preferences for the recent data
+                    Log.e("test",       "updated by SP");
+                    jsonStringUserData = getPreferenceString("ud");
+                    jsonStringCat = getPreferenceString("cd");
+                }
+            }catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /*
+    * update the server json files with current user data and time
+    * */
+    public void updateServerData()
+    {
+        //Log.e("test","updateServerData");
+        Response.Listener<String> responseUpdateListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try
+                {
+                    JSONObject jsonResponse  = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success)
+                    {
+                        Log.e("test", "updated");
+                    }
+                    else
+                    {
+                        Log.e("test", "update failed");
+                    }
+
+                }catch(Exception e)
+                {
+                    Log.e("err", "err");
+                    e.printStackTrace();
+                }
+            }
+        };
+        //update time of saving user data
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String dateTime = dateFormat.format(currentDate);
+        Gson gson = new Gson();
+        String jsonFridgeItems = gson.toJson(userData.getFrideItems());
+        String jsonCartItems = gson.toJson(userData.getCartItems());
+
+        //update the server data with user data (ID, PW, Email, UpdateTime, list of fridge and cart)
+        UpdateRequest updateRequest = new UpdateRequest(userData.getUserID(),
+                userData.getUserPW(), userData.getUserEmail(), userData.getUpdateTime(),
+                jsonFridgeItems, jsonCartItems, responseUpdateListener);
+        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+        queue.add(updateRequest);
+        queue.start();
+    }
+
+    /*
+    * Save the data to the shared preferences with the current class values.
+    * */
+    public void updatePreferences()
+    {
+        Log.e("test","updatePreferences+");
+        //update time of saving user data
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        String dateTime = dateFormat.format(currentDate);
+        userData.setUpdateTime(dateTime);
+
+        Gson gson = new Gson();
+        jsonStringUserData = gson.toJson(userData);
+//        Log.e("test", "Current Date Time : "+dateTime);
+//        Log.e("test", "Current jsonStringUserData: "+jsonStringUserData);
+        setPreference("dt", dateTime);
+        setPreference("ud", jsonStringUserData);
+        setPreference("cd", jsonStringCat);
+    }
+
+/*
+*   remove shared preferences for test
+* */
+    public void initPreference()
+    {
+        SharedPreferences pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.remove("ud");
+        editor.remove("cd");
+        editor.remove("dt");
+        editor.commit();
+
+    }
+    /*
+    * set shared preferenc with key and value
+    * */
+    public void setPreference(String key, String value){
+        Log.e("test","setPreference key: "+key+", value: "+value);
+        SharedPreferences pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+    /*
+    * getPreferenceString : return the string value of key in shared preferences.
+    * */
+    public String getPreferenceString(String key){
+        SharedPreferences pref = getSharedPreferences(PREFERENCE, MODE_PRIVATE);
+        return pref.getString(key, "");
+    }
+
+    /*
+    * Define onItemCheckListener for check button in each fridge item
+    * */
     MainActivityAdapter.OnItemCheckListener onItemCheckListener = new MainActivityAdapter.OnItemCheckListener() {
         @Override
         public void onItemCheck(FridgeItem item) {
@@ -178,17 +330,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
     };
 
+    /*
+    *  setUpdateIntent : set the intent for update item and call UpdateProduceInfoActivity
+    * */
     private void setUpdateIntent(FridgeItem item)
     {
         Intent updateItemIntent = new Intent(this, UpdateProductInfoActivity.class);
         Gson gson = new Gson();
         String jsonFridgeItem = gson.toJson(item);
         String jsonCategory = gson.toJson(CategoryData);
-        Log.e("test","setUpdateIntent : "+jsonFridgeItem);
+        //Log.e("test","setUpdateIntent : "+jsonFridgeItem);
         updateItemIntent.putExtra(LoginActivity.EDIT_ITEM, jsonFridgeItem);
         updateItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategory);
         startActivityForResult(updateItemIntent, REQUEST_CODE_EDIT);
     }
+    /*
+    * Create hash map for category name and image resource
+    * */
     private HashMap<String, Integer> createCategoryHashMap()
     {
         HashMap<String, Integer> hashMapCategory = new HashMap<String, Integer>();
@@ -266,18 +424,25 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         hashMapCategory.put("Other food",          R.drawable.otherfood);
         return hashMapCategory;
     }
+/*
+* setCategoryData() : Set the category image for each category data
+* */
     private void setCategoryData()
     {
         HashMap<String, Integer> catHashMap = createCategoryHashMap();
 
         for( CategoryData catData : CategoryData)
         {
-            Log.e("test", "catName: "+catData.getCatName()+", img : "+catHashMap.get(catData.getCatName()));
+            //Log.e("test", "catName: "+catData.getCatName()+", img : "+catHashMap.get(catData.getCatName()));
             catData.setCatImg(catHashMap.get(catData.getCatName()));
-            Log.e("test", "setCatImg: "+catData.getCatImg());
+            //Log.e("test", "setCatImg: "+catData.getCatImg());
         }
     }
 
+
+    /*
+    * Initialize the recycler view
+    * */
     private void initializeViews()
     {
         rv.setHasFixedSize(true);
@@ -301,6 +466,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     }
 
+    /*
+    * onCreateOptionsMenu : connect the search view to listener
+    * */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -315,6 +483,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return false;
     }
 
+    /*
+    * handle when the text is changed in search view
+    * */
     @Override
     public boolean onQueryTextChange(String newText) {
         newText = newText.toLowerCase();
@@ -332,6 +503,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         return false;
     }
 
+    /*
+    *  GoToMyCart: call viewcart class with cart data and email
+    * */
     public void GoToMyCart()
     {
         Intent viewCartIntent = new Intent(this, ViewCart.class);
@@ -343,6 +517,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         startActivityForResult(viewCartIntent, REQUEST_CODE_CART);
         //startActivity(viewCartIntent);
     }
+
+    /*
+    * onActivityResult after viewing cart or editing an item
+    * */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CART) {
@@ -350,6 +528,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 String jsonStringCartData = data.getStringExtra(LoginActivity.CART_DATA);
                 Gson gson = new Gson();
                 myCartList = gson.fromJson(jsonStringCartData,new TypeToken<List<CartItem>>() {}.getType());
+                userData.setCartItems(myCartList);
+                updateServerData();
             }
         }else if (requestCode == REQUEST_CODE_EDIT) {
             if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
@@ -359,11 +539,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Gson gson = new Gson();
                 FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
                 updateItem(item);
-
+                updateServerData();
             }
         }
     }
 
+    /*
+    * update the specific item in main fridge list and refresh the list
+    * */
     public void updateItem(FridgeItem updatedItem)
     {
         Log.e("test", "updateItem: "+updatedItem);
@@ -382,8 +565,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         adapter.notifyDataSetChanged();
         sortData(sort_by);
+        for(CartItem item: myCartList)
+        {
+            if(item.getItemID() == updatedItem.getItemID())
+            {
+                item.setCatID(updatedItem.getCatID());
+                item.setCatImg(updatedItem.getCatImg());
+            }
+        }
+        userData.setCartItems(myCartList);
+        updatePreferences();
+
     }
 
+    /*
+    * Menu : my cart / logout
+    * */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -392,6 +589,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 break;
 
             case R.id.logoutMenu:
+                updatePreferences();
+                updateServerData();
                 Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
                 finish();
@@ -411,6 +610,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             }
         }
     }
+
+    /*
+    * Sort the main fridge list as the order using collections
+    * */
     private void sortData(int sortOrder)
     {
         switch(sortOrder)
@@ -453,6 +656,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         rv.setAdapter(adapter);
     }
 
+    /*
+     * Click Listener for sorting by date
+     * */
     @OnClick(R.id.sortDate)
     void sortByDate() {
 //        Drawable mDrawable = getApplicationContext().getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp);
@@ -469,6 +675,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         sortCat.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
+    /*
+     * Click Listener for sorting by name
+     * */
     @OnClick(R.id.sortName)
     void sortByName() {
         sortData(SORT_BY_NAME);
@@ -480,6 +689,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         sortName.setTextColor(getResources().getColor(R.color.colorAccent));
         sortCat.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
+    /*
+     * Click Listener for sorting by category
+     * */
     @OnClick(R.id.sortCat)
     void sortByCat() {
         sortData(SORT_BY_CAT);
@@ -492,6 +704,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         sortCat.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
+    /*
+     * Click Listener for add fab button
+     * */
     @OnClick(R.id.floatingActionButton)
     public void addItem()
     {
@@ -504,6 +719,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         startActivity(addItemIntent);
         //startActivityForResult(addItemIntent, 1);
     }
+
+    /*
+     * Click Listener for delete fab button
+     * */
     @OnClick(R.id.fabDelete)
     public void deleteList()
     {
@@ -515,9 +734,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         {
             int index = listFridgeItem.indexOf(item);
             adapter.doDelete(index);
-
         }
 
+        //clear the selected item list
         Iterator<FridgeItem> iter = currentSelectedItems.iterator();
         while (iter.hasNext())
         {
@@ -529,13 +748,18 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter.notifyDataSetChanged();
     }
 
+    /*
+    * Click Listener for Add to Cart fab button
+    * */
     @OnClick(R.id.fabAddToCart)
     public void addToCart()
     {
         mFab.setVisibility(View.VISIBLE);
         mFabAddToCart.setVisibility(View.INVISIBLE);
         mFabDelete.setVisibility(View.INVISIBLE);
-        Log.e("test","fabAddToCart:"+ this.currentSelectedItems.size());
+        //Log.e("test","fabAddToCart:"+ this.currentSelectedItems.size());
+
+        // add selected items to carrList
         for(FridgeItem item: currentSelectedItems)
         {
             int index = listFridgeItem.indexOf(item);
@@ -543,9 +767,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             Boolean found = false;
             for(CartItem cartItem: myCartList)
             {
-                if(cartItem.getItemID() == item.getItemID())
+                // if the selected item is already in the cartlist, then just increase the number of the quantity
+                if((cartItem.getItemID() == item.getItemID())
+                        && (cartItem.getItemName().equals(item.getItemName())))
                 {
                     cartItem.setQuantity(cartItem.getQuantity() + 1);
+                    //cartItem.setQuantityUnit(item.getQuantityUnit());
+                    cartItem.setCatImg(item.getCatImg());
                     found = true;
                     break;
                 }

@@ -9,7 +9,7 @@ This is Fridge Friend application which manages the freshness of fridge items by
  - cart list to buy next time
 
 ### Authors
- * Jieun Lee - login, signup, food list and cart. 
+ * Jieun Lee - login, signup, edit and delete food list and cart. 
  * Hadiyah Dhodhi - food item information, category, add view. 
 
 
