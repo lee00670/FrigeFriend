@@ -105,12 +105,13 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     final static public String ServerURL="http://192.168.0.132/";
     //final static public String ServerURL="http://10.70.146.167/";
 
-    private static final int SORT_BY_DATE = 0;
+    public static final int SORT_BY_DATE = 0;
     public static final int SORT_BY_NAME = 1;
     public static final int SORT_BY_CAT = 2;
     public static final int REQUEST_CODE_CART = 1;
     public static final int REQUEST_CODE_EDIT = 2;
     public static final int REQUEST_CODE_EDIT_CAT = 3;
+    public static final int REQUEST_CODE_ADD = 4;
     private int sort_by = SORT_BY_DATE;
 
     @Override
@@ -542,6 +543,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 updateServerData();
             }
         }
+        else if (requestCode == REQUEST_CODE_ADD) {
+            if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
+
+                //String jsonEditedItem = data.getStringExtra(LoginActivity.ADD_ITEM);
+                Log.e("test", "Add item: ");
+                //Gson gson = new Gson();
+                //FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
+                //updateItem(item);
+                //updateServerData();
+            }
+        }
     }
 
     /*
@@ -575,7 +587,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         userData.setCartItems(myCartList);
         updatePreferences();
-
     }
 
     /*
@@ -716,8 +727,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         String jsonCategoryList = gson.toJson(CategoryData);
         addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategoryList);
         addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
-        startActivity(addItemIntent);
-        //startActivityForResult(addItemIntent, 1);
+        startActivityForResult(addItemIntent, REQUEST_CODE_ADD);
     }
 
     /*
