@@ -3,6 +3,8 @@ package com.example.jlee.frigefriend;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -28,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
@@ -46,20 +50,27 @@ public class addActivity extends AppCompatActivity {
     private List<FridgeItem> currentSelectedItems = new ArrayList<>();
     private String jsonStringCatData;
     private String jsonStringLCatData;
+    private int sort_by = MainActivity.SORT_BY_CAT;
 
-    @BindView(R.id.app_bar)
+    @BindView(R.id.app_bar_add)
     Toolbar toolbar;
+
+    @BindView(R.id.sortAlpha)
+    TextView sortAlpha;
+    @BindView(R.id.sortCat1)
+    TextView sortCat;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+        ButterKnife.bind(this);
 
-         //set the action bar with title
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        setTitle(R.string.addMenu);
+        //set the action bar with title
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(R.string.addMenu);
 
         //get the category list from the intent
         Intent intent = getIntent();
@@ -72,6 +83,8 @@ public class addActivity extends AppCompatActivity {
 
         createAddList();
         buildRecyclerView();
+
+        sortByCat();
 
 
 
@@ -91,41 +104,36 @@ public class addActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 filter(editable.toString());
-
             }
         });
-
-        // sort List Alphabetically
-        final TextView sortAlpha = findViewById(R.id.sortAlpha);
-        sortAlpha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortList(MainActivity.SORT_BY_NAME);
-
-                // Change color when clicked
-                setTextViewDrawableColor(sortAlpha, R.color.colorAccent );
-                sortAlpha.setTextColor(getResources().getColor(R.color.colorAccent));
-                //sortCat.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-
-            }
-        });
-
-        // sort List categorically
-        final TextView sortCat = findViewById(R.id.sortCat1);
-        sortCat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortList(MainActivity.SORT_BY_CAT);
-
-                setTextViewDrawableColor(sortCat, R.color.colorAccent );
-                sortCat.setTextColor(getResources().getColor(R.color.colorAccent));
-                sortAlpha.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-            }
-        });
-
 
     } // END of  protected void onCreate(Bundle savedInstanceState)
 
+    /*
+     * Click Listener for sorting by category
+     * */
+    @OnClick(R.id.sortCat1)
+    void sortByCat() {
+        sortList(MainActivity.SORT_BY_CAT);
+        sort_by = MainActivity.SORT_BY_DATE;
+        setTextViewDrawableColor(sortCat, R.color.colorAccent );
+        setTextViewDrawableColor(sortAlpha, R.color.colorPrimaryDark );
+        sortCat.setTextColor(getResources().getColor(R.color.colorAccent));
+        sortAlpha.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    /*
+     * Click Listener for sorting by category
+     * */
+    @OnClick(R.id.sortAlpha)
+    void sortByAlpha() {
+        sortList(MainActivity.SORT_BY_NAME);
+        sort_by = MainActivity.SORT_BY_NAME;
+        setTextViewDrawableColor(sortCat, R.color.colorPrimaryDark );
+        setTextViewDrawableColor(sortAlpha, R.color.colorAccent );
+        sortCat.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        sortAlpha.setTextColor(getResources().getColor(R.color.colorAccent));
+    }
     // To change color when on click Alpha or Cat.
     private void setTextViewDrawableColor(TextView textView, int color) {
         for (Drawable drawable : textView.getCompoundDrawables()) {
@@ -234,6 +242,7 @@ public class addActivity extends AppCompatActivity {
         mAdapter.setOnClickListner(new addAdapter.OnItemClickListner() {
             @Override
             public void onItemClick(int position) {
+                Log.e("test","position: "+position);
                 Intent intent = new Intent(addActivity.this, ProductInfo.class);
                 //intent.putExtra("addItem", listCategoryData.get(position));
                 intent.putExtra("cat_image", listCategoryData.get(position).getCatImg());
@@ -254,9 +263,9 @@ public class addActivity extends AppCompatActivity {
         {
             case MainActivity.SORT_BY_CAT:
                 Log.e("test","sortcat1: "+sortOrder);
-                Collections.sort(listFridgeItem, new Comparator<FridgeItem>() {
+                Collections.sort(listCategoryData, new Comparator<CategoryData>() {
                     @Override
-                    public int compare(FridgeItem o1, FridgeItem o2) {
+                    public int compare(CategoryData o1, CategoryData o2) {
 
                         // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
                         return o1.getCatID() < o2.getCatID() ? -1 : (o1.getCatID() > o2.getCatID()) ? 1 : 0;
@@ -272,12 +281,29 @@ public class addActivity extends AppCompatActivity {
                 });
                 break;
         }
-
-        mAdapter.notifyDataSetChanged();
+        mAdapter.filterList(listCategoryData);
     }
 
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent upIntent = NavUtils.getParentActivityIntent(this);
+                if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                    TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+                } else {
+                    upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    Gson gson = new Gson();
+                    //String jsonEditedItem = gson.toJson(mSelectedItem);
+                    //upIntent.putExtra(LoginActivity.EDIT_ITEM,jsonEditedItem);
+                    setResult(RESULT_OK, upIntent); //go back to main activity
+                    finish();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
 
