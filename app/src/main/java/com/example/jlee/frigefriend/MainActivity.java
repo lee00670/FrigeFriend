@@ -565,6 +565,15 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         adapter.notifyDataSetChanged();
         sortData(sort_by);
+        for(CartItem item: myCartList)
+        {
+            if(item.getItemID() == updatedItem.getItemID())
+            {
+                item.setCatID(updatedItem.getCatID());
+                item.setCatImg(updatedItem.getCatImg());
+            }
+        }
+        userData.setCartItems(myCartList);
         updatePreferences();
 
     }
