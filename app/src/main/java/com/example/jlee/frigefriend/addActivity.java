@@ -56,7 +56,7 @@ public class addActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-//        //set the action bar with title
+         //set the action bar with title
 //        setSupportActionBar(toolbar);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        setTitle(R.string.addMenu);
