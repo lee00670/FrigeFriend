@@ -546,16 +546,27 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         else if (requestCode == REQUEST_CODE_ADD) {
             if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
 
-                //String jsonEditedItem = data.getStringExtra(LoginActivity.ADD_ITEM);
-                Log.e("test", "Add item: ");
-                //Gson gson = new Gson();
-                //FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
-                //updateItem(item);
-                //updateServerData();
+                String jsonAddedItem = data.getStringExtra(LoginActivity.ADD_ITEM);
+                Log.e("test", "Add item: "+jsonAddedItem);
+                Gson gson = new Gson();
+                FridgeItem item  = gson.fromJson(jsonAddedItem, FridgeItem.class);
+                addItem(item);
+                updateServerData();
             }
         }
     }
-
+    private void addItem(FridgeItem newItem)
+    {
+        Gson gson = new Gson();
+        UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
+        List<FridgeItem> listFridgeItem = userData.getFrideItems();
+        listFridgeItem.add(newItem);
+        this.userData.setFrideItems(listFridgeItem);
+        this.listFridgeItem = listFridgeItem;
+        adapter.notifyItemInserted(1);
+        adapter.notifyDataSetChanged();
+        sortData(sort_by);
+    }
     /*
     * update the specific item in main fridge list and refresh the list
     * */
@@ -727,6 +738,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         String jsonCategoryList = gson.toJson(CategoryData);
         addItemIntent.putExtra(LoginActivity.CAT_DATA, jsonCategoryList);
         addItemIntent.putExtra(LoginActivity.LC_DATA, jsonStringLC);
+        addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
         startActivityForResult(addItemIntent, REQUEST_CODE_ADD);
     }
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UpdateProductInfoActivity">
+
     <include
         android:id="@+id/app_bar_update"
         layout="@layout/app_bar"

@@ -45,11 +45,13 @@ public class addActivity extends AppCompatActivity {
 
     private ArrayList<addItem> maddList;
     List<CategoryData> listCategoryData;
+    FridgeItem mNewItem;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
     private List<FridgeItem> currentSelectedItems = new ArrayList<>();
     private String jsonStringCatData;
     private String jsonStringLCatData;
+    private String jsonStringUserData;
     private int sort_by = MainActivity.SORT_BY_CAT;
 
     @BindView(R.id.app_bar_add)
@@ -76,6 +78,7 @@ public class addActivity extends AppCompatActivity {
         Intent intent = getIntent();
         jsonStringCatData = intent.getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLCatData = intent.getStringExtra(LoginActivity.LC_DATA);
+        jsonStringUserData = intent.getStringExtra(LoginActivity.USER_DATA);
 
         Log.e("test","addActivity cat_data :"+jsonStringCatData);
         Gson gson = new Gson();
@@ -83,10 +86,7 @@ public class addActivity extends AppCompatActivity {
 
         createAddList();
         buildRecyclerView();
-
         sortByCat();
-
-
 
     // Search Bar
         EditText editTextSearch = findViewById(R.id.editTextSearchBar);
@@ -246,14 +246,45 @@ public class addActivity extends AppCompatActivity {
                 Intent intent = new Intent(addActivity.this, ProductInfo.class);
                 //intent.putExtra("addItem", listCategoryData.get(position));
                 intent.putExtra("cat_image", listCategoryData.get(position).getCatImg());
+                intent.putExtra("cat_id", listCategoryData.get(position).getCatID());
                 intent.putExtra("cat_name", listCategoryData.get(position).getCatName());
-
-                startActivity(intent);
-
+                intent.putExtra(LoginActivity.CAT_DATA, jsonStringCatData);
+                intent.putExtra(LoginActivity.LC_DATA, jsonStringLCatData);
+                intent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+                startActivityForResult(intent, MainActivity.REQUEST_CODE_ADD);
             }
         });
     }
 
+    /*
+     * onActivityResult after viewing cart or editing an item
+     * */
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivity.REQUEST_CODE_ADD) {
+            if(resultCode == RESULT_OK) {
+
+                String jsonEditedItem = data.getStringExtra(LoginActivity.EDIT_ITEM);
+
+                Gson gson = new Gson();
+                mNewItem = gson.fromJson(jsonEditedItem, FridgeItem.class);
+                Log.e("test", "Add item: "+mNewItem);
+
+                //updateServerData();
+            }
+            else if( resultCode == RESULT_CANCELED) {
+
+            }
+        }
+    }
+
+    private void addItem(FridgeItem newItem)
+    {
+        Gson gson = new Gson();
+        UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
+        List<FridgeItem> listFridgeItem = userData.getFrideItems();
+        listFridgeItem.add(newItem);
+    }
 
     // sort List by Category
     private void sortList(int sortOrder) {
@@ -295,8 +326,8 @@ public class addActivity extends AppCompatActivity {
                 } else {
                     upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Gson gson = new Gson();
-                    //String jsonEditedItem = gson.toJson(mSelectedItem);
-                    //upIntent.putExtra(LoginActivity.EDIT_ITEM,jsonEditedItem);
+                    String jsonAddedItem = gson.toJson(mNewItem);
+                    upIntent.putExtra(LoginActivity.ADD_ITEM,jsonAddedItem);
                     setResult(RESULT_OK, upIntent); //go back to main activity
                     finish();
                 }

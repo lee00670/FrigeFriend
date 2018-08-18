@@ -2,256 +2,190 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/textviewItemName"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductInfo">
+    <include
+        android:id="@+id/app_bar_add"
+        layout="@layout/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></include>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_add">
+
+    <FrameLayout
+        android:id="@+id/framelayout_cat"
+        android:layout_marginTop="65dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="2dp"
+            android:layout_marginLeft="60dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageViewCat"
+            android:layout_gravity="left|center_vertical"/>
+
+        <EditText
+            android:id="@+id/textViewItemName"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="categoryName"
+            android:padding="10dp"
+            android:textSize="16dp"
+            android:textAlignment="gravity"
+            android:layout_margin="20dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="left"/>
+
+        <ImageView
+            android:id="@+id/imageViewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/ic_close_black_24dp"
+            />
+    </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
-        android:background="@color/colorPrimary"
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/framelayout_cat">
+
+        <TextView
+            android:id="@+id/textViewExpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expiration date"
+            android:textColor="@color/colorMenu"
+
+            />
+
+        <DatePicker
+            android:id="@+id/date_value"
+            style="@android:style/Widget.Holo.DatePicker"
+            android:layout_width="308dp"
+            android:layout_height="109dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
 
 
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:calendarViewShown="false"
+            android:fadingEdge="horizontal|vertical"
+            android:requiresFadingEdge="horizontal|vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="145dp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewAppDesc"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="7dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Fridge Friend"
-                android:textAppearance="@style/TextAppearance.AppCompat.Menu"
-                android:textColor="@color/colorMenu"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textviewQuantity"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Quantity"
+                    android:textColor="@color/colorMenu" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinnerQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:entries="@array/quantityNum"></android.support.v7.widget.AppCompatSpinner>
 
 
-        </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewUnits"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="Units"
+                    android:textColor="@color/colorMenu" />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinnerUnits"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:entries="@array/units"></android.support.v7.widget.AppCompatSpinner>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout_cat">
+
+            <TextView
+                android:id="@+id/textViewCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Category"
+                android:textAlignment="center"
+                android:textColor="@color/colorMenu" />
+
+            <ImageView
+                android:id="@+id/catImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_horiz_black_24dp" />
+        </LinearLayout>
 
 
     </LinearLayout>
+    </LinearLayout>
 
-    <EditText
-        android:id="@+id/textViewItemName"
-        android:layout_width="159dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="26dp"
-        android:layout_marginEnd="92dp"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="36dp"
-
-        android:editable="true"
-        android:focusableInTouchMode="true"
-        android:text="Item Name"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textViewExpDate"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:text="Item Name" />
-
-    <TextView
-        android:id="@+id/textviewQuantity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="157dp"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="24dp"
-        android:text="Quantity"
-        android:textColor="@color/colorMenu"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDisplayDate"
-        tools:text="Quantity" />
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinnerQuantity"
-        android:layout_width="105dp"
-        android:layout_height="25dp"
-        android:layout_marginEnd="139dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="13dp"
-        android:entries="@array/quantityNum"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textviewQuantity"></android.support.v7.widget.AppCompatSpinner>
-
-    <TextView
-        android:id="@+id/textViewUnits"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginEnd="170dp"
-        android:layout_marginStart="172dp"
-        android:layout_marginTop="24dp"
-        android:text="Units"
-        android:textColor="@color/colorMenu"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerQuantity"
-        tools:text="Units" />
-
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinnerUnits"
-        android:layout_width="109dp"
-        android:layout_height="22dp"
-        android:layout_marginEnd="142dp"
-        android:layout_marginStart="133dp"
-        android:layout_marginTop="20dp"
-        android:entries="@array/units"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUnits"></android.support.v7.widget.AppCompatSpinner>
-
-    <TextView
-        android:id="@+id/textViewExpDate"
-        android:layout_width="105dp"
-        android:layout_height="29dp"
-        android:layout_marginEnd="128dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="26dp"
-        android:text="Expiary Date "
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewItemName"
-        tools:text="Expiary Date " />
-
-
-    <TextView
-        android:id="@+id/textViewCategory"
-        android:layout_width="78dp"
-        android:layout_height="24dp"
-
-        android:layout_marginBottom="108dp"
-        android:layout_marginEnd="153dp"
-        android:layout_marginStart="153dp"
-        android:layout_marginTop="40dp"
-        android:text="Category "
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerUnits"
-        tools:text="Category " />
-
-    <TextView
-        android:id="@+id/textViewCloseIcon"
-        android:layout_width="44dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="85dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginLeft="14dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="18dp"
-        android:drawableRight="@drawable/ic_close_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerUnits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewItemName"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/textViewImgHolder"
-        android:layout_width="65dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="449dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textViewItemName"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-        <!--android:drawableLeft="@drawable/ic_photo_black_24dp"-->
-        app:layout_constraintBottom_toTopOf="@+id/textviewQuantity"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textViewDisplayDate"
-        android:layout_width="145dp"
-        android:layout_height="39dp"
-        android:layout_marginEnd="116dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="16dp"
-        android:text="Display Date"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExpDate" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/Button_fab_productInfo"
-        android:layout_width="wrap_content"
+        android:id="@+id/fab_add"
+        android:layout_width="216dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginStart="292dp"
-        android:layout_marginTop="368dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorAccent"
         android:clickable="true"
-        android:src="@drawable/baseline_add_white_small_18dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCloseIcon" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="52dp"
-        android:layout_height="26dp"
-        android:layout_marginBottom="63dp"
-        android:layout_marginEnd="74dp"
-        android:layout_marginStart="166dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_more_horiz_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Button_fab"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCategory" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.933"
+        app:srcCompat="@drawable/baseline_add_white_big_18dp" />
 
 
 </android.support.constraint.ConstraintLayout>
