@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         //update the shared preferences with the current user data and category data
         updatePreferences();
+        updateServerData();
 
         setCategoryData();
 
@@ -166,30 +167,37 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public void checkSharedPreferences()
     {
         String sSPDate = getPreferenceString("dt"); // date when the data is saved
+        String jsonStringSPUserData = getPreferenceString("ud");
+
 
         //sSPDate = "2018-08-14T23:18:04Z";
         if(sSPDate != "")
         {
             Gson gson = new Gson();
             UserData serverData = gson.fromJson(jsonStringUserData, UserData.class);
+            UserData SPData = gson.fromJson(jsonStringSPUserData, UserData.class);
             String sServerDate = serverData.getUpdateTime();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            try{
-                Date dSPDate = sdf.parse(sSPDate);
-                Date dServerDate = sdf.parse(sServerDate);
-//                Log.e("test", "dSPDate: "+dSPDate.toString());
-//                Log.e("test", "dServerDate: "+dServerDate.toString());
-                if (dServerDate.before(dSPDate)) {
-
-                    //get the shared preferences for the recent data
-                    Log.e("test",       "updated by SP");
-                    jsonStringUserData = getPreferenceString("ud");
-                    jsonStringCat = getPreferenceString("cd");
-                }
-            }catch (ParseException e)
+            if(serverData.getUserID().equals(SPData.getUserID()) && serverData.getUserPW().equals(SPData.getUserPW()))
             {
-                e.printStackTrace();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                try{
+                    Date dSPDate = sdf.parse(sSPDate);
+                    Date dServerDate = sdf.parse(sServerDate);
+    //                Log.e("test", "dSPDate: "+dSPDate.toString());
+    //                Log.e("test", "dServerDate: "+dServerDate.toString());
+                    if (dServerDate.before(dSPDate)) {
+
+                        //get the shared preferences for the recent data
+                        Log.e("test",       "updated by SP");
+                        jsonStringUserData = getPreferenceString("ud");
+                        jsonStringCat = getPreferenceString("cd");
+                    }
+                }catch (ParseException e)
+                {
+                    e.printStackTrace();
+                }
             }
+
         }
     }
 

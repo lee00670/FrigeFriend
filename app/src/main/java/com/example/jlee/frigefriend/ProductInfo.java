@@ -235,5 +235,6 @@ public class ProductInfo extends AppCompatActivity {
             Log.e("test", "cat id: "+mNewItem.getCatID());
         }
 
+
     }
 }
