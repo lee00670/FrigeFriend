@@ -112,7 +112,8 @@
                     android:id="@+id/spinnerQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
-                    android:entries="@array/quantityNum"></android.support.v7.widget.AppCompatSpinner>
+                    android:entries="@array/quantityNum">
+                </android.support.v7.widget.AppCompatSpinner>
 
 
             </LinearLayout>

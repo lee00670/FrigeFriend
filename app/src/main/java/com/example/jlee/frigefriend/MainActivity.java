@@ -548,6 +548,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                 String jsonAddedItem = data.getStringExtra(LoginActivity.ADD_ITEM);
                 Log.e("test", "Add item: "+jsonAddedItem);
+
                 Gson gson = new Gson();
                 FridgeItem item  = gson.fromJson(jsonAddedItem, FridgeItem.class);
                 if(item != null)
@@ -555,7 +556,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     addItem(item);
                     updateServerData();
                 }
-
             }
         }
     }

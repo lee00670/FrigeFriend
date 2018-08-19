@@ -18,7 +18,7 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
     private OnItemClickListner mListner;
 
     public interface OnItemClickListner {
-        void onItemClick(int position);
+        void onItemClick(CategoryData item);
     }
 
     public void setOnClickListner(OnItemClickListner listner) {
@@ -37,17 +37,7 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
             mImageView = itemView.findViewById(R.id.imageview1);
             mtextView1 = itemView.findViewById(R.id.textView1);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick (View v){
-                    if (listner != null) {
-                        int position = getAdapterPosition();
-                        if(position != RecyclerView.NO_POSITION){
-                            listner.onItemClick(position);
-                        }
-                    }
-                }
-            });
+
 
         }
     } //END OF public static class addViewHolder
@@ -66,12 +56,24 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull addViewHolder addViewHolder, int i) {
+    public void onBindViewHolder(@NonNull addViewHolder addViewHolder, final int i) {
         final addViewHolder baseViewHolder = (addViewHolder) addViewHolder;
         CategoryData currentItem = listCategoryData.get(i);
 
         addViewHolder.mImageView.setImageResource(currentItem.getCatImg());
         addViewHolder.mtextView1.setText(currentItem.getCatName());
+
+        baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                if (mListner != null) {
+                    int position = i;
+                    if(position != RecyclerView.NO_POSITION){
+                        mListner.onItemClick(listCategoryData.get(i));
+                    }
+                }
+            }
+        });
 
     }
 
@@ -83,7 +85,7 @@ public class addAdapter extends RecyclerView.Adapter<addAdapter.addViewHolder> {
     // Search Bar
    public void filterList (List<CategoryData> filteredList){
        listCategoryData = filteredList;
-        notifyDataSetChanged();
+       notifyDataSetChanged();
    }
 
 

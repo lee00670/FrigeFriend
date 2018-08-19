@@ -155,6 +155,7 @@ public class addActivity extends AppCompatActivity {
             }
         }
         mAdapter.filterList(filteredList);
+
     }
 
    public void createAddList(){
@@ -241,13 +242,13 @@ public class addActivity extends AppCompatActivity {
         // click item send info to product Info page
         mAdapter.setOnClickListner(new addAdapter.OnItemClickListner() {
             @Override
-            public void onItemClick(int position) {
-                Log.e("test","position: "+position);
+            public void onItemClick(CategoryData item) {
+                Log.e("test","item: "+item);
                 Intent intent = new Intent(addActivity.this, ProductInfo.class);
                 //intent.putExtra("addItem", listCategoryData.get(position));
-                intent.putExtra("cat_image", listCategoryData.get(position).getCatImg());
-                intent.putExtra("cat_id", listCategoryData.get(position).getCatID());
-                intent.putExtra("cat_name", listCategoryData.get(position).getCatName());
+                intent.putExtra("cat_image", item.getCatImg());
+                intent.putExtra("cat_id", item.getCatID());
+                intent.putExtra("cat_name", item.getCatName());
                 intent.putExtra(LoginActivity.CAT_DATA, jsonStringCatData);
                 intent.putExtra(LoginActivity.LC_DATA, jsonStringLCatData);
                 intent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
