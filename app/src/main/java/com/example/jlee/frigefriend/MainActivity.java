@@ -759,7 +759,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         for(FridgeItem item: currentSelectedItems)
         {
             int index = listFridgeItem.indexOf(item);
-            adapter.doDelete(index);
+            adapter.notifyItemRemoved(index);
+            listFridgeItem.remove(index);
         }
 
         //clear the selected item list
@@ -772,6 +773,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         Log.e("test","deleteList:"+  this.currentSelectedItems.size());
 
         adapter.notifyDataSetChanged();
+        this.userData.setFrideItems(listFridgeItem);
+        updatePreferences();
+        updateServerData();
+
     }
 
     /*

@@ -109,11 +109,6 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         // Is the view now checked?
         Log.e("test","Clicked;0");
     }
-    public void doDelete(int adapterPosition) {
-        Log.e("test", "delete: "+fridgeItemList.get(adapterPosition).getItemName()+", pos: "+adapterPosition);
-        fridgeItemList.remove(adapterPosition);
-        notifyItemRemoved(adapterPosition);
-    }
 
     public void doUncheck(int adapterPosition) {
         bUncheck = true;
