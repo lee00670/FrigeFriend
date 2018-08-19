@@ -550,25 +550,31 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Log.e("test", "Add item: "+jsonAddedItem);
 
                 Gson gson = new Gson();
-                FridgeItem item  = gson.fromJson(jsonAddedItem, FridgeItem.class);
-                if(item != null)
+                List<FridgeItem>  listAddedItems  = gson.fromJson(jsonAddedItem,new TypeToken<List<FridgeItem>>() {}.getType());
+                if(listAddedItems != null)
                 {
-                    addItem(item);
+                    addItem(listAddedItems);
                     updateServerData();
                 }
             }
         }
     }
-    private void addItem(FridgeItem newItem)
+    private void addItem(List<FridgeItem> listAddedItems)
     {
         Gson gson = new Gson();
         UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
-        List<FridgeItem> listFridgeItem = userData.getFrideItems();
-        listFridgeItem.add(newItem);
-        this.userData.setFrideItems(listFridgeItem);
+        List<FridgeItem> listFridgeItem = this.userData.getFrideItems();
+        for(FridgeItem newItem: listAddedItems)
+        {
+            listFridgeItem.add(newItem);
+
+        }
+
         this.listFridgeItem = listFridgeItem;
+
         adapter.notifyItemInserted(1);
         adapter.notifyDataSetChanged();
+        this.userData.setFrideItems(listFridgeItem);
         sortData(sort_by);
     }
     /*
@@ -799,7 +805,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             for(CartItem cartItem: myCartList)
             {
                 // if the selected item is already in the cartlist, then just increase the number of the quantity
-                if((cartItem.getItemID() == item.getItemID())
+                if((cartItem.getCatID() == item.getCatID())
                         && (cartItem.getItemName().equals(item.getItemName())))
                 {
                     cartItem.setQuantity(cartItem.getQuantity() + 1);

@@ -45,6 +45,7 @@ public class addActivity extends AppCompatActivity {
 
     private ArrayList<addItem> maddList;
     List<CategoryData> listCategoryData;
+    List<FridgeItem> mListAddedItems= new ArrayList<>();;
     FridgeItem mNewItem;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
@@ -269,6 +270,7 @@ public class addActivity extends AppCompatActivity {
 
                 Gson gson = new Gson();
                 mNewItem = gson.fromJson(jsonEditedItem, FridgeItem.class);
+                mListAddedItems.add(mNewItem);
                 Log.e("test", "Add item: "+mNewItem);
 
                 //updateServerData();
@@ -279,13 +281,13 @@ public class addActivity extends AppCompatActivity {
         }
     }
 
-    private void addItem(FridgeItem newItem)
-    {
-        Gson gson = new Gson();
-        UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
-        List<FridgeItem> listFridgeItem = userData.getFrideItems();
-        listFridgeItem.add(newItem);
-    }
+//    private void addItem(FridgeItem newItem)
+//    {
+//        Gson gson = new Gson();
+//        UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
+//        List<FridgeItem> listFridgeItem = userData.getFrideItems();
+//        listFridgeItem.add(newItem);
+//    }
 
     // sort List by Category
     private void sortList(int sortOrder) {
@@ -327,7 +329,7 @@ public class addActivity extends AppCompatActivity {
                 } else {
                     upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     Gson gson = new Gson();
-                    String jsonAddedItem = gson.toJson(mNewItem);
+                    String jsonAddedItem = gson.toJson(mListAddedItems);
                     upIntent.putExtra(LoginActivity.ADD_ITEM,jsonAddedItem);
                     setResult(RESULT_OK, upIntent); //go back to main activity
                     finish();
@@ -346,7 +348,7 @@ public class addActivity extends AppCompatActivity {
         } else {
             upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             Gson gson = new Gson();
-            String jsonEditedItem = gson.toJson(mNewItem);
+            String jsonEditedItem = gson.toJson(mListAddedItems);
             upIntent.putExtra(LoginActivity.ADD_ITEM,jsonEditedItem);
             setResult(RESULT_OK, upIntent); //go back to main activity
             super.onBackPressed();
