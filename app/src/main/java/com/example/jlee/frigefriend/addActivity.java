@@ -335,6 +335,22 @@ public class addActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public void onBackPressed(){
+        Log.e("test","back");
+
+        Intent upIntent = NavUtils.getParentActivityIntent(this);
+        if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+            TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
+        } else {
+            upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            Gson gson = new Gson();
+            String jsonEditedItem = gson.toJson(mNewItem);
+            upIntent.putExtra(LoginActivity.ADD_ITEM,jsonEditedItem);
+            setResult(RESULT_OK, upIntent); //go back to main activity
+            super.onBackPressed();
+        }
+    }
 
 
 
