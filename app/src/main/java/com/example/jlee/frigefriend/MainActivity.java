@@ -550,8 +550,12 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Log.e("test", "Add item: "+jsonAddedItem);
                 Gson gson = new Gson();
                 FridgeItem item  = gson.fromJson(jsonAddedItem, FridgeItem.class);
-                addItem(item);
-                updateServerData();
+                if(item != null)
+                {
+                    addItem(item);
+                    updateServerData();
+                }
+
             }
         }
     }
