@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     FloatingActionButton mFabAddToCart;
     @BindView( (R.id.fabDelete))
     FloatingActionButton mFabDelete;
+    @BindView( (R.id.textViewGuide))
+    TextView mTextViewGuide;
 
     public static final String PREFERENCE = "com.buildup.frigefriend";
     String jsonStringUserData = null;
@@ -103,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     //server IP address
     final static public String ServerURL="http://192.168.0.132/";
-    //final static public String ServerURL="http://10.70.146.167/";
+    //final static public String ServerURL="http://10.70.113.17/";
 
     public static final int SORT_BY_DATE = 0;
     public static final int SORT_BY_NAME = 1;
@@ -472,6 +474,23 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         mItemTouchHelper = new ItemTouchHelperExtension(mCallback);
         mItemTouchHelper.attachToRecyclerView(rv);
         adapter.setItemTouchHelperExtension(mItemTouchHelper);
+        showNoRecordText();
+
+    }
+
+    public void showNoRecordText()
+    {
+        // show the guide text if the fridge is empty.
+        if(listFridgeItem.size() == 0)
+        {
+            mTextViewGuide.setText("Fridge is empty.");
+            mTextViewGuide.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            mTextViewGuide.setText("Fridge is empty.");
+            mTextViewGuide.setVisibility(View.GONE);
+        }
 
     }
 
@@ -539,6 +558,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 myCartList = gson.fromJson(jsonStringCartData,new TypeToken<List<CartItem>>() {}.getType());
                 userData.setCartItems(myCartList);
                 updateServerData();
+                showNoRecordText();
             }
         }else if (requestCode == REQUEST_CODE_EDIT) {
             if(resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
@@ -549,6 +569,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
                 updateItem(item);
                 updateServerData();
+
             }
         }
         else if (requestCode == REQUEST_CODE_ADD) {
@@ -584,6 +605,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         adapter.notifyDataSetChanged();
         this.userData.setFrideItems(listFridgeItem);
         sortData(sort_by);
+        showNoRecordText();
     }
     /*
     * update the specific item in main fridge list and refresh the list
@@ -616,6 +638,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         }
         userData.setCartItems(myCartList);
         updatePreferences();
+        showNoRecordText();
     }
 
     /*
@@ -790,6 +813,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         this.userData.setFrideItems(listFridgeItem);
         updatePreferences();
         updateServerData();
+        showNoRecordText();
 
     }
 
