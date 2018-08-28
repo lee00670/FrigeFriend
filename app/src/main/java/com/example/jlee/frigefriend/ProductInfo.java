@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +43,7 @@ public class ProductInfo extends AppCompatActivity {
 
     String jsonStringLC;
     String jsonStringCatData;
-    String jsonStringUserData;
+    String jsonStringListFridge;
     FridgeItem mNewItem, mItemCategorySaved;
 
     private  int imageRes;
@@ -71,7 +72,7 @@ public class ProductInfo extends AppCompatActivity {
         int iCatID = getIntent().getIntExtra("cat_id",0);
         jsonStringCatData = getIntent().getStringExtra(LoginActivity.CAT_DATA);
         jsonStringLC = getIntent().getStringExtra(LoginActivity.LC_DATA);
-        jsonStringUserData = getIntent().getStringExtra(LoginActivity.USER_DATA);
+        jsonStringListFridge = getIntent().getStringExtra(LoginActivity.FRIDGE_DATA);
 
         ImageView imageView = findViewById(R.id.imageViewCat);
         imageView.setImageResource(imageRes);
@@ -86,6 +87,7 @@ public class ProductInfo extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.quantityNum));
         quantityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         quantitySpinner.setAdapter(quantityAdapter);
+        quantitySpinner.setSelection(1);
 
         // Display unit in spinner
         Spinner unitsSpinner = (Spinner) findViewById(R.id.spinnerUnits);
@@ -100,6 +102,9 @@ public class ProductInfo extends AppCompatActivity {
         this.datePicker = (DatePicker) this.findViewById(R.id.date_value);
 
         cal.set(this.datePicker.getYear(), this.datePicker.getMonth(), this.datePicker.getDayOfMonth());
+        Log.e("test", "datepicker: "+this.datePicker.getDayOfMonth());
+        cal.add(Calendar.DAY_OF_MONTH, 7);
+        this.datePicker.init(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), null);
         makeItemID();
         mNewItem = new FridgeItem(makeItemID(),
                 sCatName,
@@ -144,8 +149,7 @@ public class ProductInfo extends AppCompatActivity {
     }
     private boolean isUsed(int itemID){
         Gson gson = new Gson();
-        UserData userData = gson.fromJson(jsonStringUserData, UserData.class);
-        List<FridgeItem> listFridgeItem = userData.getFrideItems();
+        List<FridgeItem> listFridgeItem = gson.fromJson(jsonStringListFridge, new TypeToken<List<FridgeItem>>() {}.getType());
         boolean found = false;
         for(FridgeItem item : listFridgeItem){
             if(item.getItemID() == itemID)

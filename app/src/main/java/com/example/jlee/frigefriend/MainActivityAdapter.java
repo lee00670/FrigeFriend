@@ -94,19 +94,14 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             public void onClick(View view)
             {
                 //FridgeItem item = (FridgeItem) view.findViewById(R.id.item_layout);
-                Log.e("test","clicked: "+fridgeItemList.get(i).getItemName()+", pos: "+i);
+                //Log.e("test","clicked: "+fridgeItemList.get(i).getItemName()+", pos: "+i);
                 onItemClickListener.onItemClick(fridgeItemList.get(i));
                 Toast.makeText(context, "click on "+fridgeItemList.get(i).getItemName(), Toast.LENGTH_LONG).show();
             }
         });
-        Log.e("test","checkbox: "+fridgeItemList.get(i).getItemName()+": "+fridgeItemList.get(i).getChecked());
+
         Boolean checkedState = bUncheck ? false: (fridgeItemList.get(i).getChecked()==1?true:false);
         baseViewHolder.mCheckBox.setChecked(checkedState == null ? false : checkedState);
-    }
-
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        Log.e("test","Clicked;0");
     }
 
     public void doUncheck(int adapterPosition) {
@@ -203,12 +198,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
             //days left (expiration time - current time)
             long diff = endDate.getTime() - c.getTime();
-            Log.e("test", "diff: "+diff);
+            //Log.e("test", "diff: "+diff);
             String sDaysLeftMessage = "";
-            Log.e("test", "current: "+c.toString());
-            Log.e("test", "endDate: "+endDate.toString());
-            Log.e("test", "diff: "+diff);
-            Log.e("test", "TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS): "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+
             mTextViewDaysLeft.setText((diff < 0 ? " Expired" :
                     (TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS)) < 24 ? " Last day":
                     (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+1)+" days left":"")));
@@ -225,9 +217,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             {
                 mTextViewExpDate.setText("unknown");
             }
-            Log.e("test","days left: "+(diff < 0 ? " Expired" : (diff == 0 ? " Last day":
-                    (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+" days left":""))));
-            Log.e("test", "hours: "+TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS));
+//            Log.e("test","days left: "+(diff < 0 ? " Expired" : (diff == 0 ? " Last day":
+//                    (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+" days left":""))));
+//            Log.e("test", "hours: "+TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS));
 
             int mProgressBarStatus = (int) (5*(20-TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)));
             if( (TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS))  < 24 && diff >= 0)
@@ -243,8 +235,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 mProgressBarStatus=100;
             }
 
-            Log.e("test","diff: "+diff);
-            Log.e("test","progressbar: "+mProgressBarStatus);
+//            Log.e("test","diff: "+diff);
+//            Log.e("test","progressbar: "+mProgressBarStatus);
             mProgressBar.setProgress(mProgressBarStatus);
             int color=Color.GREEN;
             if(mProgressBarStatus == 100)
@@ -254,9 +246,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             mProgressBar.getProgressDrawable().setColorFilter(
                     color, android.graphics.PorterDuff.Mode.SRC_IN);
             mTextViewQuantity.setText(" "+fridgeItem.getQuantity()+" "+fridgeItem.getQuantityUnit());
-            Log.e("test", "check? :"+fridgeItem.getItemName()+"= "+fridgeItem.getChecked());
+            //Log.e("test", "check? :"+fridgeItem.getItemName()+"= "+fridgeItem.getChecked());
             mCheckBox.setChecked(fridgeItem.getChecked()==1?true:false);
-            Log.e("test", "test check? : "+fridgeItem.getChecked());
+            //Log.e("test", "test check? : "+fridgeItem.getChecked());
 
             mCheckBox.setOnClickListener(new View.OnClickListener()     {
                 public void onClick(View v) {
