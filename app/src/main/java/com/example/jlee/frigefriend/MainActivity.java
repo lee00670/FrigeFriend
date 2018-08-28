@@ -59,7 +59,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import androidx.versionedparcelable.VersionedParcel;
+//import androidx.versionedparcelable.VersionedParcel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
@@ -91,10 +91,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     String jsonStringCat = null;
     String jsonStringLC = null;
     UserData userData;
-    List<CategoryData> CategoryData;
-    List<LCData> LCData;
+    public List<CategoryData> CategoryData;
+    public List<LCData> LCData;
+    MenuItem selectMenu;
 
-    List<FridgeItem> listFridgeItem = new ArrayList<>();
+    public static List<FridgeItem> listFridgeItem = new ArrayList<>();
     private List<FridgeItem> currentSelectedItems = new ArrayList<>();
     private List<CartItem> myCartList = new ArrayList<>();
 
@@ -105,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
     //server IP address
     final static public String ServerURL="http://192.168.0.132/";
-    //final static public String ServerURL="http://10.70.113.17/";
+    //final static public String ServerURL="http://10.65.67.29/";
 
     public static final int SORT_BY_DATE = 0;
     public static final int SORT_BY_NAME = 1;
@@ -114,7 +115,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public static final int REQUEST_CODE_EDIT = 2;
     public static final int REQUEST_CODE_EDIT_CAT = 3;
     public static final int REQUEST_CODE_ADD = 4;
+    public static final int REQUEST_CODE_CATEGORY = 5;
     private int sort_by = SORT_BY_DATE;
+    private Boolean bSelectAll = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         initializeViews();
         MainActivityAdapter myAdapter = new MainActivityAdapter(listFridgeItem, onItemCheckListener);
+        for(FridgeItem item: listFridgeItem)
+        {
+            item.setChecked(0);
+        }
     }
 
     /*
@@ -309,12 +316,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         @Override
         public void onItemCheck(FridgeItem item) {
             currentSelectedItems.add(item);
-
+            item.setChecked(1);
             if(currentSelectedItems.size()==1)
             {
                 mFab.setVisibility(View.INVISIBLE);
                 mFabAddToCart.setVisibility(View.VISIBLE);
                 mFabDelete.setVisibility(View.VISIBLE);
+            }
+            if(currentSelectedItems.size()==listFridgeItem.size())
+            {
+                bSelectAll = true;
+                selectMenu.setIcon(R.drawable.ic_check_box_outline_blank_black_24dp);
             }
             Log.e("test","currentSelectedItems.add ");
             Log.e("test","currentSelectedItems.size:  "+currentSelectedItems.size());
@@ -324,13 +336,14 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         public void onItemUncheck(FridgeItem item) {
             currentSelectedItems.remove(item);
             Log.e("test","currentSelectedItems.remove");
-
+            item.setChecked(0);
             if(currentSelectedItems.size()==0)
             {
                 mFab.setVisibility(View.VISIBLE);
                 mFabAddToCart.setVisibility(View.INVISIBLE);
                 mFabDelete.setVisibility(View.INVISIBLE);
-
+                bSelectAll = false;
+                selectMenu.setIcon(R.drawable.ic_check_box_black_24dp);
             }
         }
         @Override
@@ -501,6 +514,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final MenuItem searchItem = menu.findItem(R.id.searchMenu);
+        selectMenu = menu.findItem(R.id.selectMenu);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
 
@@ -568,6 +582,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 Gson gson = new Gson();
                 FridgeItem item  = gson.fromJson(jsonEditedItem, FridgeItem.class);
                 updateItem(item);
+
                 updateServerData();
 
             }
@@ -597,6 +612,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         {
             listFridgeItem.add(newItem);
 
+
         }
 
         this.listFridgeItem = listFridgeItem;
@@ -623,9 +639,11 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 item.setQuantity(updatedItem.getQuantity());
                 item.setQuantityUnit(updatedItem.getQuantityUnit());
                 item.setExpDate(updatedItem.getExpDate());
+                item.setChecked(updatedItem.getChecked());
             }
 
         }
+
         adapter.notifyDataSetChanged();
         sortData(sort_by);
         for(CartItem item: myCartList)
@@ -652,17 +670,75 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 break;
 
             case R.id.logoutMenu:
+                bSelectAll = false;
+                SelectItems(bSelectAll);
                 updatePreferences();
                 updateServerData();
+
                 Intent loginIntent = new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
                 finish();
+                break;
+
+            case R.id.selectMenu:
+                Log.e("test", "select menu");
+
+                bSelectAll = bSelectAll?false:true;
+                SelectItems(bSelectAll);
+
                 break;
 
             default:
                 //unknown error
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void SelectItems(Boolean bSelectMode)
+    {
+        if(bSelectAll)
+        {
+            selectMenu.setIcon(R.drawable.ic_check_box_outline_blank_black_24dp);
+            for(FridgeItem item: listFridgeItem)
+            {
+                if(item.getChecked() == 0)
+                {
+                    item.setChecked(1);
+                    currentSelectedItems.add(item);
+                }
+            }
+
+        }
+        else
+        {
+            selectMenu.setIcon(R.drawable.ic_check_box_black_24dp);
+            for(FridgeItem item: listFridgeItem)
+            {
+                item.setChecked(0);
+            }
+            //clear the selected item list
+            Iterator<FridgeItem> iter = currentSelectedItems.iterator();
+            while (iter.hasNext())
+            {
+                FridgeItem item = iter.next();
+                iter.remove();
+            }
+        }
+
+
+        if(currentSelectedItems.size()==0)
+        {
+            mFab.setVisibility(View.VISIBLE);
+            mFabAddToCart.setVisibility(View.INVISIBLE);
+            mFabDelete.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            mFab.setVisibility(View.INVISIBLE);
+            mFabAddToCart.setVisibility(View.VISIBLE);
+            mFabDelete.setVisibility(View.VISIBLE);
+        }
+        adapter.notifyDataSetChanged();
     }
 
     private void setTextViewDrawableColor(TextView textView, int color) {
@@ -773,7 +849,8 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @OnClick(R.id.floatingActionButton)
     public void addItem()
     {
-        Intent addItemIntent = new Intent(this, addActivity.class);
+        //Intent addItemIntent = new Intent(this, addActivity.class);
+        Intent addItemIntent = new Intent(this, AddMainActivity.class);
          //addItemIntent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
         Gson gson = new Gson();
         String jsonCategoryList = gson.toJson(CategoryData);

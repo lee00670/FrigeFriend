@@ -11,7 +11,11 @@
         android:title="@string/searchMenu"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView"/>
-
+    <item
+        android:id="@+id/selectMenu"
+        android:icon="@drawable/ic_check_box_black_24dp"
+        android:title="Select expired items"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/cartMenu"
         android:icon="@drawable/ic_shopping_cart_black_24dp"

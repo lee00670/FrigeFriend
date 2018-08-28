@@ -81,7 +81,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
         //return new ItemSwipeWithActionWidthViewHolder(layout);
         return new Holderview(layout);
     }
-    private Map<String, Boolean> checkBoxStates = new HashMap<>();
+
     private Boolean bUncheck = false;
     @Override
     public void onBindViewHolder(@NonNull Holderview holderview, final int i) {
@@ -99,9 +99,8 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
                 Toast.makeText(context, "click on "+fridgeItemList.get(i).getItemName(), Toast.LENGTH_LONG).show();
             }
         });
-
-
-        Boolean checkedState = checkBoxStates.get(bUncheck ? false: baseViewHolder.mCheckBox.isChecked());
+        Log.e("test","checkbox: "+fridgeItemList.get(i).getItemName()+": "+fridgeItemList.get(i).getChecked());
+        Boolean checkedState = bUncheck ? false: (fridgeItemList.get(i).getChecked()==1?true:false);
         baseViewHolder.mCheckBox.setChecked(checkedState == null ? false : checkedState);
     }
 
@@ -112,6 +111,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     public void doUncheck(int adapterPosition) {
         bUncheck = true;
+        fridgeItemList.get(adapterPosition).setChecked(0);
         notifyDataSetChanged();
         bUncheck = false;
     }
@@ -205,9 +205,13 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             long diff = endDate.getTime() - c.getTime();
             Log.e("test", "diff: "+diff);
             String sDaysLeftMessage = "";
-
-            mTextViewDaysLeft.setText((diff < 0 ? " Expired" : (diff == 0 ? " Last day":
-                    (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+" days left":""))));
+            Log.e("test", "current: "+c.toString());
+            Log.e("test", "endDate: "+endDate.toString());
+            Log.e("test", "diff: "+diff);
+            Log.e("test", "TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS): "+TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+            mTextViewDaysLeft.setText((diff < 0 ? " Expired" :
+                    (TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS)) < 24 ? " Last day":
+                    (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 6 ? " "+(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)+1)+" days left":"")));
 
             if(endDate != null)
             {
@@ -226,7 +230,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             Log.e("test", "hours: "+TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS));
 
             int mProgressBarStatus = (int) (5*(20-TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS)));
-            if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) < 1 && TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) > 0)
+            if( (TimeUnit.HOURS.convert(diff, TimeUnit.MILLISECONDS))  < 24 && diff >= 0)
             {
                 mProgressBarStatus = 99;
             }
@@ -234,7 +238,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             {
                 mProgressBarStatus = 1;
             }
-            else if(diff <= 0 )
+            else if(diff < 0 )
             {
                 mProgressBarStatus=100;
             }
@@ -250,8 +254,9 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
             mProgressBar.getProgressDrawable().setColorFilter(
                     color, android.graphics.PorterDuff.Mode.SRC_IN);
             mTextViewQuantity.setText(" "+fridgeItem.getQuantity()+" "+fridgeItem.getQuantityUnit());
+            Log.e("test", "check? :"+fridgeItem.getItemName()+"= "+fridgeItem.getChecked());
             mCheckBox.setChecked(fridgeItem.getChecked()==1?true:false);
-            Log.e("test", "test check?");
+            Log.e("test", "test check? : "+fridgeItem.getChecked());
 
             mCheckBox.setOnClickListener(new View.OnClickListener()     {
                 public void onClick(View v) {
