@@ -34,30 +34,34 @@
         <activity
             android:name=".addActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".UpdateProductInfoActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity
             android:name=".ProductInfo"
             android:parentActivityName=".addActivity" />
 
-        <!--<activity-->
-        <!--android:name=".addActivity"-->
-        <!--android:parentActivityName=".ProductInfo" />-->
-        <!---->
+        <activity
+            android:name=".AddMainActivity"
+            android:label="@string/title_activity_add_main"
+            android:parentActivityName=".MainActivity" />
+
+        <!-- <activity -->
+        <!-- android:name=".addActivity" -->
+        <!-- android:parentActivityName=".ProductInfo" /> -->
+        <!--  -->
 
         <activity
             android:name=".CategoryActivity"
             android:parentActivityName=".ProductInfo" />
 
-
-
-
+        <!-- <activity -->
+        <!-- android:name=".addActivity" -->
+        <!-- android:label="@string/title_activity_add" -->
+        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity> -->
         <!--<activity-->
-            <!--android:name=".addActivity"-->
-            <!--android:label="@string/title_activity_add"-->
+            <!--android:name=".AddMainActivity"-->
+            <!--android:label="@string/title_activity_add_main"-->
             <!--android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
     </application>
 

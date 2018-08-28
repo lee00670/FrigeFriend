@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.textViewWarningLogin)  TextView textViewWarningLogin;
 
     public static final String USER_DATA = "userData";
+    public static final String FRIDGE_DATA = "fridgeData";
     public static final String USER_EMAIL = "userEmail";
     public static final String CAT_DATA = "category";
     public static final String LC_DATA = "lc";

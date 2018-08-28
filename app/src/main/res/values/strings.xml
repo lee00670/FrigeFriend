@@ -44,14 +44,15 @@
 
     <string-array name="units">
         <item>unit</item>
-        <item>Package(s)</item>
-        <item>Bag(s)</item>
-        <item>Bundle(s)</item>
-        <item>Jar(s)</item>
+        <item>package(s)</item>
+        <item>bag(s)</item>
+        <item>bundle(s)</item>
+        <item>jar(s)</item>
         <item>can(s)</item>
-        <item>Liter(s)</item>
-        <item>Kilogram(s)</item>
-        <item>Pound(s)</item>
+        <item>dozen</item>
+        <item>liter(s)</item>
+        <item>kilogram(s)</item>
+        <item>pound(s)</item>
 
     </string-array>
 
@@ -117,6 +118,17 @@
     <string name="title_activity_update_product_info">UpdateProductInfoActivity</string>
     <string name="title_activity_update_info">updateInfoActivity</string>
     <string name="title_activity_add">addActivity</string>
+    <string name="title_activity_add_main">AddMainActivity</string>
+    <string name="tab_text_1">By category</string>
+    <string name="tab_text_2">By name</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Select category of your item.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="select_category_fragment">Select category to add your item.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

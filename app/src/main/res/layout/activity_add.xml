@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:hint="Search category"
+        android:hint="Search item"
         android:textSize="16dp"
         android:textColorHint="@color/colorGray"
         android:paddingLeft="10dp"

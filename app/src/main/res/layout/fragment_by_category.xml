@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".byCategoryFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:paddingLeft="4dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/select_category_fragment" />
+
+    <view
+        android:id="@+id/recyclerView"
+        class="android.support.v7.widget.RecyclerView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:padding="4dp"
+        android:layout_marginTop="40dp"
+        android:scrollbars="vertical"
+        >
+
+    </view>
+
+</FrameLayout>

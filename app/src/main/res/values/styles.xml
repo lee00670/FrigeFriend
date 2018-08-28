@@ -50,8 +50,17 @@
         <item name="android:popupBackground">#DFFFFFFF</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="tabBackground">@drawable/tab_background</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+    </style>
 
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!--<style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Light.ActionBar" />-->
+    <style name="AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar" />
+
+    <!--<style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+    <style name="PopupOverlay" parent="Theme.AppCompat.Light.NoActionBar" />
 
 </resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".byNameFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+        <EditText
+            android:id="@+id/editTextSearchBar"
+            android:layout_gravity="center"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:hint="Search item"
+            android:textSize="16dp"
+            android:textColorHint="@color/colorGray"
+            android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/ic_search_black_24dp"
+            />
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+            <LinearLayout
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:id="@+id/sortCat1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/sort_option_color"
+                    android:gravity="center_horizontal"
+                    android:text="Cat." />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
+                <TextView
+                    android:id="@+id/sortAlpha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:drawableRight="@drawable/sort_option_color"
+                    android:gravity="center_horizontal"
+                    android:text="Alpha." />
+            </LinearLayout>
+
+        </LinearLayout>
+        <view
+        android:id="@+id/recyclerView"
+        class="android.support.v7.widget.RecyclerView"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="10dp"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        >
+
+    </view>
+    </LinearLayout>
+
+</FrameLayout>
