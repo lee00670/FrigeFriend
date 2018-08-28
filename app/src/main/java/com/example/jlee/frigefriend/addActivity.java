@@ -45,7 +45,7 @@ public class addActivity extends AppCompatActivity {
 
     private ArrayList<addItem> maddList;
     List<CategoryData> listCategoryData;
-    List<FridgeItem> mListAddedItems= new ArrayList<>();;
+    List<FridgeItem> mListAddedItems= new ArrayList<>();
     FridgeItem mNewItem;
 
     List<FridgeItem> listFridgeItem = new ArrayList<>();
@@ -85,7 +85,6 @@ public class addActivity extends AppCompatActivity {
         Gson gson = new Gson();
         listCategoryData = gson.fromJson(jsonStringCatData,new TypeToken<List<CategoryData>>() {}.getType());
 
-        createAddList();
         buildRecyclerView();
         sortByCat();
 
@@ -159,79 +158,7 @@ public class addActivity extends AppCompatActivity {
 
     }
 
-   public void createAddList(){
-//       ArrayList<addItem> addList = new ArrayList<>();
-//       maddList =new ArrayList<>();
-//
-//       maddList.add(new addItem(R.drawable.milk, "Milk", "dairy"));
-//       maddList.add(new addItem(R.drawable.yogurt, "Yogurt", "dairy"));
-//       maddList.add(new addItem(R.drawable.cheese, "Cheese", "dairy"));
-//       maddList.add(new addItem(R.drawable.butter, "Butter", "dairy"));
-//       maddList.add(new addItem(R.drawable.eggs, "Eggs", "dairy"));
-//
-//       maddList.add(new addItem(R.drawable.pork, "Beef", "meat"));
-//       maddList.add(new addItem(R.drawable.chicken, "Chicken", "meat"));
-//       maddList.add(new addItem(R.drawable.pork, "Lamb", "meat"));
-//       maddList.add(new addItem(R.drawable.chicken, "Turkey", "meat"));
-//       maddList.add(new addItem(R.drawable.pork, "Pork", "meat"));
-//       maddList.add(new addItem(R.drawable.sausague, "Sausages", "meat"));
-//       maddList.add(new addItem(R.drawable.bacon, "Bacon", "meat"));
-//       maddList.add(new addItem(R.drawable.salami, "Salami", "meat"));
-//       maddList.add(new addItem(R.drawable.fish, "Fish", "meat"));
-//       maddList.add(new addItem(R.drawable.othermeat, "Other Meat", "meat"));
-//
-//       maddList.add(new addItem(R.drawable.apple, "Apple" , "fruit"));
-//       maddList.add(new addItem(R.drawable.pineapple, "Pineapple", "fruit"));
-//       maddList.add(new addItem(R.drawable.pear, "Pear", "fruit"));
-//       maddList.add(new addItem(R.drawable.orange, "Oranges", "fruit"));
-//       maddList.add(new addItem(R.drawable.lemon, "Lemon", "fruit"));
-//       maddList.add(new addItem(R.drawable.melon,"Melon", "fruit"));
-//       maddList.add(new addItem(R.drawable.kiwi, "Kiwi", "fruit"));
-//       maddList.add(new addItem(R.drawable.grapes, "Grapes", "fruit"));
-//       maddList.add(new addItem(R.drawable.strawberry, "Strawberries", "fruit"));
-//       maddList.add(new addItem(R.drawable.berries, "Berries", "fruit"));
-//       maddList.add(new addItem(R.drawable.avocado, "Avocado", "fruit"));
-//       maddList.add(new addItem(R.drawable.otherfruits, "Other Fruit", "fruit"));
-//
-//       maddList.add(new addItem(R.drawable.cucummber, "Cucumber", "veggies"));
-//       maddList.add(new addItem(R.drawable.broccoli, "Broccoli", "veggies"));
-//       maddList.add(new addItem(R.drawable.carrots, "Carrots", "veggies"));
-//       maddList.add(new addItem(R.drawable.pepper, "Pepper", "veggies"));
-//       maddList.add(new addItem(R.drawable.lettuce, "Lettuce", "veggies"));
-//       maddList.add(new addItem(R.drawable.tomato, "Tomatoes", "veggies"));
-//       maddList.add(new addItem(R.drawable.potato, "Potatoes", "veggies"));
-//       maddList.add(new addItem(R.drawable.mushroom, "Mushrooms", "veggies"));
-//       maddList.add(new addItem(R.drawable.garlic, "Garlic", "veggies"));
-//       maddList.add(new addItem(R.drawable.ginger, "Ginger", "veggies"));
-//       maddList.add(new addItem(R.drawable.onion, "Onions", "veggies"));
-//       maddList.add(new addItem(R.drawable.chili, "Chili", "veggies"));
-//       maddList.add(new addItem(R.drawable.corn, "Corn", "veggies"));
-//       maddList.add(new addItem(R.drawable.peas, "Peas", "veggies"));
-//       maddList.add(new addItem(R.drawable.eggplant, "Eggplant", "veggies"));
-//       maddList.add(new addItem(R.drawable.herbs, "Herbs", "veggies"));
-//       maddList.add(new addItem(R.drawable.otherveggies, "Other Vegetables", "veggies"));
-//
-//       maddList.add(new addItem(R.drawable.bread, "Bread", "bakery"));
-//       maddList.add(new addItem(R.drawable.bagel, "Bagel", "bakery"));
-//       maddList.add(new addItem(R.drawable.donuts, "Doughnuts", "bakery"));
-//       maddList.add(new addItem(R.drawable.cake, "Cake", "bakery"));
-//       maddList.add(new addItem(R.drawable.cookies, "Cookies", "bakery"));
-//       maddList.add(new addItem(R.drawable.chocolate, "Chocolate", "bakery"));
-//       maddList.add(new addItem(R.drawable.pie, "Pie", "bakery"));
-//       maddList.add(new addItem(R.drawable.icecream, "Ice Cream", "bakery"));
-//       maddList.add(new addItem(R.drawable.otherbakery, "Other Bakery&Sweets", "bakery"));
-//
-//       maddList.add(new addItem(R.drawable.softdrink, "Soft Drinks", "beverages"));
-//       maddList.add(new addItem(R.drawable.soda, "Soda", "beverages"));
-//       maddList.add(new addItem(R.drawable.jucie, "Juice", "beverages"));
-//       maddList.add(new addItem(R.drawable.icedtea, "Iced Tea", "beverages"));
-//       maddList.add(new addItem(R.drawable.coffee, "Coffee", "beverages"));
-//       maddList.add(new addItem(R.drawable.water, "Water", "beverages"));
-//       maddList.add(new addItem(R.drawable.smoothie, "Smoothies", "beverages"));
-//       maddList.add(new addItem(R.drawable.otherbeverages, "Other Beverages", "beverages"));
-   }
-
-    public void buildRecyclerView(){
+     public void buildRecyclerView(){
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new LinearLayoutManager(this);
         mAdapter = new addAdapter(listCategoryData);
@@ -252,7 +179,9 @@ public class addActivity extends AppCompatActivity {
                 intent.putExtra("cat_name", item.getCatName());
                 intent.putExtra(LoginActivity.CAT_DATA, jsonStringCatData);
                 intent.putExtra(LoginActivity.LC_DATA, jsonStringLCatData);
-                intent.putExtra(LoginActivity.USER_DATA, jsonStringUserData);
+                Gson gson = new Gson();
+                String mJsonFridgeData = gson.toJson(MainActivity.listFridgeItem);
+                intent.putExtra(LoginActivity.FRIDGE_DATA, mJsonFridgeData);
                 startActivityForResult(intent, MainActivity.REQUEST_CODE_ADD);
             }
         });
